@@ -2,11 +2,13 @@
 package org.usfirst.frc.team1923.robot;
 
 
+import org.usfirst.frc.team1923.robot.commands.autonRoutine1;
 import org.usfirst.frc.team1923.robot.subsystems.DriveTrainSubsystem;
 import org.usfirst.frc.team1923.robot.subsystems.ElevatorSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
@@ -26,7 +28,7 @@ public class Robot extends IterativeRobot {
 	public static DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem();
     //public static Elevator elevator
     public static ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
-    Command autonomousCommand;
+    CommandGroup autonomousCommand;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -38,7 +40,7 @@ public class Robot extends IterativeRobot {
 		RobotMap.init();
 		//CommandBase.init();
         // instantiate the command used for the autonomous period
-        //autonomousCommand = new ExampleCommand();
+        autonomousCommand = new autonRoutine1();
     }
 	
 	public void disabledPeriodic() {
