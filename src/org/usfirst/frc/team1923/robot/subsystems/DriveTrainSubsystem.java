@@ -76,6 +76,7 @@ public void init(){
     // Live Window
     LiveWindow.addSensor("DriveTrainSubsystem", "Left Encoder", this.driveEncoderLeft);
     LiveWindow.addSensor("DriveTrainSubsystem", "Right Encoder", this.driveEncoderRight);
+    LiveWindow.addSensor("DriveTrainSubsystem", "Gyro", this.gyro);
     
 }
    
@@ -97,6 +98,7 @@ public void init(){
     }
     // Stop
     public void stop(){
+    	this.disable();
     	RobotMap.robotDriveTrain.tankDrive(0.0, 0.0);
     }
     
@@ -178,4 +180,11 @@ public void init(){
         return (this.driveEncoderLeft.getDistance()+this.driveEncoderRight.getDistance())/2.0;
     }
     
+    // Gyro Base Turns
+    public void turnRobotHeading(double angle){
+    // TODO
+    	
+    }
+    
 }
+

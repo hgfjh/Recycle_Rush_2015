@@ -73,7 +73,8 @@ public class OI {
         rB = new JoystickButton(xboxController, 6);
         
         lB = new JoystickButton(xboxController, 5);
-        
+
+        y = new JoystickButton(xboxController, 4);
         
         x = new JoystickButton(xboxController, 3);
         
