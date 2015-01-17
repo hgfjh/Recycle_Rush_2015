@@ -13,7 +13,7 @@ public class TurnLeft90 extends Command {
 	private Timer timer = new Timer();
 	
     public TurnLeft90() {
-    	
+    	requires(Robot.driveTrainSubsystem);
     }
 
     // Called just before this Command runs the first time
