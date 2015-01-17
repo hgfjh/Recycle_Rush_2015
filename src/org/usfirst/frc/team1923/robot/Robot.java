@@ -29,6 +29,7 @@ public class Robot extends IterativeRobot {
     //public static Elevator elevator
     public static ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
     CommandGroup autonomousCommand;
+    CommandGroup teleopCommand;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -65,6 +66,7 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
+        if (teleopCommand != null) teleopCommand.start();
     }
 
     /**
@@ -72,7 +74,8 @@ public class Robot extends IterativeRobot {
      * You can use it to reset subsystems before shutting down.
      */
     public void disabledInit(){
-
+        if (autonomousCommand != null) autonomousCommand.cancel();
+        if (teleopCommand != null) teleopCommand.cancel();
     }
 
     /**
