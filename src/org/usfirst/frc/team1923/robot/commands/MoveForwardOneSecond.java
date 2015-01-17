@@ -13,7 +13,7 @@ public class MoveForwardOneSecond extends Command {
 	private Timer timer = new Timer();
 	
     public MoveForwardOneSecond() {
-    	
+    	requires(Robot.driveTrainSubsystem);
     }
 
     // Called just before this Command runs the first time
