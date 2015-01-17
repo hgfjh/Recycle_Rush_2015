@@ -28,8 +28,13 @@ public class DriveForward extends Command {
 	 * 						
 	 */
     public DriveForward(double speed, double duration) {
-    	if(!(0 <= speed && speed <= 1) || duration < 0)
-    		throw new InvalidParameterException();
+    	requires(Robot.driveTrainSubsystem);
+    	if(speed < 0){
+    		speed = 0;   		
+    	}
+    	else if(speed > 1){
+    		speed = 1;    		
+    	}
         this.speed = speed;
         this.duration = duration;
     }

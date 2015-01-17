@@ -28,8 +28,14 @@ public class DriveBackward extends Command {
 	 * 						
 	 */
     public DriveBackward(double speed, double duration) {
-    	if(!(0 <= speed && speed <= 1) || duration < 0)
-    		throw new InvalidParameterException();
+
+    	requires(Robot.driveTrainSubsystem);
+    	if(speed < 0){
+    		speed = 0;  		
+    	}
+    	else if(speed > 1){
+    		speed = 1;   		
+    	}
         this.speed = -speed; //go in the other direction
         this.duration = duration;
     }
@@ -47,7 +53,7 @@ public class DriveBackward extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return timer.get() >= durationw;
+    	return timer.get() >= duration;
     }
 
     // Called once after isFinished returns true
