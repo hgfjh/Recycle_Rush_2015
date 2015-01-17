@@ -47,7 +47,7 @@ public class DriveBackward extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return timer.get() >= durationw;
+    	return timer.get() >= duration;
     }
 
     // Called once after isFinished returns true
