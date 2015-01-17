@@ -24,5 +24,24 @@ public class AutoRoutine_MAK extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
+    	addParallel(new MoveElevatorToPositionCommand(20,3));
+    	addSequential(new WaitHalfSecond()); // Replace with Grab Tote
+    	addSequential(new WaitHalfSecond()); // Replace with Elevate Tote
+    	addSequential(new TurnLeft90());
+    	addSequential(new ArcRight180());
+    	addSequential(new TurnLeft90());
+    	addSequential(new MoveForwardOneSecond()); //Replace with Put Tote on Other Tote
+    	
+
+    	addSequential(new WaitHalfSecond()); // Replace with Grab Tote
+    	addSequential(new WaitHalfSecond()); // Replace with Elevate Tote
+    	addSequential(new TurnLeft90());
+    	addSequential(new ArcRight180());
+    	addSequential(new TurnLeft90());
+    	addSequential(new MoveForwardOneSecond()); //Replace with Put Tote on Other Tote
+    	
+    	addSequential(new WaitHalfSecond()); // Replace with Grab Tote
+    	addSequential(new TurnRight90());
+    	addSequential(new MoveForwardTwoSecond());
     }
 }

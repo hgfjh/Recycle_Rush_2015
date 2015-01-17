@@ -186,5 +186,13 @@ public void init(){
     	
     }
     
+       
+    public boolean reachedHeading(){
+		return true;
+
+	    // TODO
+    	
+    }
+    
 }
 
