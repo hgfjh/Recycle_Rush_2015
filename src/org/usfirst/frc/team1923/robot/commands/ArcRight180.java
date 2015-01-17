@@ -13,7 +13,7 @@ public class ArcRight180 extends Command {
 	private Timer timer = new Timer();
 	
     public ArcRight180() {
-    	
+    	requires(Robot.driveTrainSubsystem);
     }
 
     // Called just before this Command runs the first time
