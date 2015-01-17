@@ -23,59 +23,65 @@ public class RobotMap {
     // number and the module. For example you with a rangefinder:
     // public static int rangefinderPort = 1;
     // public static int rangefinderModule = 1;
-    
-    // Compressor
-    public static Solenoid  solenoid  = new Solenoid(0);
-    public static Compressor compressor = new Compressor(0);
-    
-    // Drive Train Talon SRX
-    public static CANTalon frontLeftDrive = new CANTalon(0);
-    public static CANTalon rearLeftDrive = new CANTalon(1);
-    public static CANTalon frontRightDrive = new CANTalon(2);
-    public static CANTalon rearRightDrive = new CANTalon(3);
-    
-    // Elevator Talon SRX
-    public static CANTalon elevatorLeftMotor = new CANTalon(4);
-    public static CANTalon elevatorRightMotor = new CANTalon(5);
-    
-    public static Encoder driveEncoderLeft = new Encoder(1, 2, true, EncodingType.k4X);
+	
+	// Compressor
+	public static Solenoid  solenoid  = new Solenoid(0);
+	public static Compressor compressor = new Compressor(0);
+	
+	// Drive Train Talon SRX
+	public static CANTalon frontLeftDrive = new CANTalon(0);
+	public static CANTalon rearLeftDrive = new CANTalon(1);
+	public static CANTalon frontRightDrive = new CANTalon(2);
+	public static CANTalon rearRightDrive = new CANTalon(3);
+	
+	// Elevator Talon SRX
+	public static CANTalon elevatorLeftMotor = new CANTalon(4);
+	public static CANTalon elevatorRightMotor = new CANTalon(5);
+	// Sensors
+	public static Encoder driveEncoderLeft = new Encoder(1, 2, true, EncodingType.k4X);
     public static Gyro gyro = new Gyro(1);
     public static Encoder driveEncoderRight = new Encoder(3,4, false, EncodingType.k4X);
     public static AnalogInput temperature = new AnalogInput(2);
+    public static Encoder elevatorEncoder = new Encoder(5,6, false, EncodingType.k4X);
     
-    
-    //DriveTrain
-    public static RobotDrive robotDriveTrain = new RobotDrive(frontLeftDrive, rearLeftDrive, frontRightDrive, rearRightDrive);
-    
-    
-    // Elevator
-    public static RobotDrive elevatorDrive = new RobotDrive(elevatorLeftMotor, elevatorRightMotor);
-    
-    
-    
-    
-    
-    // Robot system initialization
-    public static void init(){
-    compressor.setClosedLoopControl(true);
-    gyro.reset();
-    driveEncoderLeft.reset();
-    driveEncoderRight.reset();
-    
-    // Test Mode --------------------
-    LiveWindow.addActuator("DriveTRainSubsystem", "frontLeftDrive",  (LiveWindowSendable) frontLeftDrive);
-    LiveWindow.addActuator("DriveTRainSubsystem", "rearLeftDrive",  (LiveWindowSendable) rearLeftDrive);
-    LiveWindow.addActuator("DriveTRainSubsystem", "frontRightDrive",  (LiveWindowSendable) frontRightDrive);
-    LiveWindow.addActuator("DriveTRainSubsystem", "rearRightDrive",  (LiveWindowSendable) rearRightDrive);
-    LiveWindow.addActuator("elevatorDrive", "elevatorLeftMotor",  (LiveWindowSendable) elevatorLeftMotor);
-    LiveWindow.addActuator("elevatorDrive", "elevatorRightMotor",  (LiveWindowSendable) elevatorRightMotor);
-    
+    // Digital IO
+    public static DigitalInput elevatorTopLimitSwitch = new DigitalInput(8);
+    public static DigitalInput elevatorBottomLimitSwitch = new DigitalInput(9);
+	
+	//DriveTrain
+	public static RobotDrive robotDriveTrain = new RobotDrive(frontLeftDrive, rearLeftDrive, frontRightDrive, rearRightDrive);
+	
+	
+	// Elevator
+	public static RobotDrive elevatorDrive = new RobotDrive(elevatorLeftMotor, elevatorRightMotor);
+	
+	
+	
+	
+	
+	// Robot system initialization
+	public static void init(){
+	compressor.setClosedLoopControl(true);
+	gyro.reset();
+	driveEncoderLeft.reset();
+	driveEncoderRight.reset();
+	elevatorEncoder.reset();
+	
+	
+	// Test Mode --------------------
+	LiveWindow.addActuator("DriveTRainSubsystem", "frontLeftDrive",  (LiveWindowSendable) frontLeftDrive);
+	LiveWindow.addActuator("DriveTRainSubsystem", "rearLeftDrive",  (LiveWindowSendable) rearLeftDrive);
+	LiveWindow.addActuator("DriveTRainSubsystem", "frontRightDrive",  (LiveWindowSendable) frontRightDrive);
+	LiveWindow.addActuator("DriveTRainSubsystem", "rearRightDrive",  (LiveWindowSendable) rearRightDrive);
+	LiveWindow.addActuator("elevatorDrive", "elevatorLeftMotor",  (LiveWindowSendable) elevatorLeftMotor);
+	LiveWindow.addActuator("elevatorDrive", "elevatorRightMotor",  (LiveWindowSendable) elevatorRightMotor);
+	
      
-        
-        
-    }
-    
-    
-    
+		
+		
+	}
+	
+	
+	
     
 }
