@@ -2,15 +2,25 @@
 package org.usfirst.frc.team1923.robot;
 
 
-import org.usfirst.frc.team1923.robot.commands.autonRoutine1;
+import org.usfirst.frc.team1923.robot.commands.AutonEvadeBins;
+import org.usfirst.frc.team1923.robot.commands.DriveDistanceCommand;
+import org.usfirst.frc.team1923.robot.commands.DriveForwardCommand;
+import org.usfirst.frc.team1923.robot.commands.DriveWithJoyStickCommand;
+import org.usfirst.frc.team1923.robot.commands.AutonNoBins;
+import org.usfirst.frc.team1923.robot.commands.ElevatorSetHomeCommand;
+import org.usfirst.frc.team1923.robot.commands.MoveElevatorToPositionCommand;
+import org.usfirst.frc.team1923.robot.commands.TeleopElevatorBumpers;
 import org.usfirst.frc.team1923.robot.subsystems.DriveTrainSubsystem;
 import org.usfirst.frc.team1923.robot.subsystems.ElevatorSubsystem;
+import org.usfirst.frc.team1923.robot.subsystems.PIDriveTrainSubsystem;
+import org.usfirst.frc.team1923.robot.subsystems.PIElevatorSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 
@@ -25,11 +35,11 @@ public class Robot extends IterativeRobot {
 
 	//public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
-	public static DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem();
+	public static PIDriveTrainSubsystem driveTrainSubsystem = new PIDriveTrainSubsystem();
     //public static Elevator elevator
-    public static ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
-    CommandGroup autonomousCommand;
-    CommandGroup teleopCommand;
+    public static PIElevatorSubsystem elevatorSubsystem = new PIElevatorSubsystem();
+    public CommandGroup autonomousCommand;
+    public CommandGroup teleopCommand;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -41,7 +51,14 @@ public class Robot extends IterativeRobot {
 		RobotMap.init();
 		//CommandBase.init();
         // instantiate the command used for the autonomous period
-        autonomousCommand = new autonRoutine1();
+		
+		SmartDashboard.putData(driveTrainSubsystem);
+		SmartDashboard.putData(elevatorSubsystem);
+		addCommandsToDashboard();
+		autonomousCommand = new AutonNoBins();
+		teleopCommand = new TeleopElevatorBumpers();
+		
+		
     }
 	
 	public void disabledPeriodic() {
@@ -58,6 +75,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+    	log();
     }
 
     public void teleopInit() {
@@ -83,6 +101,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+    	log();
     }
     
     /**
@@ -91,4 +110,24 @@ public class Robot extends IterativeRobot {
     public void testPeriodic() {
         LiveWindow.run();
     }
+
+    public void log(){
+    	// Log values at Dashboard
+    	SmartDashboard.putNumber("Left Distance", driveTrainSubsystem.getLeftEncoderDistance());
+    	SmartDashboard.putNumber("Right Distance", driveTrainSubsystem.getRightEncoderDistance());
+    	SmartDashboard.putNumber("Elevator Position", elevatorSubsystem.getElevatorEncoderPosition());
+    }
+ 
+    public void addCommandsToDashboard(){
+    	//SmartDashboard.putData("Drive DRIVE_DIST_1", new DriveDistanceCommand(RobotMap.DRIVE_DIST_1,5.0));
+    	//SmartDashboard.putData("Drive DRIVE_DIST_2", new DriveDistanceCommand(RobotMap.DRIVE_DIST_2,5.0));
+    	SmartDashboard.putData("Move Elevator ELEVATOR_POSITION_1", new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_1,5.0));
+    	SmartDashboard.putData("Move Elevator ELEVATOR_POSITION_2", new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_2,5.0));
+    	SmartDashboard.putData("Move Elevator ELEVATOR_POSITION_3", new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_3,5.0));
+    	SmartDashboard.putData("Move Elevator ELEVATOR_POSITION_4", new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_4,5.0));
+    	SmartDashboard.putData("Set Up Home Position", new ElevatorSetHomeCommand());
+    	
+    }
+    
 }
+

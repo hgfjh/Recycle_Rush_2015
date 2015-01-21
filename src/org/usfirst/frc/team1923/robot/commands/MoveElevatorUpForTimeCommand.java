@@ -4,45 +4,40 @@ import org.usfirst.frc.team1923.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-//import org.usfirst.frc.team1923.robot.subsystems.DriveTrainSubsystem;
-
 /**
  *
  */
-public class DriveWithJoyStickCommand extends Command {
-
-    public DriveWithJoyStickCommand() {
+public class MoveElevatorUpForTimeCommand extends Command {
+	private double timeOut;
+    public MoveElevatorUpForTimeCommand(double timeOut) {
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	requires(Robot.driveTrainSubsystem);
+        requires(Robot.elevatorSubsystem);
+        this.timeOut = timeOut;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	setTimeout(this.timeOut);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	boolean rightTrigger = Robot.oi.rightStick.getTrigger();
-    	boolean leftTrigger = Robot.oi.leftStick.getTrigger();
-    	if(rightTrigger && leftTrigger){
-        	Robot.driveTrainSubsystem.manualDrive(-Robot.oi.leftStick.getY(), -Robot.oi.rightStick.getY());
-    	} else {
-    		Robot.driveTrainSubsystem.manualDrive(-Robot.oi.leftStick.getY()/2, -Robot.oi.rightStick.getY()/2);    		
-    	}
+    	Robot.elevatorSubsystem.moveElevatorUp(0.5);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.elevatorSubsystem.elevatorStop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }

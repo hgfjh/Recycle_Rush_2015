@@ -2,192 +2,38 @@ package org.usfirst.frc.team1923.robot.subsystems;
 
 import org.usfirst.frc.team1923.robot.RobotMap;
 
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  *
  */
-public class ElevatorSubsystem extends PIDSubsystem {
+public class ElevatorSubsystem extends Subsystem {
     
+	public ElevatorSubsystem() {
+		RobotMap.elevatorEncoder.reset();
+		RobotMap.elevatorEncoder.setDistancePerPulse(1/256);
+	}
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-	private RobotDrive elevatorDrive = RobotMap.elevatorDrive;
-    private Timer timer;
-    private double timeOut = 2.0;
-    // Elevator Encoder
-    private Encoder elevatorEncoder = RobotMap.elevatorEncoder;
-    private boolean elevatorHomePositionSet = false;
-    
-    	
-	private static final double NUM_CLICKS = 256, //distance per pulse = 0.0491"/pulse
-    							GEAR_RATIO = 1.0/1.0, 
-					            WHEEL_CIRCUMFERENCE = 1.0,   // 4 inches wheels
-					            kp = 0.1, ki = 0.0, kd = 0.0,     // LEAVE THESE CONSTANTS ALONE!
-					            PID_LOOP_TIME = .05, 
-					            encoderTOLERANCE = 2.0;         // +/- 2" tolarance
-	
-	
-	
-	public ElevatorSubsystem() {
-        super(kp,ki,kd);
-        this.init();
-        this.disable();
-	}
-	
-	
-	public void init(){
-		
-		// Set distance per pulse for each encoder
-	    this.elevatorEncoder.setDistancePerPulse(GEAR_RATIO*WHEEL_CIRCUMFERENCE/NUM_CLICKS);
-	   // Set PID source parameter to Distance...
-	    this.elevatorEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
-	    
-	    // PID tolerance
-	    this.setAbsoluteTolerance(encoderTOLERANCE);
-	    
-	    
-	    // Timer        
-	    timer = new Timer();
-	    timer.reset();
-	    timer.stop();
-	    
-	    // Homing Elevator
-	    this.elevatorHomePositionSet = false;
-	    //this.elevatorHomePositionSet = this.setElevatorReferance();
-	    
-	    // Live Window
-	    LiveWindow.addSensor("ElevatorSubsystem", "Elevator Encoder", this.elevatorEncoder);
-	    	    
-	}
-	
-	// Homing Elevator
-	public void setElevatorReferance(){
-		while(!RobotMap.elevatorBottomLimitSwitch.get()){
-			RobotMap.elevatorDrive.drive(-0.2, 0);
-		}
-		this.elevatorEncoder.reset();
-		this.elevatorHomePositionSet = true;
-	}
-	/**
-     * Use the elevator Encoder as the PID sensor. This method is automatically
-     * called by the subsystem.
-     */
-    protected double returnPIDInput() {
-        return this.elevatorEncoder.getDistance();
-    }
 
-
-    /**
-     * Use the elevatorDrive as the PID output. This method is automatically called by
-     * the subsystem.
-     */
-    protected void usePIDOutput(double d) {
-        if(! (RobotMap.elevatorTopLimitSwitch.get() || RobotMap.elevatorBottomLimitSwitch.get())){
-        this.elevatorDrive.drive(d,0);
-        }else{
-        	this.elevatorDrive.drive(0.0,0.0);
-        	
-        }
-    }
-	
-	
-	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
-   
-    // Drive Stright Distance Using Encoder
-    public void moveElevatorToPosition(double position,double maxTimeOut){
-    	//TODO
-    	setSetpoint(position);
-    	this.enable();
-    	this.timeOut = maxTimeOut;
-    	this.timer.reset();
-    	this.timer.start();
-    }
-    
-    
-    
     public void moveElevatorUp(double speed) {
-        this.disable();
-        if (! RobotMap.elevatorTopLimitSwitch.get()){
-    	RobotMap.elevatorDrive.drive(speed, 0);
-        }else{
-        	RobotMap.elevatorDrive.drive(0.0, 0.0);
-        }
+        //disablePID();
+        //mode = MANUAL_MODE;
+    	RobotMap.elevatorDrive.tankDrive(speed, speed);
+        
         
     }
     
     public void moveElevatorDown(double speed) {
-        this.disable();
-        
-        if (! RobotMap.elevatorBottomLimitSwitch.get()){
-        	RobotMap.elevatorDrive.drive(-speed, 0);
-            }else{
-            	RobotMap.elevatorDrive.drive(0.0, 0.0);
-            }
+        //disablePID();
+        //mode = MANUAL_MODE;
+    	RobotMap.elevatorDrive.tankDrive(-speed, -speed);
         
         
     }
-    
-    public boolean reachedPosition(){
-    	if (timer.get() > this.timeOut || this.onTarget()){
-    		this.disable();
-    		timer.stop();
-    		timer.reset();
-    		return true;
-    	}else{
-    		return false;
-    	}
-    		
-    	
-    	
-    }
-    
-    public void elevatorStop(){
-    	this.disable();
-    	RobotMap.elevatorDrive.drive(0.0, 0.0);
-    }
-    
-    public double getPositionError(){
-		   	
-    	return this.getSetpoint() - this.getPosition();
-    	
-    }
-    
-    /**
-     *
-     * @return Count from the encoder (since the last reset?).
-     */
-    public double getElevatorEncoderCount() {
-       return this.elevatorEncoder.getRaw();
-    }
-    
-    
-    /**
-     *
-     * @return Distance the encoder has recorded since the last reset, adjusted for the gear ratio.
-     */
-    public double getElevatorEncoderPosition() {
-    	
-        return this.elevatorEncoder.getDistance();
-        
-    }
-    
-    private void moveElevator(double speed){
-    	RobotMap.elevatorLeftMotor.set(speed);
-    	RobotMap.elevatorRightMotor.set(speed);
-    	
-    }
-    
-    public boolean isElevatorHomePositionSet(){
-    	return this.elevatorHomePositionSet;
-    }
-    
 }
 
