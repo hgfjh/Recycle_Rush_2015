@@ -27,6 +27,9 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
     //public RobotDrive robotDriveTrain = RobotMap.robotDriveTrain;
     private Timer timer;
     private double timeOut = 2.0;
+    private int DRIVE_MODE = 1;
+    public double cLeft = 0;
+	public double cRight = 0;
     // Drive Wheel Encoders
     //private Encoder driveEncoderLeft = RobotMap.driveEncoderLeft;
     //private Encoder driveEncoderRight = RobotMap.driveEncoderRight;
@@ -44,6 +47,7 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 					            encoderTOLERANCE = 2.0;         // +/- 2" tolarance
 	
 	
+	private static final int MANUAL_MODE = 1, ENCODER_MODE = 2, GYRO_MODE = 3;
 	
 	public PIDriveTrainSubsystem() {
         super(Pe, Ie, De);
@@ -51,19 +55,13 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
     	// Set distance per pulse for each encoder
         RobotMap.driveEncoderLeft.setDistancePerPulse(GEAR_RATIO*WHEEL_CIRCUMFERENCE/NUM_CLICKS);
         RobotMap.driveEncoderRight.setDistancePerPulse(GEAR_RATIO*WHEEL_CIRCUMFERENCE/NUM_CLICKS);
-        // Set PID source parameter to Distance...
-        //this.driveEncoderLeft.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
-        //this.driveEncoderRight.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
-        // PID tolerance
+        this.getPIDController().setPID(Pe, Ie, De);
         this.setAbsoluteTolerance(encoderTOLERANCE);
         this.setOutputRange(-1.0, 1.0);
         this.setInputRange(-200.0, 200.0);
-       
-        
-        
-        
+        this.disable();
         RobotMap.gyro.reset();
-       
+        DRIVE_MODE = MANUAL_MODE;
         
         // Timer        
         timer = new Timer();
@@ -71,7 +69,7 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
         timer.stop();
         
         
-        this.disable();
+        
 	}
    
     
@@ -89,6 +87,15 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
         
         
     }
+    public void coalesceLeft(double left){
+    	if (left < cLeft - 0.02){
+    		cLeft = cLeft - 0.02;
+    	} else if (left > cLeft + 0.02) {
+    		cLeft = cLeft + 0.02;
+    	} else {
+    		cLeft = left;
+    	}    	
+    }
     // Stop
     public void stop(){
     	this.disable();
@@ -98,8 +105,11 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
     // Drive Stright Distance Using Encoder
     public void driveStrightUsingEncoder(double dist,double maxTimeOut){
     	//TODO
+    	
+    	
     	setSetpoint(dist);
-    	this.enable();
+    	setEncoderPID();
+    	
     	this.timeOut = maxTimeOut;
     	this.timer.reset();
     	this.timer.start();
@@ -111,7 +121,7 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
      * called by the subsystem.
      */
     protected double returnPIDInput() {
-        return this.getLeftEncoderDistance();
+    	return sensorFeedback();
     }
 
 
@@ -120,13 +130,14 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
      * the subsystem.
      */
     protected void usePIDOutput(double d) {
-    	RobotMap.robotDriveTrain.drive(d, 0);
+    	applyPIDOutput(d);
     }
     
        
-    public boolean reachedDistance(){
+    public boolean reachedTarget(){
     	if (timer.get() > this.timeOut || this.onTarget()){
     		this.disable();
+    		DRIVE_MODE = MANUAL_MODE;
     		timer.stop();
     		timer.reset();
     		return true;
@@ -179,10 +190,61 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
     }
     
     // Gyro Base Turns
-    public void turnRobotHeading(double angle){
-    // TODO
+    public void turnRobotHeading(double angle, double maxTimeOut){
+    	
+    	setGyroPID();
+    	
+    	setSetpoint(angle);
+    	    	
+    	this.timeOut = maxTimeOut;
+    	this.timer.reset();
+    	this.timer.start();
     	
     }
+    private void setEncoderPID(){
+    	// PID tolerance
+    	DRIVE_MODE = ENCODER_MODE;
+    	this.getPIDController().setPID(Pe, Ie, De);
+        this.setAbsoluteTolerance(encoderTOLERANCE);
+        this.setOutputRange(-1.0, 1.0);
+        this.setInputRange(-200.0, 200.0);
+        this.enable();
+    	
+    }
+    
+    public void setGyroPID(){
+    	DRIVE_MODE = GYRO_MODE;
+    	this.getPIDController().setPID(Pg, Ig, Dg);
+        this.setAbsoluteTolerance(gyroTOLERANCE);
+        this.setOutputRange(-1.0, 1.0);
+        this.setInputRange(-360.0, 360.0);
+        RobotMap.gyro.reset();
+        this.enable();
+    	
+    }
+    private double sensorFeedback(){
+    	double sensorReading = 0.0;
+    	if (DRIVE_MODE == ENCODER_MODE){
+    		sensorReading =  getAvgEncoderDistance();
+        	}else if (DRIVE_MODE == GYRO_MODE){
+        		sensorReading =  RobotMap.gyro.getAngle();
+        		
+        	}
+    	
+    	return sensorReading;
+    }
+    
+    private void applyPIDOutput(double d){
+    	if (DRIVE_MODE == ENCODER_MODE){
+    		RobotMap.robotDriveTrain.drive(d, 0);
+        	}else if (DRIVE_MODE == GYRO_MODE){
+        			RobotMap.robotDriveTrain.tankDrive(d/2, -d/2);
+        		}
+        		
+        	}
+    	
+    	
+  
     
 }
 
