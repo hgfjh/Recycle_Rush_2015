@@ -117,7 +117,7 @@ public class RobotMap {
 	public static CANTalon elevatorRightMotor = new CANTalon(5);
 	// Sensors
 	public static Encoder driveEncoderLeft = new Encoder(0, 1, true, EncodingType.k4X);
-    public static Gyro gyro = new Gyro(1);
+    public static Gyro gyro = new Gyro(0);
     public static Encoder driveEncoderRight = new Encoder(2,3, false, EncodingType.k4X);
     public static AnalogInput temperature = new AnalogInput(2);
     public static Encoder elevatorEncoder = new Encoder(4,5, true, EncodingType.k4X);
