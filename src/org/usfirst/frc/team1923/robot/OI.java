@@ -86,7 +86,6 @@ public class OI {
 
 		// Assign commands to buttons
 		a.whileHeld(new ElevatorUpCommand());
-		b.
 		// b.whileHeld(new ElevatorDownCommand());
 	}
 
