@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ElevatorBumpersCommand extends Command {
+	
+	private boolean leftBumper, rightBumper, a, b, x, y;
 
 	public ElevatorBumpersCommand() {
 		// Use requires() here to declare subsystem dependencies
@@ -24,17 +26,14 @@ public class ElevatorBumpersCommand extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		boolean rightBumper = Robot.oi.rB.get();
-		boolean leftBumper = Robot.oi.lB.get();
+		 rightBumper = Robot.oi.rB.get();
+		 leftBumper = Robot.oi.lB.get();
+		a = Robot.oi.a.get();
+		 b = Robot.oi.b.get();
+		 x = Robot.oi.x.get();
+		 y = Robot.oi.y.get();
 
-		if (rightBumper && !leftBumper
-				&& !RobotMap.elevatorBottomLimitSwitch.get()) {
-			Robot.elevatorSubsystem.moveElevatorDown(0.8);
-		} else if (!rightBumper && leftBumper) {
-			Robot.elevatorSubsystem.moveElevatorUp(0.8);
-		} else {
-			Robot.elevatorSubsystem.moveElevatorDown(0.0);
-		}
+		checkBumpers();
 
 	}
 
@@ -52,5 +51,32 @@ public class ElevatorBumpersCommand extends Command {
 	// subsystems is scheduled to run
 	protected void interrupted() {
 		Robot.elevatorSubsystem.moveElevatorDown(0.0);
+	}
+	
+	private void checkBumpers(){
+		if (rightBumper && !leftBumper
+				&& !RobotMap.elevatorBottomLimitSwitch.get()) {
+			Robot.elevatorSubsystem.moveElevatorDown(0.8);
+		} else if (!rightBumper && leftBumper) {
+			Robot.elevatorSubsystem.moveElevatorUp(0.8);
+		}
+		else {
+			Robot.elevatorSubsystem.moveElevatorDown(0.0);
+		}
+	}
+	
+	private void checkLetters(){
+		if(a && !b && !x && !y){
+			
+		}
+		else if(!a && b && !x && !y){
+			
+		}
+		else if(!a && !b && x && !y){
+	
+}
+		else if(!a && !b && !x && y){
+	
+}
 	}
 }

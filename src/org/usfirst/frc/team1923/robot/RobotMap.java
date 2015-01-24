@@ -97,6 +97,9 @@ public class RobotMap {
 	public static double DRIVE_DIST_2 = 10.0;
 	public static double DRIVE_DIST_3 = 20.0;
 	public static double DRIVE_DIST_4 = 30.0;
+	
+	public static final double ELEVATOR_UP_SPEED = 0.8;
+	public static final double ELEVATOR_DOWN_SPEED = 0.6;
 
 	// Compressor
 	public static Solenoid solenoid = new Solenoid(0);

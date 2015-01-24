@@ -9,6 +9,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class ElevatorSubsystem extends Subsystem {
 
+	private double acceleration = RobotMap.ELEVATOR_ACCELERATION;
+	private double velocity = RobotMap.ELEVATOR_INITIALVELOCITY;
+	private double maxVelocity = 0.8;
+	
 	public ElevatorSubsystem() {
 		RobotMap.elevatorEncoder.reset();
 		RobotMap.elevatorEncoder.setDistancePerPulse(1 / 256);
@@ -25,14 +29,22 @@ public class ElevatorSubsystem extends Subsystem {
 	public void moveElevatorUp(double speed) {
 		// disablePID();
 		// mode = MANUAL_MODE;
-		RobotMap.elevatorDrive.tankDrive(speed, speed);
+		if (velocity + acceleration < maxVelocity)
+			velocity += acceleration;
+		RobotMap.elevatorDrive.tankDrive(velocity, velocity);
 
 	}
 
 	public void moveElevatorDown(double speed) {
 		// disablePID();
 		// mode = MANUAL_MODE;
-		RobotMap.elevatorDrive.tankDrive(-speed, -speed);
+		if (velocity + acceleration < maxVelocity)
+			velocity += acceleration;
+		RobotMap.elevatorDrive.tankDrive(-velocity, -velocity);
 
+	}
+	
+	public void resetVelocity(){
+		this.velocity = RobotMap.ELEVATOR_INITIALVELOCITY;
 	}
 }

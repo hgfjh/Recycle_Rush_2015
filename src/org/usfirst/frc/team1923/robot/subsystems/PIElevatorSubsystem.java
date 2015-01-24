@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1923.robot.subsystems;
 
+import org.usfirst.frc.team1923.robot.Robot;
 import org.usfirst.frc.team1923.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -21,7 +22,7 @@ public class PIElevatorSubsystem extends PIDSubsystem {
 	private double timeOut = 2.0;
 	// Elevator Encoder
 	// private Encoder elevatorEncoder = RobotMap.elevatorEncoder;
-	private boolean elevatorHomePositionSet = false;
+	private boolean elevatorHomePositionSet = false;	
 
 	private static final double NUM_CLICKS = 256, // distance per pulse =
 													// 0.0491"/pulse
@@ -116,7 +117,6 @@ public class PIElevatorSubsystem extends PIDSubsystem {
 
 	public void moveElevatorUp(double speed) {
 		this.disable();
-		// if (! RobotMap.elevatorTopLimitSwitch.get()){
 		RobotMap.elevatorDrive.drive(speed, 0);
 		// }else{
 		// RobotMap.elevatorDrive.drive(0.0, 0.0);
@@ -126,7 +126,6 @@ public class PIElevatorSubsystem extends PIDSubsystem {
 
 	public void moveElevatorDown(double speed) {
 		this.disable();
-
 		// if (! RobotMap.elevatorBottomLimitSwitch.get()){
 		RobotMap.elevatorDrive.drive(-speed, 0);
 		// }else{
@@ -134,6 +133,7 @@ public class PIElevatorSubsystem extends PIDSubsystem {
 		// }
 
 	}
+	
 
 	public boolean reachedPosition() {
 		if (timer.get() > this.timeOut || this.onTarget()) {
@@ -187,5 +187,5 @@ public class PIElevatorSubsystem extends PIDSubsystem {
 	public boolean isElevatorHomePositionSet() {
 		return this.elevatorHomePositionSet;
 	}
-
+	
 }
