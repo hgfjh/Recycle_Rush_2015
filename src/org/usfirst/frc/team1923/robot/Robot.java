@@ -25,7 +25,7 @@ public class Robot extends IterativeRobot {
 	public static PIDriveTrainSubsystem driveTrainSubsystem = new PIDriveTrainSubsystem();
 	// public static Elevator elevator
 	public static PIElevatorSubsystem elevatorSubsystem = new PIElevatorSubsystem();
-	public CommandGroup autonomousCommand;
+	public Command autonomousCommand;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -41,7 +41,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(driveTrainSubsystem);
 		SmartDashboard.putData(elevatorSubsystem);
 		addCommandsToDashboard();
-		autonomousCommand = new AutonNoBins();
+		autonomousCommand = new DriveDistanceCommand(0.4, 10);
 		//teleopCommand = new TeleopElevatorBumpers();
 
 	}
