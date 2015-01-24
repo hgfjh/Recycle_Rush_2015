@@ -9,35 +9,36 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class MoveElevatorDownForTimeCommand extends Command {
 	private double timeOut;
-    public MoveElevatorDownForTimeCommand(double timeOut) {
-        // Use requires() here to declare subsystem dependencies
-        requires(Robot.elevatorSubsystem);
-        this.timeOut = timeOut;
-    }
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    	setTimeout(this.timeOut);
-    }
+	public MoveElevatorDownForTimeCommand(double timeOut) {
+		// Use requires() here to declare subsystem dependencies
+		requires(Robot.elevatorSubsystem);
+		this.timeOut = timeOut;
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	Robot.elevatorSubsystem.moveElevatorDown(0.5);
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
+		setTimeout(this.timeOut);
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return isTimedOut();
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+		Robot.elevatorSubsystem.moveElevatorDown(0.5);
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    	Robot.elevatorSubsystem.elevatorStop();
-    }
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return isTimedOut();
+	}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    	end();
-    }
+	// Called once after isFinished returns true
+	protected void end() {
+		Robot.elevatorSubsystem.elevatorStop();
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+		end();
+	}
 }
