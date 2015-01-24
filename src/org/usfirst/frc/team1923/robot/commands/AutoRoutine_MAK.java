@@ -1,6 +1,8 @@
 package org.usfirst.frc.team1923.robot.commands;
 
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
  *
@@ -25,9 +27,9 @@ public class AutoRoutine_MAK extends CommandGroup {
 		// a CommandGroup containing them would require both the chassis and the
 		// arm.
 		addParallel(new MoveElevatorToPositionCommand(20, 3));
-		addSequential(new WaitHalfSecond()); // Replace with Grab Tote
-		addSequential(new WaitHalfSecond()); // Replace with Elevate Tote
-		addSequential(new TurnLeft90());
+		addSequential(new WaitCommand(0.2)); // Replace with Grab Tote
+		addSequential(new WaitCommand(0.5)); // Replace with Elevate Tote
+		addSequential(new TurnToHeading(-90.0,5.0));
 		addSequential(new ArcRight180());
 		addSequential(new TurnLeft90());
 		addSequential(new MoveForwardOneSecond()); // Replace with Put Tote on

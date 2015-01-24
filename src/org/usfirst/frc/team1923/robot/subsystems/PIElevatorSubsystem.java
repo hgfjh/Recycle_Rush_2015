@@ -58,7 +58,7 @@ public class PIElevatorSubsystem extends PIDSubsystem {
 		// Homing Elevator
 		this.elevatorHomePositionSet = false;
 		// Comment line below once bottom limit switch installed
-		this.setElevatorReferance();
+		//this.setElevatorReferance();
 
 		// Live Window
 		// LiveWindow.addSensor("ElevatorSubsystem", "Elevator Encoder",

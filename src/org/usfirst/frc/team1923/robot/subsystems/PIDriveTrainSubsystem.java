@@ -233,9 +233,16 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 		if (DRIVE_MODE == ENCODER_MODE) {
 			RobotMap.robotDriveTrain.drive(d, 0);
 		} else if (DRIVE_MODE == GYRO_MODE) {
-			RobotMap.robotDriveTrain.tankDrive(d / 2, -d / 2);
+			RobotMap.robotDriveTrain.tankDrive(d / 2.0, -d / 2.0);
 		}
 
 	}
+	public void arcDrive(double speed,double curve){
+	RobotMap.robotDriveTrain.drive(speed, curve);
+	}
+	
+	
+	
 
+	
 }
