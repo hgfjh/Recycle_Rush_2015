@@ -11,7 +11,11 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ElevatorDownCommand extends Command {
-
+	
+	private double acceleration = 0.01;
+	private double velocity = 0.4;
+	private double maxVelocity = 0.8;
+	
     public ElevatorDownCommand() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.elevatorSubsystem);
@@ -26,7 +30,9 @@ public class ElevatorDownCommand extends Command {
     	if(RobotMap.elevatorBottomLimitSwitch.get()){
         	Robot.elevatorSubsystem.moveElevatorDown(0.0);
     	} else {
-        	Robot.elevatorSubsystem.moveElevatorDown(0.8);    		
+        	if(velocity + acceleration < maxVelocity)
+        		velocity += acceleration;
+        	Robot.elevatorSubsystem.moveElevatorDown(velocity);  		
     	}
     }
 
