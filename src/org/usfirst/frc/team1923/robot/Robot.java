@@ -1,17 +1,7 @@
 package org.usfirst.frc.team1923.robot;
 
-import org.usfirst.frc.team1923.robot.commands.AutonEvadeBins;
-import org.usfirst.frc.team1923.robot.commands.DriveDistanceCommand;
-import org.usfirst.frc.team1923.robot.commands.DriveForwardCommand;
-import org.usfirst.frc.team1923.robot.commands.DriveWithJoyStickCommand;
-import org.usfirst.frc.team1923.robot.commands.AutonNoBins;
-import org.usfirst.frc.team1923.robot.commands.ElevatorSetHomeCommand;
-import org.usfirst.frc.team1923.robot.commands.MoveElevatorToPositionCommand;
-import org.usfirst.frc.team1923.robot.commands.TeleopElevatorBumpers;
-import org.usfirst.frc.team1923.robot.subsystems.DriveTrainSubsystem;
-import org.usfirst.frc.team1923.robot.subsystems.ElevatorSubsystem;
-import org.usfirst.frc.team1923.robot.subsystems.PIDriveTrainSubsystem;
-import org.usfirst.frc.team1923.robot.subsystems.PIElevatorSubsystem;
+import org.usfirst.frc.team1923.robot.commands.*;
+import org.usfirst.frc.team1923.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -36,7 +26,6 @@ public class Robot extends IterativeRobot {
 	// public static Elevator elevator
 	public static PIElevatorSubsystem elevatorSubsystem = new PIElevatorSubsystem();
 	public CommandGroup autonomousCommand;
-	public CommandGroup teleopCommand;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -53,7 +42,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(elevatorSubsystem);
 		addCommandsToDashboard();
 		autonomousCommand = new AutonNoBins();
-		teleopCommand = new TeleopElevatorBumpers();
+		//teleopCommand = new TeleopElevatorBumpers();
 
 	}
 
@@ -82,8 +71,7 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-		if (teleopCommand != null)
-			teleopCommand.start();
+		
 	}
 
 	/**
@@ -120,6 +108,7 @@ public class Robot extends IterativeRobot {
 				driveTrainSubsystem.getRightEncoderDistance());
 		SmartDashboard.putNumber("Elevator Position",
 				elevatorSubsystem.getElevatorEncoderPosition());
+		
 	}
 
 	public void addCommandsToDashboard() {
