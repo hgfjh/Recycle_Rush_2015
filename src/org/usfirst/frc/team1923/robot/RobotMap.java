@@ -112,9 +112,10 @@ public class RobotMap {
 				RobotMap.driveEncoderLeft);
 		LiveWindow.addSensor("DriveTrainSubsystem", "Right Encoder",
 				RobotMap.driveEncoderRight);
-		// LiveWindow.addSensor("DriveTrainSubsystem", "Gyro", RobotMap.gyro);
+		LiveWindow.addSensor("DriveTrainSubsystem", "Gyro", RobotMap.gyro);
 		LiveWindow.addSensor("ElevatorSubsystem", "Elevator Encoder",
 				RobotMap.elevatorEncoder);
+
 
 	}
 

@@ -88,7 +88,7 @@ public class OI {
 		x.whileHeld(new ElevatorSetHomeCommand());
 		a.whileHeld(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_2 , 5.0));
 		b.whileHeld(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_3 , 5.0));
-		y.whileHeld(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_2 , 5.0));
+		y.whileHeld(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_4 , 5.0));
 		lB.whileHeld(new ElevatorDownCommand());
 		rB.whileHeld(new ElevatorUpCommand());
 	}

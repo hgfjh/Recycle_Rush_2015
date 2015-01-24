@@ -25,7 +25,7 @@ public class Robot extends IterativeRobot {
 	public static PIDriveTrainSubsystem driveTrainSubsystem = new PIDriveTrainSubsystem();
 	// public static Elevator elevator
 	public static PIElevatorSubsystem elevatorSubsystem = new PIElevatorSubsystem();
-	public Command autonomousCommand;
+	public Command autonomousCommand, teleopCommand;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -42,7 +42,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(elevatorSubsystem);
 		addCommandsToDashboard();
 		autonomousCommand = new DriveDistanceCommand(0.4, 10);
-		//teleopCommand = new TeleopElevatorBumpers();
+		teleopCommand = new DriveWithJoyStickCommand();
 
 	}
 
@@ -71,6 +71,8 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+			
+		teleopCommand.start();
 		
 	}
 
@@ -106,7 +108,9 @@ public class Robot extends IterativeRobot {
 				driveTrainSubsystem.getRightEncoderDistance());
 		SmartDashboard.putNumber("Elevator Position",
 				elevatorSubsystem.getElevatorEncoderPosition());
-		
+		SmartDashboard.putNumber("Gyro",
+				RobotMap.gyro.getAngle());
+		  
 	}
 
 	public void addCommandsToDashboard() {
