@@ -79,25 +79,17 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 	// Manual Drive
 	public void manualDrive(double x, double y) {
 		this.disable();
-		// RobotMap.robotDriveTrain.tankDrive(x, y);
-		RobotMap.robotDriveTrain.tankDrive(x, y, true);
+		// smoothDrive(x, y);
+		smoothDrive(x, y);
 
 	}
 
-	public void coalesceLeft(double left) {
-		if (left < cLeft - 0.02) {
-			cLeft = cLeft - 0.02;
-		} else if (left > cLeft + 0.02) {
-			cLeft = cLeft + 0.02;
-		} else {
-			cLeft = left;
-		}
-	}
+	
 
 	// Stop
 	public void stop() {
 		this.disable();
-		RobotMap.robotDriveTrain.tankDrive(0.0, 0.0);
+		smoothDrive(0.0, 0.0);
 	}
 
 	// Drive Stright Distance Using Encoder
@@ -231,18 +223,61 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 
 	private void applyPIDOutput(double d) {
 		if (DRIVE_MODE == ENCODER_MODE) {
-			RobotMap.robotDriveTrain.drive(d, 0);
+			smoothDrive(d, d);
 		} else if (DRIVE_MODE == GYRO_MODE) {
-			RobotMap.robotDriveTrain.tankDrive(d / 2.0, -d / 2.0);
+			smoothDrive(d / 2.0, -d / 2.0);
 		}
 
 	}
 	public void arcDrive(double speed,double curve){
-	RobotMap.robotDriveTrain.drive(speed, curve);
+		//TODO
+		//smoothDrive(speed, speed);
+	}
+
+	public void coalesceLeft(double left) {
+		if (left < cLeft - 0.02) {
+			cLeft = cLeft - 0.02;
+		} else if (left > cLeft + 0.02) {
+			cLeft = cLeft + 0.02;
+		} else {
+			cLeft = left;
+		}
+	}
+	public void coalesceRight(double right) {
+		if (right < cRight - 0.02) {
+			cRight = cRight - 0.02; }
+		else if (right > cRight + 0.02) {
+			cRight = cRight + 0.02;
+		} else {
+			cRight = right;
+		}
 	}
 	
+	public double getCoalLeft(){
+		return cLeft;
+	}
 	
+	public double getCoalRight(){
+		return cRight;
+	}
 	
-
+	public void smoothDrive(double left, double right){
+		coalesceLeft(left);
+		coalesceRight(right);
+		
+		RobotMap.robotDriveTrain.tankDrive(cLeft, cRight, true);
+	}
 	
+	public double getRobotHeading(){
+		return RobotMap.gyro.getAngle();
+	}
+	
+	public void resetBothEncoders(){
+		RobotMap.driveEncoderLeft.reset();
+		RobotMap.driveEncoderRight.reset();
+	}
+	
+	public void resetGyro(){
+		RobotMap.gyro.reset();
+	}
 }

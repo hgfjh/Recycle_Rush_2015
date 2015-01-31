@@ -78,16 +78,21 @@ public class XboxController extends Joystick {
 		public static final int kBack_val = 7;
 		public static final int kLeftClick_val = 9;
 		public static final int kRightClick_val = 10;
+		public static final int kLT_val = 11;
+		public static final int kRT_val = 12;
 		public static final Button A = new Button(kA_val);
 		public static final Button B = new Button(kB_val);
 		public static final Button X = new Button(kX_val);
 		public static final Button Y = new Button(kY_val);
 		public static final Button LB = new Button(kLB_val);
 		public static final Button RB = new Button(kRB_val);
+		public static final Button LT = new Button(kLT_val);
+		public static final Button RT = new Button(kRT_val);
 		public static final Button Start = new Button(kStart_val);
 		public static final Button Back = new Button(kBack_val);
 		public static final Button LeftClick = new Button(kLeftClick_val);
 		public static final Button RightClick = new Button(kRightClick_val);
+	
 
 		private Button(int value) { // Value inputed is equal to value in Button
 									// class

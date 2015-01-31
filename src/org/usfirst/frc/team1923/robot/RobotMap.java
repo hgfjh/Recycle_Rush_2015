@@ -25,11 +25,9 @@ public class RobotMap {
 	// public static int rangefinderModule = 1;
 	// Constants
 	public static double ELEVATOR_POSITION_1 = 0.0;
-	public static double ELEVATOR_POSITION_2 = 12.0;
-	public static double ELEVATOR_POSITION_3 = 24.0;
-	public static double ELEVATOR_POSITION_4 = 36.0;
-	public static double ELEVATOR_POSITION_5 = 12.0;
-	public static double ELEVATOR_POSITION_6 = 24.0;
+	public static double ELEVATOR_POSITION_2 = 16;
+	public static double ELEVATOR_POSITION_3 = 32.0;
+	public static double ELEVATOR_POSITION_4 = 49.0;
 
 	public static double DRIVE_DIST_1 = 0.0;
 	public static double DRIVE_DIST_2 = 10.0;
@@ -40,8 +38,8 @@ public class RobotMap {
 	public static final double ELEVATOR_DOWN_SPEED = 0.6;
 
 	// Compressor
-	public static Solenoid solenoid = new Solenoid(0);
-	public static Compressor compressor = new Compressor(0);
+	//public static Solenoid solenoid = new Solenoid(0);
+	//public static Compressor compressor = new Compressor(0);
 
 	// Drive Train Talon SRX
 	public static CANTalon frontLeftDrive = new CANTalon(0);
@@ -87,7 +85,7 @@ public class RobotMap {
 
 	// Robot system initialization
 	public static void init() {
-		compressor.setClosedLoopControl(true);
+		//compressor.setClosedLoopControl(true);
 		gyro.reset();
 		driveEncoderLeft.reset();
 		driveEncoderRight.reset();

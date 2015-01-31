@@ -21,11 +21,13 @@ public class Robot extends IterativeRobot {
 
 	// public static final ExampleSubsystem exampleSubsystem = new
 	// ExampleSubsystem();
-	public static OI oi;
+
 	public static PIDriveTrainSubsystem driveTrainSubsystem = new PIDriveTrainSubsystem();
 	// public static Elevator elevator
 	public static PIElevatorSubsystem elevatorSubsystem = new PIElevatorSubsystem();
-	public Command autonomousCommand, teleopCommand;
+	public static OI oi;
+	public CommandGroup autonomousCommand;
+	public CommandGroup teleopCommand;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -41,8 +43,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(driveTrainSubsystem);
 		SmartDashboard.putData(elevatorSubsystem);
 		addCommandsToDashboard();
-		autonomousCommand = new DriveDistanceCommand(0.4, 10);
-		teleopCommand = new DriveWithJoyStickCommand();
+		autonomousCommand = new AutonNoBins();
 
 	}
 
@@ -51,6 +52,8 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousInit() {
+		driveTrainSubsystem.cLeft = 0;
+		driveTrainSubsystem.cRight = 0;
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
@@ -69,11 +72,15 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		// Assign commands to buttons
+		driveTrainSubsystem.cLeft = 0;
+		driveTrainSubsystem.cRight = 0;
+
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-			
-		teleopCommand.start();
-		
+		if (teleopCommand != null)
+			teleopCommand.start();
+
 	}
 
 	/**
@@ -81,8 +88,12 @@ public class Robot extends IterativeRobot {
 	 * to reset subsystems before shutting down.
 	 */
 	public void disabledInit() {
+		driveTrainSubsystem.cLeft = 0;
+		driveTrainSubsystem.cRight = 0;
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+		if (teleopCommand != null)
+			teleopCommand.cancel();
 	}
 
 	/**
@@ -108,9 +119,12 @@ public class Robot extends IterativeRobot {
 				driveTrainSubsystem.getRightEncoderDistance());
 		SmartDashboard.putNumber("Elevator Position",
 				elevatorSubsystem.getElevatorEncoderPosition());
-		SmartDashboard.putNumber("Gyro",
-				RobotMap.gyro.getAngle());
-		  
+		SmartDashboard.putNumber("Gyro", driveTrainSubsystem.getRobotHeading());
+		SmartDashboard.putNumber("Coal Left", 
+				driveTrainSubsystem.getCoalLeft());
+		SmartDashboard.putNumber("Coal Right",
+				driveTrainSubsystem.getCoalRight());
+
 	}
 
 	public void addCommandsToDashboard() {
@@ -132,6 +146,14 @@ public class Robot extends IterativeRobot {
 						5.0));
 		SmartDashboard.putData("Set Up Home Position",
 				new ElevatorSetHomeCommand());
+		SmartDashboard.putData("Drive Distance DRIVE_DIST_1",
+				new DriveDistanceCommand(RobotMap.DRIVE_DIST_1, 5.0));
+		SmartDashboard.putData("Drive Distance DRIVE_DIST_2",
+				new DriveDistanceCommand(RobotMap.DRIVE_DIST_2, 5.0));
+		SmartDashboard.putData("Drive Distance DRIVE_DIST_3",
+				new DriveDistanceCommand(RobotMap.DRIVE_DIST_3, 5.0));
+		SmartDashboard.putData("Drive Distance DRIVE_DIST_4",
+				new DriveDistanceCommand(RobotMap.DRIVE_DIST_4, 5.0));
 
 	}
 

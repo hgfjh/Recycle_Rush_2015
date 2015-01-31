@@ -29,7 +29,7 @@ public class PIElevatorSubsystem extends PIDSubsystem {
 			GEAR_RATIO = 1.0 / 1.0, WHEEL_CIRCUMFERENCE = 6.0, // 4 inches
 																// wheels
 			kp = 0.3, ki = 0.0, kd = 0.0, // LEAVE THESE CONSTANTS ALONE!
-			PID_LOOP_TIME = .05, encoderTOLERANCE = 0.1; // +/- 2" tolarance
+			PID_LOOP_TIME = .05, encoderTOLERANCE = 0.5; // +/- 2" tolarance
 
 	public PIElevatorSubsystem() {
 		super(kp, ki, kd);

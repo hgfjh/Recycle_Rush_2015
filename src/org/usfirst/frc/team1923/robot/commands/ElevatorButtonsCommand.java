@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveWithJoyStickCommand extends Command {
-
-	public DriveWithJoyStickCommand() {
+public class ElevatorButtonsCommand extends Command {
+	private int lastPressed = -1;
+	public ElevatorButtonsCommand() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.driveTrainSubsystem);
@@ -23,16 +23,28 @@ public class DriveWithJoyStickCommand extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		boolean rightTrigger = Robot.oi.rightStick.getTrigger();
-		boolean leftTrigger = Robot.oi.leftStick.getTrigger();
-		if (rightTrigger && leftTrigger) {
-			Robot.driveTrainSubsystem.manualDrive(-Robot.oi.leftStick.getY() / 2,
-					-Robot.oi.rightStick.getY() / 2);
-		} else {
-			Robot.driveTrainSubsystem.manualDrive(
-					-Robot.oi.leftStick.getY(),
-					-Robot.oi.rightStick.getY());
+
+		boolean button1 = Robot.oi.start.get();
+		boolean button2 = Robot.oi.x.get();
+		boolean button3 = Robot.oi.a.get();
+		boolean button4 = Robot.oi.b.get();
+		boolean button5 = Robot.oi.y.get();
+
+		if((lastPressed > 1 || lastPressed == -1) && button1) {
+			lastPressed = 1;
+		} else if((lastPressed > 2 || lastPressed == -1) && button2) {
+			lastPressed = 2;
+
+			//Robot.elevatorSubsystem.moveElevatorToPosition(position, timeOut);
+		} else if((lastPressed > 3 || lastPressed == -1) && button3) {
+			lastPressed = 3;
+		} else if((lastPressed > 4 || lastPressed == -1) && button4) {
+			lastPressed = 4;
+		} else if((lastPressed > 5 || lastPressed == -1) && button5) {
+			lastPressed = 5;
 		}
+		
+		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
