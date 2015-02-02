@@ -44,6 +44,6 @@ public class TurnToHeading extends Command {
 	// subsystems is scheduled to run
 	protected void interrupted() {
 		// Robot.elevatorSubsystem.elevatorStop();
-		Robot.driveTrainSubsystem.stop();
+		end();
 	}
 }

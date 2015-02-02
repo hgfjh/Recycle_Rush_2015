@@ -13,7 +13,7 @@ public class MoveElevatorDownForTimeCommand extends Command {
 	public MoveElevatorDownForTimeCommand(double timeOut) {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.elevatorSubsystem);
-		this.timeOut = timeOut;
+		timeOut = timeOut;
 	}
 
 	// Called just before this Command runs the first time
