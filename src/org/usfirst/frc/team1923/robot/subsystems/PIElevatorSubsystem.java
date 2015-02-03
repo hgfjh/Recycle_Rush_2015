@@ -40,8 +40,7 @@ public class PIElevatorSubsystem extends PIDSubsystem {
 	public void init() {
 
 		// Set distance per pulse for each encoder
-		RobotMap.elevatorEncoder.setDistancePerPulse(GEAR_RATIO
-				* WHEEL_CIRCUMFERENCE / NUM_CLICKS);
+		RobotMap.elevatorEncoder.setDistancePerPulse(GEAR_RATIO * WHEEL_CIRCUMFERENCE / NUM_CLICKS);
 		// Set PID source parameter to Distance...
 		// RobotMap.elevatorEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
 
@@ -147,7 +146,7 @@ public class PIElevatorSubsystem extends PIDSubsystem {
 
 	}
 
-	public void elevatorStop() {
+	public void stop() {
 		this.disable();
 		RobotMap.elevatorDrive.drive(0.0, 0.0);
 	}
@@ -177,13 +176,6 @@ public class PIElevatorSubsystem extends PIDSubsystem {
 
 	}
 
-	/*
-	 * private void moveElevator(double speed){
-	 * RobotMap.elevatorLeftMotor.set(speed);
-	 * RobotMap.elevatorRightMotor.set(speed);
-	 * 
-	 * }
-	 */
 	public boolean isElevatorHomePositionSet() {
 		return this.elevatorHomePositionSet;
 	}

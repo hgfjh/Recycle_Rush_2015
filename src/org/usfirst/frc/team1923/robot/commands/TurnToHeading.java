@@ -20,7 +20,6 @@ public class TurnToHeading extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		// Robot.elevatorSubsystem.moveElevatorToPosition(position, timeOut);
 		Robot.driveTrainSubsystem.turnRobotHeading(angle, timeOut);
 	}
 
@@ -30,20 +29,17 @@ public class TurnToHeading extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		// return Robot.elevatorSubsystem.reachedPosition();
 		return Robot.driveTrainSubsystem.reachedTarget();
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
-		// Robot.elevatorSubsystem.elevatorStop();
 		Robot.driveTrainSubsystem.stop();
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
-		// Robot.elevatorSubsystem.elevatorStop();
 		end();
 	}
 }
