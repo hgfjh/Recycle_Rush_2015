@@ -38,12 +38,12 @@ public class ElevatorButtonsCommand extends Command {
 
 		if(button1){
 			if(lastPressed != 1){
-				Robot.elevatorSubsystem.elevatorStop();
+				Robot.elevatorSubsystem.stop();
 				lastPressed = 1;
 			}
 		} else if(button2){
 			if(lastPressed != 2){
-				Robot.elevatorSubsystem.elevatorStop();
+				Robot.elevatorSubsystem.stop();
 				lastPressed = 2;
 
 				this.position = RobotMap.ELEVATOR_POSITION_1;
@@ -52,7 +52,7 @@ public class ElevatorButtonsCommand extends Command {
 			}
 		} else if(button3){
 			if(lastPressed != 3){
-				Robot.elevatorSubsystem.elevatorStop();
+				Robot.elevatorSubsystem.stop();
 				lastPressed = 3;
 
 				this.position = RobotMap.ELEVATOR_POSITION_2;
@@ -62,7 +62,7 @@ public class ElevatorButtonsCommand extends Command {
 			}
 		} else if(button4){
 			if(lastPressed != 4){
-				Robot.elevatorSubsystem.elevatorStop();
+				Robot.elevatorSubsystem.stop();
 				lastPressed = 4;
 				
 				this.position = RobotMap.ELEVATOR_POSITION_3;
@@ -71,7 +71,7 @@ public class ElevatorButtonsCommand extends Command {
 			}
 		} else if(button5){
 			if(lastPressed != 5){
-				Robot.elevatorSubsystem.elevatorStop();
+				Robot.elevatorSubsystem.stop();
 				lastPressed = 5;				
 
 				this.position = RobotMap.ELEVATOR_POSITION_4;
@@ -83,11 +83,11 @@ public class ElevatorButtonsCommand extends Command {
 		
 		if (button6){
 			if (RobotMap.elevatorBottomLimitSwitch.get()) {
-				Robot.elevatorSubsystem.elevatorStop();
+				Robot.elevatorSubsystem.stop();
 				Robot.elevatorSubsystem.setElevatorReferance();
 				lastPressed= -1;
 			} else if ( RobotMap.elevatorEncoder.getDistance()<=1) {
-				Robot.elevatorSubsystem.elevatorStop();
+				Robot.elevatorSubsystem.stop();
 				lastPressed= -1;
 				
 			} else {
@@ -97,7 +97,7 @@ public class ElevatorButtonsCommand extends Command {
 				Robot.elevatorSubsystem.moveElevatorUp(0.7);
 		} else if(lastPressed==1){
 			if (RobotMap.elevatorBottomLimitSwitch.get()) {
-				Robot.elevatorSubsystem.elevatorStop();
+				Robot.elevatorSubsystem.stop();
 				Robot.elevatorSubsystem.setElevatorReferance();
 				lastPressed= -1;
 			} else {
@@ -105,7 +105,7 @@ public class ElevatorButtonsCommand extends Command {
 			}
 		} else if(lastPressed==2 || lastPressed==3 || lastPressed==4 || lastPressed==5){
 			if(Robot.elevatorSubsystem.reachedPosition()){
-				Robot.elevatorSubsystem.elevatorStop();
+				Robot.elevatorSubsystem.stop();
 				lastPressed= -1;
 			}
 		}
@@ -119,12 +119,12 @@ public class ElevatorButtonsCommand extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.elevatorSubsystem.elevatorStop();
+		Robot.driveTrainSubsystem.stop();
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
-		Robot.elevatorSubsystem.elevatorStop();
+		end();
 	}
 }

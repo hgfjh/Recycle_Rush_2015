@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveBackwardForArcCommand extends Command {
 
-	private Timer timer = new Timer();
+	private Timer timer;
 
 	private double speed = 0.4;
 
@@ -22,9 +22,7 @@ public class DriveBackwardForArcCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		timer.stop();
-		timer.reset();
-		timer.start();
+		timer = new Timer();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -48,13 +46,12 @@ public class DriveBackwardForArcCommand extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		timer.stop();
-		Robot.driveTrainSubsystem.manualDrive(0, 0);
+		Robot.driveTrainSubsystem.stop();
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
-		timer.stop();
-		Robot.driveTrainSubsystem.manualDrive(0, 0);
+		end();
 	}
 }

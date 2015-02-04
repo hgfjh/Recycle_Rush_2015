@@ -33,7 +33,7 @@ public class MoveElevatorUpForTimeCommand extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.elevatorSubsystem.elevatorStop();
+		Robot.elevatorSubsystem.stop();
 	}
 
 	// Called when another command which requires one or more of the same

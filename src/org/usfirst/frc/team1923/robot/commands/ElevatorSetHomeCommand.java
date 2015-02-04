@@ -37,11 +37,13 @@ public class ElevatorSetHomeCommand extends Command {
 	protected void end() {
 		Robot.elevatorSubsystem.moveElevatorDown(0.0);
 		Robot.elevatorSubsystem.setElevatorReferance();
+		Robot.elevatorSubsystem.stop();
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
 		Robot.elevatorSubsystem.moveElevatorDown(0.0);
+		Robot.elevatorSubsystem.stop();
 	}
 }

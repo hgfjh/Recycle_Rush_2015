@@ -34,21 +34,24 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 	private double SMOOTH_CORRECT = 0.3;
 	private double SMOOTH_THRESHHOLD = 0.3;
 
+
 	// Drive Wheel Encoders
 	// private Encoder driveEncoderLeft = RobotMap.driveEncoderLeft;
 	// private Encoder driveEncoderRight = RobotMap.driveEncoderRight;
 	// gyro.
 	// private Gyro gyro = RobotMap.gyro;
 
-	private static final double NUM_CLICKS = 256, // distance per pulse =
-													// 0.0491"/pulse
-			GEAR_RATIO = 1.0 / 1.0, WHEEL_CIRCUMFERENCE = 13.25, // 4 inches
-																	// wheels
-			Pg = 0.1, Ig = 0.000, Dg = 0.0, // LEAVE THESE CONSTANTS ALONE!
-			Pe = 0.022, Ie = 0.0005, De = 0.5, // LEAVE THESE CONSTANTS ALONE!
-			PID_LOOP_TIME = .05, gyroTOLERANCE = 0.3, // 0.2778% error ~= 0.5
-														// degrees...?
-			encoderTOLERANCE = 2.0; // +/- 2" tolerance
+	private static final double NUM_CLICKS = 256, // distance per pulse = 0.0491"/pulse
+			GEAR_RATIO = 1.0 / 1.0, 
+			WHEEL_CIRCUMFERENCE = 12.56, // 4 inches wheels
+			
+			//LEAVE THESE CONSTANTS ALONE!
+			Pg = 0.1, 	Ig = 0.005,	 Dg = 0.0,
+			Pe = 0.5, 	Ie = 0.01,	 De = 0.0, 
+			
+			PID_LOOP_TIME = .05,
+			gyroTOLERANCE = 0.3, // 0.2778% error ~= 0.5 degrees...?
+			encoderTOLERANCE = 2.0; // +/- 2" tolarance
 
 	private static final int MANUAL_MODE = 1, ENCODER_MODE = 2, GYRO_MODE = 3;
 
@@ -56,10 +59,8 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 		super(Pe, Ie, De);
 		// TODO
 		// Set distance per pulse for each encoder
-		RobotMap.driveEncoderLeft.setDistancePerPulse(GEAR_RATIO
-				* WHEEL_CIRCUMFERENCE / NUM_CLICKS);
-		RobotMap.driveEncoderRight.setDistancePerPulse(GEAR_RATIO
-				* WHEEL_CIRCUMFERENCE / NUM_CLICKS);
+		RobotMap.driveEncoderLeft.setDistancePerPulse(GEAR_RATIO * WHEEL_CIRCUMFERENCE / NUM_CLICKS);
+		RobotMap.driveEncoderRight.setDistancePerPulse(GEAR_RATIO * WHEEL_CIRCUMFERENCE / NUM_CLICKS);
 		this.getPIDController().setPID(Pe, Ie, De);
 		this.setAbsoluteTolerance(encoderTOLERANCE);
 		this.setOutputRange(-1.0, 1.0);
@@ -70,8 +71,6 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 
 		// Timer
 		timer = new Timer();
-		timer.reset();
-		timer.stop();
 
 	}
 
@@ -84,9 +83,7 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 	// Manual Drive
 	public void manualDrive(double x, double y) {
 		this.disable();
-		// smoothDrive(x, y);
 		smoothDrive(x, y);
-
 	}
 
 	// Stop
@@ -102,6 +99,7 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 		// TODO
 		resetGyro();
 		resetBothEncoders();
+		
 		setSetpoint(dist);
 		setEncoderPID();
 
@@ -240,41 +238,24 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 		// smoothDrive(speed, speed);
 	}
 
-	public void coalesceLeft(double left) {
-		
-		//left += getSpeedDiff() * SMOOTH_CORRECT;
-		if(left > 1){
-			left = 1;
-		} else if(left < -1){
-			left = -1;
-		}
-		 
-		if (left < cLeft - SMOOTH_VALUE) {
-			cLeft = cLeft - SMOOTH_VALUE;
-		} else if (left > cLeft + SMOOTH_VALUE) {
-			cLeft = cLeft + SMOOTH_VALUE;
+	/**
+	 * Coalesces the given current number to match the old number
+	 * @param current the current number given from the input
+	 * @param old the previous input
+	 * @return the coalesced number
+	 */
+	private double coalesce(double current, double old) {
+		if (current < old - SMOOTH_VALUE) {
+			old = old - SMOOTH_VALUE;
+		} else if (current > old + SMOOTH_VALUE) {
+			old = old + SMOOTH_VALUE;
 		} else {
-			cLeft = left;
+			old = current;
 		}
-	}
+	
 
-	public void coalesceRight(double right) {
 
-		//right -= getSpeedDiff() * SMOOTH_CORRECT;
-		
-		if(right > 1){
-			right = 1;
-		} else if(right < -1){
-			right = -1;
-		}
-		 
-		if (right < cRight - SMOOTH_VALUE) {
-			cRight = cRight - SMOOTH_VALUE;
-		} else if (right > cRight + SMOOTH_VALUE) {
-			cRight = cRight + SMOOTH_VALUE;
-		} else {
-			cRight = right;
-		}
+		return old;
 	}
 
 	public double getCoalLeft() {
@@ -285,11 +266,12 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 		return cRight;
 	}
 
-	public void smoothDrive(double left, double right) {
-		coalesceLeft(left);
-		coalesceRight(right);
-		double correctionRate = 1;
-		
+	
+	public void smoothDrive(double left, double right){
+		cLeft = coalesce(left, cLeft);
+		cRight = coalesce(right, cRight);
+		double correctionRate;
+
 		if((left + right)/2>0){
 			correctionRate = 1.046 + 0.008 *(1-(left + right)/2);
 		} else if((left + right)/2>-0.5){
@@ -305,6 +287,7 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 		}
 		//cLeft = left;
 		//cRight = right;
+
 		RobotMap.robotDriveTrain.tankDrive(cLeft, cRight, false);
 	}
 
