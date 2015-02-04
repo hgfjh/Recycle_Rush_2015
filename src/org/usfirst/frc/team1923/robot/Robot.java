@@ -44,7 +44,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(elevatorSubsystem);
 		addCommandsToDashboard();
 		autonomousCommand = new AutonNoBins();
-
+		teleopCommand = new TeleopCommand();
 	}
 
 	public void disabledPeriodic() {
@@ -124,6 +124,8 @@ public class Robot extends IterativeRobot {
 				driveTrainSubsystem.getCoalLeft());
 		SmartDashboard.putNumber("Coal Right",
 				driveTrainSubsystem.getCoalRight());
+		SmartDashboard.putNumber("Encoder Speed Diff", driveTrainSubsystem.getSpeedDiff());
+		SmartDashboard.putBoolean("Elevator Bottom Limit Switch", RobotMap.elevatorBottomLimitSwitch.get());
 
 	}
 
@@ -146,14 +148,19 @@ public class Robot extends IterativeRobot {
 						5.0));
 		SmartDashboard.putData("Set Up Home Position",
 				new ElevatorSetHomeCommand());
-		SmartDashboard.putData("Drive Distance DRIVE_DIST_1",
-				new DriveDistanceCommand(RobotMap.DRIVE_DIST_1, 5.0));
-		SmartDashboard.putData("Drive Distance DRIVE_DIST_2",
-				new DriveDistanceCommand(RobotMap.DRIVE_DIST_2, 5.0));
-		SmartDashboard.putData("Drive Distance DRIVE_DIST_3",
-				new DriveDistanceCommand(RobotMap.DRIVE_DIST_3, 5.0));
-		SmartDashboard.putData("Drive Distance DRIVE_DIST_4",
-				new DriveDistanceCommand(RobotMap.DRIVE_DIST_4, 5.0));
+
+		SmartDashboard.putData("Drive Distance DIST_TO_PICK_UP_TOTE",
+				new DriveDistanceCommand(RobotMap.DIST_TO_PICK_UP_TOTE, 5.0));
+		SmartDashboard.putData("Drive Distance DIST_TO_NEXT_TOTE",
+				new DriveDistanceCommand(RobotMap.DIST_TO_NEXT_TOTE, 5.0));
+		SmartDashboard.putData("Drive Distance DIST_TO_AUTON_ZONE",
+				new DriveDistanceCommand(RobotMap.DIST_TO_AUTON_ZONE, 5.0));
+		SmartDashboard.putData("Drive Distance -DIST_TO_PICK_UP_TOTE",
+				new DriveDistanceCommand(-RobotMap.DIST_TO_PICK_UP_TOTE, 5.0));
+		SmartDashboard.putData("Reset Gyro",
+				new ResetGyroCommand());
+		SmartDashboard.putData("Reset Both Encoders",
+				new ResetBothEncodersCommand());
 
 	}
 

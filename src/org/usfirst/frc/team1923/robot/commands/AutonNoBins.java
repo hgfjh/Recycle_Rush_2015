@@ -8,43 +8,51 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  */
 public class AutonNoBins extends CommandGroup {
-	
-	private double testModifier = 1923.0;
-	private double distanceToPickUpTote = 24.25;
-	private double distanceToNextTote = 55.25 / testModifier;
-	private double distanceToAutonZone = 60.0 / testModifier;
-    
     public  AutonNoBins() {
     	
-    	addSequential(new DriveDistanceCommand(-50, 2.0));
-    	addSequential(new ResetGyroCommand());
-
+    	//Initialize elevator
     	addSequential(new ElevatorSetHomeCommand());
+    	//Move elevator to above the first tote
     	addSequential(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_2, 2.0));
-    	//intake
-    	addSequential(new DriveDistanceCommand(distanceToPickUpTote, 2.0));
+//    	//Add the intake wheels command here
+    	//Move robot so first tote is in the robot
+    	addSequential(new DriveDistanceCommand(RobotMap.DIST_TO_PICK_UP_TOTE, 2.0));
+    	//Drop elevator on first tote
     	addSequential(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_1 , 2.0));
+    	//Pick up first tote
     	addSequential(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_2 , 2.0));
-    	//addSequential(new DriveDistanceCommand(distanceToNextTote, 2.0));
-    	//intake
-    	addSequential(new DriveDistanceCommand(distanceToPickUpTote, 2.0));
+/////////////////////We now have the first tote	
+    	//Move right up to second tote
+    	addSequential(new DriveDistanceCommand(RobotMap.DIST_TO_NEXT_TOTE, 2.0));
+//    	//Add the intake wheels command here
+    	//Move robot so second tote is in the robot
+    	addSequential(new DriveDistanceCommand(RobotMap.DIST_TO_PICK_UP_TOTE, 2.0));
+    	//Drop elevator on second tote
     	addSequential(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_1 , 2.0));
+    	//Pick up second tote
     	addSequential(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_2 , 2.0));
-    	//addSequential(new DriveDistanceCommand(distanceToNextTote, 2.0));
-    	//intake
-    	addSequential(new DriveDistanceCommand(distanceToPickUpTote, 2.0));
+/////////////////////We now have the second tote	
+    	//Move right up to third tote
+    	addSequential(new DriveDistanceCommand(RobotMap.DIST_TO_NEXT_TOTE, 2.0));
+//    	//Add the intake wheels command here
+    	//Move robot so third tote is in the robot
+    	addSequential(new DriveDistanceCommand(RobotMap.DIST_TO_PICK_UP_TOTE, 2.0));
+    	//Drop elevator on third tote
     	addSequential(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_1 , 2.0));
+    	//Pick up third tote
     	addSequential(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_2 , 2.0));
-    	//addSequential(new TurnToHeading(90, 2.0));
-    	//addSequential(new DriveDistanceCommand(distanceToAutonZone, 2.0));
+/////////////////////We now have the third tote	
+    	//Move to face auton zone
+    	addSequential(new TurnToHeading(90, 2.0));
+    	//Move into auton zone
+    	addSequential(new DriveDistanceCommand(RobotMap.DIST_TO_AUTON_ZONE, 2.0));
+    	//Turn left so when the robot backs up it stays in the auton zone
+    	addSequential(new TurnToHeading(-90, 5.0));
     	
-    	//addSequential(new TurnToHeading(-90, 5.0));
-    	
+    	//Drop totes
     	addSequential(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_1 , 2.0));
-    	//reverse intake
-    	//addSequential(new DriveDistanceCommand(-distanceToPickUpTote, 2.0));
-    	addSequential(new DriveDistanceCommand(-50, 2.0));
-
-    	
+//    	//Add the reverse intake wheels command here
+    	//Back away from totes
+    	addSequential(new DriveDistanceCommand(-RobotMap.DIST_TO_PICK_UP_TOTE, 2.0));    	
     }
 }

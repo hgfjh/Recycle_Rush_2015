@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1923.robot.subsystems;
 
+import org.usfirst.frc.team1923.robot.Robot;
 import org.usfirst.frc.team1923.robot.RobotMap;
 import org.usfirst.frc.team1923.robot.commands.*;
 
@@ -29,6 +30,10 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 	private int DRIVE_MODE = 1;
 	public double cLeft = 0;
 	public double cRight = 0;
+	private double SMOOTH_VALUE = 0.02;
+	private double SMOOTH_CORRECT = 0.3;
+	private double SMOOTH_THRESHHOLD = 0.3;
+
 	// Drive Wheel Encoders
 	// private Encoder driveEncoderLeft = RobotMap.driveEncoderLeft;
 	// private Encoder driveEncoderRight = RobotMap.driveEncoderRight;
@@ -37,13 +42,13 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 
 	private static final double NUM_CLICKS = 256, // distance per pulse =
 													// 0.0491"/pulse
-			GEAR_RATIO = 1.0 / 1.0, WHEEL_CIRCUMFERENCE = 12.56, // 4 inches
+			GEAR_RATIO = 1.0 / 1.0, WHEEL_CIRCUMFERENCE = 13.25, // 4 inches
 																	// wheels
-			Pg = 0.1, Ig = 0.005, Dg = 0.0, // LEAVE THESE CONSTANTS ALONE!
-			Pe = 0.5, Ie = 0.01, De = 0.0, // LEAVE THESE CONSTANTS ALONE!
+			Pg = 0.1, Ig = 0.000, Dg = 0.0, // LEAVE THESE CONSTANTS ALONE!
+			Pe = 0.022, Ie = 0.0005, De = 0.5, // LEAVE THESE CONSTANTS ALONE!
 			PID_LOOP_TIME = .05, gyroTOLERANCE = 0.3, // 0.2778% error ~= 0.5
 														// degrees...?
-			encoderTOLERANCE = 2.0; // +/- 2" tolarance
+			encoderTOLERANCE = 2.0; // +/- 2" tolerance
 
 	private static final int MANUAL_MODE = 1, ENCODER_MODE = 2, GYRO_MODE = 3;
 
@@ -73,7 +78,7 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
-		setDefaultCommand(new DriveWithJoyStickCommand());
+		setDefaultCommand(new TeleopCommand());
 	}
 
 	// Manual Drive
@@ -84,18 +89,19 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 
 	}
 
-	
-
 	// Stop
 	public void stop() {
 		this.disable();
+		cLeft = 0;
+		cRight = 0;
 		smoothDrive(0.0, 0.0);
 	}
 
 	// Drive Stright Distance Using Encoder
 	public void driveStrightUsingEncoder(double dist, double maxTimeOut) {
 		// TODO
-
+		resetGyro();
+		resetBothEncoders();
 		setSetpoint(dist);
 		setEncoderPID();
 
@@ -204,7 +210,6 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 		this.setAbsoluteTolerance(gyroTOLERANCE);
 		this.setOutputRange(-1.0, 1.0);
 		this.setInputRange(-360.0, 360.0);
-		RobotMap.gyro.reset();
 		this.enable();
 
 	}
@@ -229,55 +234,90 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 		}
 
 	}
-	public void arcDrive(double speed,double curve){
-		//TODO
-		//smoothDrive(speed, speed);
+
+	public void arcDrive(double speed, double curve) {
+		// TODO
+		// smoothDrive(speed, speed);
 	}
 
 	public void coalesceLeft(double left) {
-		if (left < cLeft - 0.02) {
-			cLeft = cLeft - 0.02;
-		} else if (left > cLeft + 0.02) {
-			cLeft = cLeft + 0.02;
+		
+		//left += getSpeedDiff() * SMOOTH_CORRECT;
+		if(left > 1){
+			left = 1;
+		} else if(left < -1){
+			left = -1;
+		}
+		 
+		if (left < cLeft - SMOOTH_VALUE) {
+			cLeft = cLeft - SMOOTH_VALUE;
+		} else if (left > cLeft + SMOOTH_VALUE) {
+			cLeft = cLeft + SMOOTH_VALUE;
 		} else {
 			cLeft = left;
 		}
 	}
+
 	public void coalesceRight(double right) {
-		if (right < cRight - 0.02) {
-			cRight = cRight - 0.02; }
-		else if (right > cRight + 0.02) {
-			cRight = cRight + 0.02;
+
+		//right -= getSpeedDiff() * SMOOTH_CORRECT;
+		
+		if(right > 1){
+			right = 1;
+		} else if(right < -1){
+			right = -1;
+		}
+		 
+		if (right < cRight - SMOOTH_VALUE) {
+			cRight = cRight - SMOOTH_VALUE;
+		} else if (right > cRight + SMOOTH_VALUE) {
+			cRight = cRight + SMOOTH_VALUE;
 		} else {
 			cRight = right;
 		}
 	}
-	
-	public double getCoalLeft(){
+
+	public double getCoalLeft() {
 		return cLeft;
 	}
-	
-	public double getCoalRight(){
+
+	public double getCoalRight() {
 		return cRight;
 	}
-	
-	public void smoothDrive(double left, double right){
+
+	public void smoothDrive(double left, double right) {
 		coalesceLeft(left);
 		coalesceRight(right);
+		double correctionRate = 1;
 		
-		RobotMap.robotDriveTrain.tankDrive(cLeft, cRight, true);
+		if((left + right)/2>0){
+			correctionRate = 1.046 + 0.008 *(1-(left + right)/2);
+		} else if((left + right)/2>-0.5){
+			correctionRate = 1.007;
+		} else {
+			correctionRate = 1.007 + 0.001*(left+right)/2;
+		}
+		
+		if(correctionRate > 1){
+			right/=correctionRate;
+		} else {
+			left*=correctionRate;
+		}
+		//cLeft = left;
+		//cRight = right;
+		RobotMap.robotDriveTrain.tankDrive(cLeft, cRight, false);
 	}
-	
-	public double getRobotHeading(){
+
+	public double getRobotHeading() {
 		return RobotMap.gyro.getAngle();
 	}
-	
-	public void resetBothEncoders(){
+
+	public void resetBothEncoders() {
 		RobotMap.driveEncoderLeft.reset();
 		RobotMap.driveEncoderRight.reset();
 	}
-	
-	public void resetGyro(){
+
+	public void resetGyro() {
 		RobotMap.gyro.reset();
 	}
 }

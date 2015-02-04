@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class TeleopCommand extends CommandGroup {
     
     public  TeleopCommand() {
+    	addParallel(new ElevatorButtonsCommand());
     	addSequential(new DriveWithJoyStickCommand());
     }
 }

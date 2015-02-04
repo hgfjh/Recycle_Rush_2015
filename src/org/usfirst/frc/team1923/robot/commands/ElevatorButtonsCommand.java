@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1923.robot.commands;
 
 import org.usfirst.frc.team1923.robot.Robot;
+import org.usfirst.frc.team1923.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -11,10 +12,13 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ElevatorButtonsCommand extends Command {
 	private int lastPressed = -1;
+	private double position;
+	private double timeOut;
+
 	public ElevatorButtonsCommand() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(Robot.driveTrainSubsystem);
+		requires(Robot.elevatorSubsystem);
 	}
 
 	// Called just before this Command runs the first time
@@ -29,21 +33,82 @@ public class ElevatorButtonsCommand extends Command {
 		boolean button3 = Robot.oi.a.get();
 		boolean button4 = Robot.oi.b.get();
 		boolean button5 = Robot.oi.y.get();
+		boolean button6 = Robot.oi.lB.get();
+		boolean button7 = Robot.oi.rB.get();
 
-		if((lastPressed > 1 || lastPressed == -1) && button1) {
-			lastPressed = 1;
-		} else if((lastPressed > 2 || lastPressed == -1) && button2) {
-			lastPressed = 2;
+		if(button1){
+			if(lastPressed != 1){
+				Robot.elevatorSubsystem.elevatorStop();
+				lastPressed = 1;
+			}
+		} else if(button2){
+			if(lastPressed != 2){
+				Robot.elevatorSubsystem.elevatorStop();
+				lastPressed = 2;
 
-			//Robot.elevatorSubsystem.moveElevatorToPosition(position, timeOut);
-		} else if((lastPressed > 3 || lastPressed == -1) && button3) {
-			lastPressed = 3;
-		} else if((lastPressed > 4 || lastPressed == -1) && button4) {
-			lastPressed = 4;
-		} else if((lastPressed > 5 || lastPressed == -1) && button5) {
-			lastPressed = 5;
+				this.position = RobotMap.ELEVATOR_POSITION_1;
+				this.timeOut = 5.0;
+				Robot.elevatorSubsystem.moveElevatorToPosition(position, timeOut);
+			}
+		} else if(button3){
+			if(lastPressed != 3){
+				Robot.elevatorSubsystem.elevatorStop();
+				lastPressed = 3;
+
+				this.position = RobotMap.ELEVATOR_POSITION_2;
+				this.timeOut = 5.0;
+				Robot.elevatorSubsystem.moveElevatorToPosition(position, timeOut);
+				
+			}
+		} else if(button4){
+			if(lastPressed != 4){
+				Robot.elevatorSubsystem.elevatorStop();
+				lastPressed = 4;
+				
+				this.position = RobotMap.ELEVATOR_POSITION_3;
+				this.timeOut = 5.0;
+				Robot.elevatorSubsystem.moveElevatorToPosition(position, timeOut);
+			}
+		} else if(button5){
+			if(lastPressed != 5){
+				Robot.elevatorSubsystem.elevatorStop();
+				lastPressed = 5;				
+
+				this.position = RobotMap.ELEVATOR_POSITION_4;
+				this.timeOut = 5.0;
+				Robot.elevatorSubsystem.moveElevatorToPosition(position, timeOut);
+			}
 		}
 		
+		
+		if (button6){
+			if (RobotMap.elevatorBottomLimitSwitch.get()) {
+				Robot.elevatorSubsystem.elevatorStop();
+				Robot.elevatorSubsystem.setElevatorReferance();
+				lastPressed= -1;
+			} else if ( RobotMap.elevatorEncoder.getDistance()<=1) {
+				Robot.elevatorSubsystem.elevatorStop();
+				lastPressed= -1;
+				
+			} else {
+				Robot.elevatorSubsystem.moveElevatorDown(0.7);
+			}
+		} else if (button7){
+				Robot.elevatorSubsystem.moveElevatorUp(0.7);
+		} else if(lastPressed==1){
+			if (RobotMap.elevatorBottomLimitSwitch.get()) {
+				Robot.elevatorSubsystem.elevatorStop();
+				Robot.elevatorSubsystem.setElevatorReferance();
+				lastPressed= -1;
+			} else {
+				Robot.elevatorSubsystem.moveElevatorDown(0.4);
+			}
+		} else if(lastPressed==2 || lastPressed==3 || lastPressed==4 || lastPressed==5){
+			if(Robot.elevatorSubsystem.reachedPosition()){
+				Robot.elevatorSubsystem.elevatorStop();
+				lastPressed= -1;
+			}
+		}
 		
 	}
 
@@ -54,10 +119,12 @@ public class ElevatorButtonsCommand extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
+		Robot.elevatorSubsystem.elevatorStop();
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
+		Robot.elevatorSubsystem.elevatorStop();
 	}
 }

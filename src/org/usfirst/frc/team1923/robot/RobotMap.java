@@ -26,16 +26,18 @@ public class RobotMap {
 	// Constants
 	public static double ELEVATOR_POSITION_1 = 0.0;
 	public static double ELEVATOR_POSITION_2 = 16;
-	public static double ELEVATOR_POSITION_3 = 32.0;
+	public static double ELEVATOR_POSITION_3 = 28.5;
 	public static double ELEVATOR_POSITION_4 = 49.0;
 
-	public static double DRIVE_DIST_1 = 0.0;
-	public static double DRIVE_DIST_2 = 10.0;
-	public static double DRIVE_DIST_3 = 20.0;
-	public static double DRIVE_DIST_4 = 30.0;
+	
+
+	public static double DIST_TO_PICK_UP_TOTE = 24.25;
+	public static double DIST_TO_NEXT_TOTE = 55.25;
+	public static double DIST_TO_AUTON_ZONE = 60.0;
 	
 	public static final double ELEVATOR_UP_SPEED = 0.8;
 	public static final double ELEVATOR_DOWN_SPEED = 0.6;
+	private static double SMOOTH_VALUE = 12.0;
 
 	// Compressor
 	//public static Solenoid solenoid = new Solenoid(0);
@@ -90,6 +92,10 @@ public class RobotMap {
 		driveEncoderLeft.reset();
 		driveEncoderRight.reset();
 		elevatorEncoder.reset();
+		//frontLeftDrive.setVoltageRampRate(SMOOTH_VALUE);
+		//frontRightDrive.setVoltageRampRate(SMOOTH_VALUE);
+		//rearLeftDrive.setVoltageRampRate(SMOOTH_VALUE);
+		//rearRightDrive.setVoltageRampRate(SMOOTH_VALUE);
 
 		// Test Mode --------------------
 		// LiveWindow.addActuator("DriveTRainSubsystem", "frontLeftDrive",
