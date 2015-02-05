@@ -3,7 +3,6 @@ package org.usfirst.frc.team1923.robot.commands;
 import org.usfirst.frc.team1923.robot.Robot;
 import org.usfirst.frc.team1923.robot.RobotMap;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 //import edu.wpi.first.wpilibj.command.Command;
@@ -33,7 +32,6 @@ public class ElevatorDropCommand extends Command {
 	protected boolean isFinished() {
 		return RobotMap.elevatorBottomLimitSwitch.get() || isTimedOut();
 	}
-
 	// Called once after isFinished returns true
 	protected void end() {
 		Robot.elevatorSubsystem.stop();

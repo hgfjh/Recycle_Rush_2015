@@ -46,11 +46,11 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 			WHEEL_CIRCUMFERENCE = 12.56, // 4 inches wheels
 			
 			//LEAVE THESE CONSTANTS ALONE!
-			Pg = 0.1, 	Ig = 0.005,	 Dg = 0.0,
-			Pe = 0.5, 	Ie = 0.01,	 De = 0.0, 
+			Pg = 0.0118, 	Ig = 0.000,	 Dg = 0.0,
+			Pe = 0.015, 	Ie = 0.001,	 De = 0.03, 
 			
 			PID_LOOP_TIME = .05,
-			gyroTOLERANCE = 0.3, // 0.2778% error ~= 0.5 degrees...?
+			gyroTOLERANCE = 3, // 0.2778% error ~= 0.5 degrees...?
 			encoderTOLERANCE = 2.0; // +/- 2" tolarance
 
 	private static final int MANUAL_MODE = 1, ENCODER_MODE = 2, GYRO_MODE = 3;
@@ -204,6 +204,7 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 
 	public void setGyroPID() {
 		DRIVE_MODE = GYRO_MODE;
+		this.resetGyro();
 		this.getPIDController().setPID(Pg, Ig, Dg);
 		this.setAbsoluteTolerance(gyroTOLERANCE);
 		this.setOutputRange(-1.0, 1.0);
