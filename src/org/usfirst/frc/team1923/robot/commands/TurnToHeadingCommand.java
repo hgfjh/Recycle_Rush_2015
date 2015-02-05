@@ -7,18 +7,18 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class TurnToHeading extends Command {
+public class TurnToHeadingCommand extends Command {
 	private double angle;
 	private double timeOut;
 
-	public TurnToHeading(double angle, double timeOut) {
+	public TurnToHeadingCommand(double angle, double timeOut) {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.driveTrainSubsystem);
 		this.angle = angle;
 		this.timeOut = timeOut;
 	}
 	
-	public TurnToHeading(double angle){
+	public TurnToHeadingCommand(double angle){
 		this(angle, 2.0);
 	}
 

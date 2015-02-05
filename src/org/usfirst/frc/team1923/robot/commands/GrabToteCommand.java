@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class GrabTote extends CommandGroup {
+public class GrabToteCommand extends CommandGroup {
 
-	public GrabTote() {
+	public GrabToteCommand() {
 		addSequential(new MoveElevatorToPositionCommand(0, 4));
 		addSequential(new MoveElevatorToPositionCommand(5, 2));
 	}

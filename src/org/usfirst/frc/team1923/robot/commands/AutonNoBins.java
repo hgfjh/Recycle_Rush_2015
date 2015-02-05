@@ -43,11 +43,11 @@ public class AutonNoBins extends CommandGroup {
     	addSequential(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_2));
 /////////////////////We now have the third tote	
     	//Move to face auton zone
-    	addSequential(new TurnToHeading(90));
+    	addSequential(new TurnToHeadingCommand(90));
     	//Move into auton zone
     	addSequential(new DriveDistanceCommand(RobotMap.DIST_TO_AUTON_ZONE));
     	//Turn left so when the robot backs up it stays in the auton zone
-    	addSequential(new TurnToHeading(-90, 5.0));
+    	addSequential(new TurnToHeadingCommand(-90, 5.0));
     	
     	//Drop totes
     	addSequential(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_1));
