@@ -34,16 +34,16 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		oi = new OI();
 		// Initialize Robot
 		RobotMap.init();
+		oi = new OI();
 		// CommandBase.init();
 		// instantiate the command used for the autonomous period
 
 		SmartDashboard.putData(driveTrainSubsystem);
 		SmartDashboard.putData(elevatorSubsystem);
 		addCommandsToDashboard();
-		autonomousCommand = new AutonNoBins();
+		autonomousCommand = new AutonSpin();
 		teleopCommand = new TeleopCommand();
 	}
 
@@ -73,6 +73,7 @@ public class Robot extends IterativeRobot {
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		// Assign commands to buttons
+		
 		driveTrainSubsystem.cLeft = 0;
 		driveTrainSubsystem.cRight = 0;
 
