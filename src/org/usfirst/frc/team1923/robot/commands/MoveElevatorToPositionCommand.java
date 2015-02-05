@@ -8,14 +8,17 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class MoveElevatorToPositionCommand extends Command {
-	private double position;
-	private double timeOut;
+	private double position, timeOut;
 
 	public MoveElevatorToPositionCommand(double position, double timeOut) {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.elevatorSubsystem);
 		this.position = position;
 		this.timeOut = timeOut;
+	}
+	
+	public MoveElevatorToPositionCommand(double position) {
+		this(position, 2.0);
 	}
 
 	// Called just before this Command runs the first time

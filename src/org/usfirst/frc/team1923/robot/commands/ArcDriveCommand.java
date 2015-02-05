@@ -9,9 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ArcDriveCommand extends Command  {
-	double speed;
-	double curve;
-
+	private double speed, curve;
 
     public ArcDriveCommand(double speed, double curve, double maxTimeOut) {
         // Use requires() here to declare subsystem dependencies

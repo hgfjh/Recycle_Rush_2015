@@ -8,14 +8,16 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class DriveDistanceCommand extends Command {
-	private double dist;
-	private double timeOut;
-
+	private double dist, timeOut;
 	public DriveDistanceCommand(double dist, double timeOut) {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.driveTrainSubsystem);
 		this.dist = dist;
 		this.timeOut = timeOut;
+	}
+	
+	public DriveDistanceCommand(double dist){
+		this(dist, 2.0);
 	}
 
 	// Called just before this Command runs the first time

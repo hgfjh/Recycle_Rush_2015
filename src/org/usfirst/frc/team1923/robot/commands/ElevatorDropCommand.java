@@ -26,9 +26,7 @@ public class ElevatorDropCommand extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if (! RobotMap.elevatorBottomLimitSwitch.get()) {
-			Robot.elevatorSubsystem.moveElevatorDown(0.8);
-		}
+			Robot.elevatorSubsystem.moveElevatorDown(RobotMap.ELEVATOR_DOWN_SPEED);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

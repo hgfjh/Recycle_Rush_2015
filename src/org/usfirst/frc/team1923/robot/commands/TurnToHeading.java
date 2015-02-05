@@ -17,6 +17,10 @@ public class TurnToHeading extends Command {
 		this.angle = angle;
 		this.timeOut = timeOut;
 	}
+	
+	public TurnToHeading(double angle){
+		this(angle, 2.0);
+	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
