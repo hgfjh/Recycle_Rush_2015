@@ -1,8 +1,6 @@
 package org.usfirst.frc.team1923.robot.commands;
 
 import org.usfirst.frc.team1923.robot.Robot;
-import org.usfirst.frc.team1923.robot.RobotMap;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ResetBothEncodersCommand extends Command {

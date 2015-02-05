@@ -1,6 +1,5 @@
 package org.usfirst.frc.team1923.robot;
 
-import org.usfirst.frc.team1923.robot.commands.*;
 import org.usfirst.frc.team1923.util.XboxController;
 
 import edu.wpi.first.wpilibj.Joystick;

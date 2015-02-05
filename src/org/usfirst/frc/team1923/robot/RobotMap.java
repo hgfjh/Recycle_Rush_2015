@@ -5,7 +5,6 @@ package org.usfirst.frc.team1923.robot;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -37,7 +36,6 @@ public class RobotMap {
 	
 	public static final double ELEVATOR_UP_SPEED = 0.8;
 	public static final double ELEVATOR_DOWN_SPEED = 0.6;
-	private static double SMOOTH_VALUE = 12.0;
 
 	// Compressor
 	//public static Solenoid solenoid = new Solenoid(0);

@@ -1,18 +1,18 @@
 package org.usfirst.frc.team1923.robot.subsystems;
 
-import org.usfirst.frc.team1923.robot.Robot;
+//import org.usfirst.frc.team1923.robot.Robot;
 import org.usfirst.frc.team1923.robot.RobotMap;
 import org.usfirst.frc.team1923.robot.commands.*;
 
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Gyro;
+//import edu.wpi.first.wpilibj.Encoder;
+//import edu.wpi.first.wpilibj.Gyro;
 //import edu.wpi.first.wpilibj.PIDController;
 //import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.RobotDrive;
+//import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 //import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+//import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
  *
@@ -247,16 +247,14 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 	 */
 	private double coalesce(double current, double old) {
 		if (current < old - SMOOTH_VALUE) {
-			old = old - SMOOTH_VALUE;
+			current = old - SMOOTH_VALUE;
 		} else if (current > old + SMOOTH_VALUE) {
-			old = old + SMOOTH_VALUE;
+			current = old + SMOOTH_VALUE;
 		} else {
-			old = current;
+			current = old;
 		}
 	
-
-
-		return old;
+		return current;
 	}
 
 	public double getCoalLeft() {
