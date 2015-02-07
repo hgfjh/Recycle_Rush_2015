@@ -31,7 +31,7 @@ public class IntakePistonSubsystem extends Subsystem {
 	}
 	
 	public void activate(){
-		RobotMap.intakeSolenoidLeft.set(true);
+ 		RobotMap.intakeSolenoidLeft.set(true);
 		RobotMap.intakeSolenoidRight.set(false);
 		activated = true;
 	}
