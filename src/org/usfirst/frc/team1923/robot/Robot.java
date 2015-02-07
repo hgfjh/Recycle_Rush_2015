@@ -24,6 +24,8 @@ public class Robot extends IterativeRobot {
 	public static PIDriveTrainSubsystem driveTrainSubsystem = new PIDriveTrainSubsystem();
 	// public static Elevator elevator
 	public static PIElevatorSubsystem elevatorSubsystem = new PIElevatorSubsystem();
+	public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+	public static IntakePistonSubsystem intakePistonSubsystem = new IntakePistonSubsystem();
 	public static OI oi;
 	public CommandGroup autonomousCommand;
 	public CommandGroup teleopCommand;
@@ -41,6 +43,8 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putData(driveTrainSubsystem);
 		SmartDashboard.putData(elevatorSubsystem);
+		SmartDashboard.putData(intakeSubsystem);
+		SmartDashboard.putData(intakePistonSubsystem);
 		addCommandsToDashboard();
 		autonomousCommand = new AutonNoBins();
 		teleopCommand = new TeleopCommand();
@@ -53,6 +57,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		driveTrainSubsystem.cLeft = 0;
 		driveTrainSubsystem.cRight = 0;
+		intakeSubsystem.cWheels = 0;
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
@@ -75,6 +80,7 @@ public class Robot extends IterativeRobot {
 		
 		driveTrainSubsystem.cLeft = 0;
 		driveTrainSubsystem.cRight = 0;
+		intakeSubsystem.cWheels = 0;
 
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();

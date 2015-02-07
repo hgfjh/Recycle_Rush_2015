@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1923.robot.commands;
+ package org.usfirst.frc.team1923.robot.commands;
 
 import org.usfirst.frc.team1923.robot.Robot;
 import org.usfirst.frc.team1923.robot.RobotMap;
@@ -92,10 +92,10 @@ public class ElevatorButtonsCommand extends Command {
 				lastPressed= -1;
 				
 			} else {
-				Robot.elevatorSubsystem.moveElevatorDown(0.7);
+				Robot.elevatorSubsystem.moveElevatorDown(0.8);
 			}
 		} else if (button7){
-				Robot.elevatorSubsystem.moveElevatorUp(0.7);
+				Robot.elevatorSubsystem.moveElevatorUp(0.8);
 		} else if(lastPressed==1){
 			if (RobotMap.elevatorBottomLimitSwitch.get()) {
 				Robot.elevatorSubsystem.stop();

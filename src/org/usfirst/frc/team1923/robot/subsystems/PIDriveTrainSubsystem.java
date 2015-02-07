@@ -272,7 +272,7 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 		double correctionRate;
 
 		if((left + right)/2>0){
-			correctionRate = 0.85;//1.046 + 0.008 *(1-(left + right)/2);
+			correctionRate = 0.86;//1.046 + 0.008 *(1-(left + right)/2);
 		} else if((left + right)/2>-0.5){
 			correctionRate = 1.007;
 		} else {

@@ -50,6 +50,13 @@ public class RobotMap {
 	// Elevator Talon SRX
 	public static CANTalon elevatorLeftMotor = new CANTalon(4);
 	public static CANTalon elevatorRightMotor = new CANTalon(5);
+
+	// Intake Talon SRX
+	public static CANTalon intakeMotor = new CANTalon(6);
+	
+	public static Solenoid intakeSolenoidLeft = new Solenoid(0);
+	public static Solenoid intakeSolenoidRight = new Solenoid(1);
+
 	// Sensors
 	public static Encoder driveEncoderLeft = new Encoder(0, 1, false,
 			EncodingType.k4X);
@@ -75,6 +82,7 @@ public class RobotMap {
 	// Elevator
 	public static RobotDrive elevatorDrive = new RobotDrive(elevatorLeftMotor,
 			elevatorRightMotor);
+	
 
 	// Motor Group for Drive
 	/* Motor Group Init. */

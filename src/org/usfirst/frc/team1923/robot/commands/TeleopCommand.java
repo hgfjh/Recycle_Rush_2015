@@ -9,6 +9,8 @@ public class TeleopCommand extends CommandGroup {
     
     public  TeleopCommand() {
     	addParallel(new ElevatorButtonsCommand());
+    	addParallel(new IntakeButtonsCommand());
+    	addParallel(new IntakePistonButtonsCommand());
     	addSequential(new DriveWithJoyStickCommand());
     }
 }

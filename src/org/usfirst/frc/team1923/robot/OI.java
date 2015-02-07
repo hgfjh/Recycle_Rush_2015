@@ -54,12 +54,12 @@ public class OI {
 	public JoystickButton back;
 	public JoystickButton leftClick;
 	public JoystickButton rightClick;
-	public Joystick xboxController;
+	public XboxController xboxController;
 
 	public OI() {
 		leftStick = new Joystick(1);
 		rightStick = new Joystick(2);
-		triggers = new Joystick(6);
+		
 		xboxController = new XboxController(3);
 		
 		

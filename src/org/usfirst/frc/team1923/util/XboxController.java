@@ -62,6 +62,21 @@ public class XboxController extends Joystick {
 
 	}
 
+	public double getTriggerDiff(){
+		return this.getRawAxis(3);
+	} 
+	
+	public int getSharpTriggerDiff(){
+		double temp = getTriggerDiff();
+		
+		if (temp > .1 ) {
+			return 1;
+		} else if (temp < -.1) {
+			return -1;
+		} else {
+			return 0;
+		}
+	}
 	/**
 	 * The value of each button on controller
 	 */
