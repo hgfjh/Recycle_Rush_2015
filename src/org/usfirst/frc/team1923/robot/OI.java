@@ -59,7 +59,9 @@ public class OI {
 	public OI() {
 		leftStick = new Joystick(1);
 		rightStick = new Joystick(2);
+		triggers = new Joystick(6);
 		xboxController = new XboxController(3);
+		
 		
 		// Create XBOX buttons
 		a = new JoystickButton(xboxController, 1);

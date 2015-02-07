@@ -47,7 +47,7 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 			
 			//LEAVE THESE CONSTANTS ALONE!
 			Pg = 0.0118, 	Ig = 0.000,	 Dg = 0.0,
-			Pe = 0.015, 	Ie = 0.001,	 De = 0.03, 
+			Pe = 0.015, 	Ie = 0.000,	 De = 0.00, 
 			
 			PID_LOOP_TIME = .05,
 			gyroTOLERANCE = 3, // 0.2778% error ~= 0.5 degrees...?
@@ -272,7 +272,7 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 		double correctionRate;
 
 		if((left + right)/2>0){
-			correctionRate = 0.87;//1.046 + 0.008 *(1-(left + right)/2);
+			correctionRate = 0.85;//1.046 + 0.008 *(1-(left + right)/2);
 		} else if((left + right)/2>-0.5){
 			correctionRate = 1.007;
 		} else {

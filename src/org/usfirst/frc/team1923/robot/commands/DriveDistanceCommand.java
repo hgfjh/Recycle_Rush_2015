@@ -17,7 +17,7 @@ public class DriveDistanceCommand extends Command {
 	}
 	
 	public DriveDistanceCommand(double dist){
-		this(dist, 2.0);
+		this(dist, 4.0);
 	}
 
 	// Called just before this Command runs the first time
