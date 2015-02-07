@@ -30,8 +30,8 @@ public class RobotMap {
 
 	
 
-	public static double DIST_TO_PICK_UP_TOTE = 24.25;
-	public static double DIST_TO_NEXT_TOTE = 55.25;
+	public static double DIST_TO_PICK_UP_TOTE = 33.25;
+	public static double DIST_TO_NEXT_TOTE = 46.25;
 	public static double DIST_TO_AUTON_ZONE = 60.0;
 	
 	public static final double ELEVATOR_UP_SPEED = 0.8;

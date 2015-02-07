@@ -42,7 +42,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(driveTrainSubsystem);
 		SmartDashboard.putData(elevatorSubsystem);
 		addCommandsToDashboard();
-		autonomousCommand = new AutonSpin();
+		autonomousCommand = new AutonNoBins();
 		teleopCommand = new TeleopCommand();
 	}
 

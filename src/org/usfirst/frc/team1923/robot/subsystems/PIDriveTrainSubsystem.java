@@ -272,12 +272,15 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 		double correctionRate;
 
 		if((left + right)/2>0){
-			correctionRate = 1.046 + 0.008 *(1-(left + right)/2);
+			correctionRate = 0.87;//1.046 + 0.008 *(1-(left + right)/2);
 		} else if((left + right)/2>-0.5){
 			correctionRate = 1.007;
 		} else {
 			correctionRate = 1.007 + 0.001*(left+right)/2;
 		}
+
+		left = cLeft;
+		right = cRight;
 		
 		if(correctionRate > 1){
 			right/=correctionRate;
@@ -287,7 +290,7 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 		//cLeft = left;
 		//cRight = right;
 
-		RobotMap.robotDriveTrain.tankDrive(cLeft, cRight, false);
+		RobotMap.robotDriveTrain.tankDrive(left, right, false);
 	}
 
 	public double getRobotHeading() {
