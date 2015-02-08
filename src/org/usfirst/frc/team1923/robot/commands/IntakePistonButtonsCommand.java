@@ -26,8 +26,8 @@ public class IntakePistonButtonsCommand extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		double dPad = Robot.oi.xboxController.getDPad();
-		boolean intakeActivate = (dPad > 90 && dPad < 270);
+		//double dPad = Robot.oi.xboxController.getDPad();
+		boolean intakeActivate = Robot.oi.leftClick.get();//(dPad > 90 && dPad < 270);
 		
 		if(intakeActivate!=lastPressed){
 			lastPressed=intakeActivate;

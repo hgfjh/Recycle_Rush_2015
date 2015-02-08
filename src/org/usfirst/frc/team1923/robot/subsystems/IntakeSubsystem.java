@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class IntakeSubsystem extends Subsystem {
 
-	private static double SMOOTH_VALUE = 0.02;
+	private static double SMOOTH_VALUE = 0.20;
 	public double cWheels = 0;
 	
 	public IntakeSubsystem() {
@@ -33,12 +33,12 @@ public class IntakeSubsystem extends Subsystem {
 
 
 	public void intakeWheelsIn(double speed) {
-		cWheels = coalesce(speed, cWheels);
+		cWheels = coalesce(-speed, cWheels);
 		RobotMap.intakeMotor.set(cWheels);
 	}
 
 	public void intakeWheelsOut(double speed) {
-		cWheels = coalesce(-speed, cWheels);
+		cWheels = coalesce(speed, cWheels);
 		RobotMap.intakeMotor.set(cWheels);
 	}
 	
