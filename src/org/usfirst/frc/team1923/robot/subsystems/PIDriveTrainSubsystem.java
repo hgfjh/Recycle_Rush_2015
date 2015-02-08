@@ -3,6 +3,7 @@ package org.usfirst.frc.team1923.robot.subsystems;
 //import org.usfirst.frc.team1923.robot.Robot;
 import org.usfirst.frc.team1923.robot.RobotMap;
 import org.usfirst.frc.team1923.robot.commands.*;
+import org.usfirst.frc.team1923.util.Calculator;
 
 //import edu.wpi.first.wpilibj.Encoder;
 //import edu.wpi.first.wpilibj.Gyro;
@@ -28,12 +29,9 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 	private Timer timer;
 	private double timeOut = 2.0;
 	private int DRIVE_MODE = 1;
-	public double cLeft = 0;
-	public double cRight = 0;
+	public double oldLeftSpeed = 0;
+	public double oldRightSpeed = 0;
 	private double SMOOTH_VALUE = 0.02;
-	private double SMOOTH_CORRECT = 0.3;
-	private double SMOOTH_THRESHHOLD = 0.3;
-
 
 	// Drive Wheel Encoders
 	// private Encoder driveEncoderLeft = RobotMap.driveEncoderLeft;
@@ -89,8 +87,8 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 	// Stop
 	public void stop() {
 		this.disable();
-		cLeft = 0;
-		cRight = 0;
+		oldLeftSpeed = 0;
+		oldRightSpeed = 0;
 		smoothDrive(0.0, 0.0);
 	}
 
@@ -245,30 +243,19 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 	 * @param old the previous input
 	 * @return the coalesced number
 	 */
-	private double coalesce(double current, double old) {
-		if (current < old - SMOOTH_VALUE) {
-			current = old - SMOOTH_VALUE;
-		} else if (current > old + SMOOTH_VALUE) {
-			current = old + SMOOTH_VALUE;
-		} else {
-			current = old;
-		}
-	
-		return current;
+
+	public double getEasedLeft() {
+		return oldLeftSpeed;
 	}
 
-	public double getCoalLeft() {
-		return cLeft;
-	}
-
-	public double getCoalRight() {
-		return cRight;
+	public double getEasedRight() {
+		return oldRightSpeed;
 	}
 
 	
 	public void smoothDrive(double left, double right){
-		cLeft = coalesce(left, cLeft);
-		cRight = coalesce(right, cRight);
+		oldLeftSpeed = Calculator.ease(left, oldLeftSpeed);
+		oldRightSpeed = Calculator.ease(right, oldRightSpeed);
 		double correctionRate;
 
 		if((left + right)/2>0){
@@ -279,16 +266,14 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 			correctionRate = 1.007 + 0.001*(left+right)/2;
 		}
 
-		left = cLeft;
-		right = cRight;
+		left = oldLeftSpeed;
+		right = oldRightSpeed;
 		
 		if(correctionRate > 1){
 			right/=correctionRate;
 		} else {
 			left*=correctionRate;
 		}
-		//cLeft = left;
-		//cRight = right;
 
 		RobotMap.robotDriveTrain.tankDrive(left, right, false);
 	}

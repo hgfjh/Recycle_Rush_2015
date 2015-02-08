@@ -152,9 +152,7 @@ public class PIElevatorSubsystem extends PIDSubsystem {
 	}
 
 	public double getPositionError() {
-
 		return this.getSetpoint() - this.getPosition();
-
 	}
 
 	/**
