@@ -55,7 +55,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		driveTrainSubsystem.oldLeftSpeed = 0;
 		driveTrainSubsystem.oldRightSpeed = 0;
-		intakeSubsystem.cWheels = 0;
+		intakeSubsystem.oldWheelSpeed = 0;
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
@@ -78,7 +78,7 @@ public class Robot extends IterativeRobot {
 		
 		driveTrainSubsystem.oldLeftSpeed = 0;
 		driveTrainSubsystem.oldRightSpeed = 0;
-		intakeSubsystem.cWheels = 0;
+		intakeSubsystem.oldWheelSpeed = 0;
 
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();

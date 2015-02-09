@@ -19,8 +19,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class IntakeSubsystem extends Subsystem {
 
-	private static double SMOOTH_VALUE = 0.02;
-	public double cWheels = 0;
+	public double oldWheelSpeed = 0;
 	public boolean armsActivated = false;
 	
 	public IntakeSubsystem() {
@@ -36,13 +35,13 @@ public class IntakeSubsystem extends Subsystem {
 
 
 	public void intakeWheelsIn(double speed) {
-		cWheels = coalesce(speed, cWheels);
-		RobotMap.intakeMotor.set(cWheels);
+		oldWheelSpeed = Calculator.ease(speed, oldWheelSpeed);
+		RobotMap.intakeMotor.set(oldWheelSpeed);
 	}
 
 	public void intakeWheelsOut(double speed) {
-		cWheels = coalesce(-speed, cWheels);
-		RobotMap.intakeMotor.set(cWheels);
+		oldWheelSpeed = Calculator.ease(-speed, oldWheelSpeed);
+		RobotMap.intakeMotor.set(oldWheelSpeed);
 	}
 	
 	public void armsIn(){
@@ -78,32 +77,9 @@ public class IntakeSubsystem extends Subsystem {
 		}
 	}
 	
-	/**
-	 * Coalesces the given current number to match the old number
-	 * @param current the current number given from the input
-	 * @param old the previous input
-	 * @param smooth_value the value at which to coalesce at
-	 * @return the coalesced number
-	 */
-	private double coalesce(double current, double old, double smooth_value) {
-		if (current < old - SMOOTH_VALUE) {
-			current = old - SMOOTH_VALUE;
-		} else if (current > old + SMOOTH_VALUE) {
-			current = old + SMOOTH_VALUE;
-		} else {
-			current = old;
-		}
-	
-		return current;
-	}
-	
-	private double coalesce(double current, double old){
-		return Calculator.ease(current, old);
-	}
-	
 	public void stop() {
-		cWheels = 0;
-		RobotMap.intakeMotor.set(cWheels);
+		oldWheelSpeed = 0;
+		RobotMap.intakeMotor.set(oldWheelSpeed);
 	}
 	
 }

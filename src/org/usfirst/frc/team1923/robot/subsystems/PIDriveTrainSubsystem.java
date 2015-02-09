@@ -31,7 +31,6 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 	private int DRIVE_MODE = 1;
 	public double oldLeftSpeed = 0;
 	public double oldRightSpeed = 0;
-	private double SMOOTH_VALUE = 0.02;
 
 	// Drive Wheel Encoders
 	// private Encoder driveEncoderLeft = RobotMap.driveEncoderLeft;
