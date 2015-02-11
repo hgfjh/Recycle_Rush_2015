@@ -15,7 +15,6 @@
 
   <!-- By default the system team number is used -->
    <property name="team-number" value="9999"/> 
-
   <!-- By default the target is set to 10.TE.AM.2 -->
   <!-- <property name="target" value=""/> -->
 

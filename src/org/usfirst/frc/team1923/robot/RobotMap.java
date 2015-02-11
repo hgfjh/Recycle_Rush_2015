@@ -82,6 +82,8 @@ public class RobotMap {
 	// Elevator
 	public static RobotDrive elevatorDrive = new RobotDrive(elevatorLeftMotor,
 			elevatorRightMotor);
+	// Calculator
+	public static double EASE_INCREMENT = 0.02;
 	
 
 	// Motor Group for Drive

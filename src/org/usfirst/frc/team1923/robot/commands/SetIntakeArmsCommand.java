@@ -1,31 +1,30 @@
 package org.usfirst.frc.team1923.robot.commands;
 
 import org.usfirst.frc.team1923.robot.Robot;
+import org.usfirst.frc.team1923.robot.subsystems.IntakeSubsystem;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class ArcDriveCommand extends Command  {
-	private double speed, curve;
+public class SetIntakeArmsCommand extends Command {
+	
+	private boolean state;
 
-    public ArcDriveCommand(double speed, double curve, double maxTimeOut) {
+    public SetIntakeArmsCommand(boolean state) {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.driveTrainSubsystem);
-        setTimeout(maxTimeOut);
-        this.speed = speed;
-        this.curve = curve;
-        
+        requires(Robot.intakeSubsystem);
+        setTimeout(1);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.intakeSubsystem.setArms(state);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(!isFinished())
-    	Robot.driveTrainSubsystem.arcDrive(speed, curve);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -35,7 +34,7 @@ public class ArcDriveCommand extends Command  {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.driveTrainSubsystem.stop();
+    	Robot.intakeSubsystem.stop();
     }
 
     // Called when another command which requires one or more of the same

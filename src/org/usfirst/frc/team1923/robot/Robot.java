@@ -25,7 +25,6 @@ public class Robot extends IterativeRobot {
 	// public static Elevator elevator
 	public static PIElevatorSubsystem elevatorSubsystem = new PIElevatorSubsystem();
 	public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-	public static IntakePistonSubsystem intakePistonSubsystem = new IntakePistonSubsystem();
 	public static OI oi;
 	public CommandGroup autonomousCommand;
 	public CommandGroup teleopCommand;
@@ -44,7 +43,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(driveTrainSubsystem);
 		SmartDashboard.putData(elevatorSubsystem);
 		SmartDashboard.putData(intakeSubsystem);
-		SmartDashboard.putData(intakePistonSubsystem);
 		addCommandsToDashboard();
 		autonomousCommand = new AutonNoBins();
 		teleopCommand = new TeleopCommand();
@@ -55,9 +53,9 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousInit() {
-		driveTrainSubsystem.cLeft = 0;
-		driveTrainSubsystem.cRight = 0;
-		intakeSubsystem.cWheels = 0;
+		driveTrainSubsystem.oldLeftSpeed = 0;
+		driveTrainSubsystem.oldRightSpeed = 0;
+		intakeSubsystem.oldWheelSpeed = 0;
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
@@ -78,9 +76,9 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		// Assign commands to buttons
 		
-		driveTrainSubsystem.cLeft = 0;
-		driveTrainSubsystem.cRight = 0;
-		intakeSubsystem.cWheels = 0;
+		driveTrainSubsystem.oldLeftSpeed = 0;
+		driveTrainSubsystem.oldRightSpeed = 0;
+		intakeSubsystem.oldWheelSpeed = 0;
 
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
@@ -94,8 +92,8 @@ public class Robot extends IterativeRobot {
 	 * to reset subsystems before shutting down.
 	 */
 	public void disabledInit() {
-		driveTrainSubsystem.cLeft = 0;
-		driveTrainSubsystem.cRight = 0;
+		driveTrainSubsystem.oldLeftSpeed = 0;
+		driveTrainSubsystem.oldRightSpeed = 0;
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		if (teleopCommand != null)
@@ -127,9 +125,9 @@ public class Robot extends IterativeRobot {
 				elevatorSubsystem.getElevatorEncoderPosition());
 		SmartDashboard.putNumber("Gyro", driveTrainSubsystem.getRobotHeading());
 		SmartDashboard.putNumber("Coal Left", 
-				driveTrainSubsystem.getCoalLeft());
+				driveTrainSubsystem.getEasedLeft());
 		SmartDashboard.putNumber("Coal Right",
-				driveTrainSubsystem.getCoalRight());
+				driveTrainSubsystem.getEasedRight());
 		SmartDashboard.putNumber("Encoder Speed Diff", driveTrainSubsystem.getSpeedDiff());
 		SmartDashboard.putBoolean("Elevator Bottom Limit Switch", RobotMap.elevatorBottomLimitSwitch.get());
 
