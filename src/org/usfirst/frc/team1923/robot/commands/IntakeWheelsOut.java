@@ -8,29 +8,28 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class SetIntakeArmsCommand extends Command {
+public class IntakeWheelsOut extends Command {
 	
-	private boolean state;
+	private double speed;
 
-    public SetIntakeArmsCommand(boolean state) {
+    public IntakeWheelsOut(double speed) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.intakeSubsystem);
-        this.state = state;
-        setTimeout(1);
+        this.speed = speed;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.intakeSubsystem.setArms(state);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.intakeSubsystem.intakeWheelsOut(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isTimedOut();
+        return false;
     }
 
     // Called once after isFinished returns true

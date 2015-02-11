@@ -83,6 +83,8 @@ public class OI {
 	a.whenPressed(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_2));
 	b.whenPressed(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_3));
 	y.whenPressed(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_4));
+//		x.whenPressed(new IntakeWheelsIn(0.2));
+//		a.whenPressed(new IntakeWheelsOut(0.2));
 	lB.whileHeld(new ElevatorDownCommand());
 	rB.whileHeld(new ElevatorUpCommand()); 
 	lT.whenActive(new SetIntakeArmsCommand(false)); //FIXME is whenActive correct here?
