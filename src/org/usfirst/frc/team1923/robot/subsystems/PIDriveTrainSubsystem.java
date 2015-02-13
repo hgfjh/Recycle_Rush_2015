@@ -37,6 +37,9 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 	public double autoOldRightSpeed = 0;
 	public double corValue = 0.2;
 	public double corValueNeg = 0.05;
+	private double kpLeft = 0.5;
+	private double kpRight = 0.5;
+	private double maxWheelSpeed = 110.0;
 
 	// Drive Wheel Encoders
 	// private Encoder driveEncoderLeft = RobotMap.driveEncoderLeft;
@@ -260,6 +263,7 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 
 	
 	public void smoothDrive(double left, double right){
+		// open loop bias based correction
 		oldLeftSpeed = Calculator.ease(left, oldLeftSpeed);
 		oldRightSpeed = Calculator.ease(right, oldRightSpeed);
 
@@ -277,6 +281,24 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 
 	}
 	
+	/*
+	public void smoothDrive(double left, double right){
+		// PID speed loop with feedforward
+		oldLeftSpeed = Calculator.ease(left, oldLeftSpeed);
+		oldRightSpeed = Calculator.ease(right, oldRightSpeed);
+
+		left = oldLeftSpeed;
+		right = oldRightSpeed;
+		
+		left = left + (left - ((this.getLeftSpeed()/this.maxWheelSpeed)*this.kpLeft));
+		right = right + (right - ((this.getRightSpeed()/this.maxWheelSpeed)*this.kpRight));
+		
+
+		
+		RobotMap.robotDriveTrain.tankDrive(left, right, false);
+
+	}
+	*/
 	public void autonStraightSmoothDrive(double left, double right){
 		left = left - ((getSpeedDiff() / 2 ) * speedDiffGain );
 		right = right + ((getSpeedDiff() / 2 ) * speedDiffGain );

@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class DriveBackwardForArcCommand extends Command {
+	//TODO
+	// Use Arc Drive command instead. DELETE THIS CLASS
 
 	private Timer timer;
 
