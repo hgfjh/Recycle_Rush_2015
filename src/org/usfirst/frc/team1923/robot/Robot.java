@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -27,7 +28,7 @@ public class Robot extends IterativeRobot {
 	public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 	public static OI oi;
 	public CommandGroup autonomousCommand;
-	public CommandGroup teleopCommand;
+	public SendableChooser autoChooser;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -43,9 +44,24 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(driveTrainSubsystem);
 		SmartDashboard.putData(elevatorSubsystem);
 		SmartDashboard.putData(intakeSubsystem);
-		addCommandsToDashboard();
+		
+		// instantiate the command used for the autonomous period
+		
+		// Comment line below if dashboard is used for auton chooser
 		autonomousCommand = new AutonNoBins();
-		teleopCommand = new TeleopCommand();
+		
+		     
+		// Uncomment below for auton chooser from Dashboard
+		//autoChooser = new SendableChooser();
+		//autoChooser.addDefault("Auton NO BINS ", new AutonNoBins());
+		//autoChooser.addObject("Auton Routine # 2", new AutoRoutine_MAK());
+		//SmartDashboard.putData("Auto Mode", autoChooser);
+		
+		
+		addCommandsToDashboard();
+			
+		
+		
 	}
 
 	public void disabledPeriodic() {
@@ -57,8 +73,12 @@ public class Robot extends IterativeRobot {
 		driveTrainSubsystem.oldRightSpeed = 0;
 		intakeSubsystem.oldWheelSpeed = 0;
 		// schedule the autonomous command (example)
-		if (autonomousCommand != null)
-			autonomousCommand.start();
+		// Comment line below if dashboard is used for auton chooser
+		if (autonomousCommand != null) autonomousCommand.start();
+		// Uncomment below for auton chooser from Dashboard
+		//autonomousCommand = (CommandGroup) autoChooser.getSelected();
+		//autonomousCommand.start();
+		
 	}
 
 	/**
@@ -84,8 +104,7 @@ public class Robot extends IterativeRobot {
 
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-		if (teleopCommand != null)
-			teleopCommand.start();
+		
 
 	}
 
@@ -98,8 +117,7 @@ public class Robot extends IterativeRobot {
 		driveTrainSubsystem.oldRightSpeed = 0;
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-		if (teleopCommand != null)
-			teleopCommand.cancel();
+		
 	}
 
 	/**
