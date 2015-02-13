@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.buttons.Trigger;
 public class RightTrigger extends Trigger {
     
     public boolean get() {
-    	return Robot.oi.xboxController.getSharpTriggerDiff() > 0.2;
+    	//return Robot.oi.xboxController.getRightTrigger() > 0.2;
+    	return false;
     }
 }

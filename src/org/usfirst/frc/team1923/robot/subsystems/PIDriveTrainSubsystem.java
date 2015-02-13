@@ -31,6 +31,8 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 	private int DRIVE_MODE = 1;
 	public double oldLeftSpeed = 0;
 	public double oldRightSpeed = 0;
+	public double corValue = 0.2;
+	public double corValueNeg = 0.05;
 
 	// Drive Wheel Encoders
 	// private Encoder driveEncoderLeft = RobotMap.driveEncoderLeft;
@@ -44,7 +46,7 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 			
 			//LEAVE THESE CONSTANTS ALONE!
 			Pg = 0.0118, 	Ig = 0.000,	 Dg = 0.0,
-			Pe = 0.015, 	Ie = 0.000,	 De = 0.00, 
+			Pe = 0.02, 	Ie = 0.000,	 De = 0.00, 
 			
 			PID_LOOP_TIME = .05,
 			gyroTOLERANCE = 3, // 0.2778% error ~= 0.5 degrees...?
@@ -224,7 +226,7 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 
 	private void applyPIDOutput(double d) {
 		if (DRIVE_MODE == ENCODER_MODE) {
-			smoothDrive(d, d);
+			smoothDrive(d, d); //TODO make auton smooth drive
 		} else if (DRIVE_MODE == GYRO_MODE) {
 			smoothDrive(d / 2.0, -d / 2.0);
 		}
@@ -255,30 +257,30 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 	public void smoothDrive(double left, double right){
 		oldLeftSpeed = Calculator.ease(left, oldLeftSpeed);
 		oldRightSpeed = Calculator.ease(right, oldRightSpeed);
-		double correctionRate;
-
-		if((left + right)/2>0){
-			correctionRate = 0.86;//1.046 + 0.008 *(1-(left + right)/2);
-		} else if((left + right)/2>-0.5){
-			correctionRate = 1.007;
-		} else {
-			correctionRate = 1.007 + 0.001*(left+right)/2;
-		}
 
 		left = oldLeftSpeed;
 		right = oldRightSpeed;
 		
-		if(correctionRate > 1){
-			right/=correctionRate;
-		} else {
-			left*=correctionRate;
-		}
 
+		if (left < 0.0 && Math.abs(left) > corValueNeg)
+			left += corValueNeg;
+		else if (left > 0.0 && left > corValue)
+			left -= corValue; 
+		else
+			left = 0.0;
 		RobotMap.robotDriveTrain.tankDrive(left, right, false);
+
 	}
 
 	public double getRobotHeading() {
 		return RobotMap.gyro.getAngle();
+	}
+	public double getLeftSpeed(){
+		return RobotMap.driveEncoderLeft.getRate();
+	}
+	
+	public double getRightSpeed(){
+		return RobotMap.driveEncoderRight.getRate();
 	}
 
 	public void resetBothEncoders() {

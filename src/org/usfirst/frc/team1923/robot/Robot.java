@@ -117,6 +117,8 @@ public class Robot extends IterativeRobot {
 
 	public void log() {
 		// Log values at Dashboard
+		SmartDashboard.putNumber("Left SPEED", driveTrainSubsystem.getLeftSpeed());
+		SmartDashboard.putNumber("Right SPEED", driveTrainSubsystem.getRightSpeed());
 		SmartDashboard.putNumber("Left Distance",
 				driveTrainSubsystem.getLeftEncoderDistance());
 		SmartDashboard.putNumber("Right Distance",
@@ -129,6 +131,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Coal Right",
 				driveTrainSubsystem.getEasedRight());
 		SmartDashboard.putNumber("Encoder Speed Diff", driveTrainSubsystem.getSpeedDiff());
+		
 		SmartDashboard.putBoolean("Elevator Bottom Limit Switch", RobotMap.elevatorBottomLimitSwitch.get());
 
 	}
