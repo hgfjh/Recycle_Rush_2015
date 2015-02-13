@@ -79,6 +79,8 @@ public class Robot extends IterativeRobot {
 		driveTrainSubsystem.oldLeftSpeed = 0;
 		driveTrainSubsystem.oldRightSpeed = 0;
 		intakeSubsystem.oldWheelSpeed = 0;
+		
+		Robot.elevatorSubsystem.setElevatorReferance();
 
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();

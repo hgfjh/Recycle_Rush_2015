@@ -9,10 +9,15 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ElevatorSetHomeCommand extends Command {
-
+	private boolean dontMove;
+	
 	public ElevatorSetHomeCommand() {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.elevatorSubsystem);
+	}
+	
+	public ElevatorSetHomeCommand(boolean dontMove){
+		this.dontMove = dontMove;
 	}
 
 	// Called just before this Command runs the first time
@@ -22,12 +27,12 @@ public class ElevatorSetHomeCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		if(!isFinished())
-			Robot.elevatorSubsystem.moveElevatorDown(0.5);
+			Robot.elevatorSubsystem.moveElevatorDown(0.3);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return RobotMap.elevatorBottomLimitSwitch.get();
+		return RobotMap.elevatorBottomLimitSwitch.get() || dontMove;
 	}
 
 	// Called once after isFinished returns true

@@ -102,9 +102,5 @@ public class OI {
 		return rightStick;
 	}
 
-	public Joystick getXboxController() {
-		return xboxController;
-
-	}
 
 }

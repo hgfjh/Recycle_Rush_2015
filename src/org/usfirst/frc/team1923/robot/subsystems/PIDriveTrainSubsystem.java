@@ -1,10 +1,12 @@
 package org.usfirst.frc.team1923.robot.subsystems;
 
 //import org.usfirst.frc.team1923.robot.Robot;
+import org.usfirst.frc.team1923.robot.Robot;
 import org.usfirst.frc.team1923.robot.RobotMap;
 import org.usfirst.frc.team1923.robot.commands.*;
 import org.usfirst.frc.team1923.util.Calculator;
 
+import edu.wpi.first.wpilibj.RobotDrive;
 //import edu.wpi.first.wpilibj.Encoder;
 //import edu.wpi.first.wpilibj.Gyro;
 //import edu.wpi.first.wpilibj.PIDController;
@@ -31,6 +33,8 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 	private int DRIVE_MODE = 1;
 	public double oldLeftSpeed = 0;
 	public double oldRightSpeed = 0;
+	public double autoOldLeftSpeed = 0;
+	public double autoOldRightSpeed = 0;
 	public double corValue = 0.2;
 	public double corValueNeg = 0.05;
 
@@ -50,7 +54,8 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 			
 			PID_LOOP_TIME = .05,
 			gyroTOLERANCE = 3, // 0.2778% error ~= 0.5 degrees...?
-			encoderTOLERANCE = 2.0; // +/- 2" tolarance
+			encoderTOLERANCE = 2.0, // +/- 2" tolarance
+			speedDiffGain = 0.05;
 
 	private static final int MANUAL_MODE = 1, ENCODER_MODE = 2, GYRO_MODE = 3;
 
@@ -226,7 +231,7 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 
 	private void applyPIDOutput(double d) {
 		if (DRIVE_MODE == ENCODER_MODE) {
-			smoothDrive(d, d); //TODO make auton smooth drive
+			autonStraightSmoothDrive(d, d);
 		} else if (DRIVE_MODE == GYRO_MODE) {
 			smoothDrive(d / 2.0, -d / 2.0);
 		}
@@ -270,6 +275,19 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 			left = 0.0;
 		RobotMap.robotDriveTrain.tankDrive(left, right, false);
 
+	}
+	
+	public void autonStraightSmoothDrive(double left, double right){
+		left = left - ((getSpeedDiff() / 2 ) * speedDiffGain );
+		right = right + ((getSpeedDiff() / 2 ) * speedDiffGain );
+
+		autoOldLeftSpeed = Calculator.ease(left, autoOldLeftSpeed);
+		autoOldRightSpeed = Calculator.ease(right, autoOldRightSpeed);
+
+		left = autoOldLeftSpeed;
+		right = autoOldRightSpeed;
+		
+		RobotMap.robotDriveTrain.tankDrive(left, right, false);
 	}
 
 	public double getRobotHeading() {
