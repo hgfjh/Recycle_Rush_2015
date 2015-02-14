@@ -4,8 +4,6 @@ package org.usfirst.frc.team1923.robot.subsystems;
 import org.usfirst.frc.team1923.robot.RobotMap;
 
 
-import org.usfirst.frc.team1923.util.Calculator;
-
 //import edu.wpi.first.wpilibj.Encoder;
 //import edu.wpi.first.wpilibj.Relay;
 //import edu.wpi.first.wpilibj.RobotDrive;
@@ -19,8 +17,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class IntakeSubsystem extends Subsystem {
 
-	public double oldWheelSpeed = 0;
-	public boolean armsActivated = false;
+	private static double SMOOTH_VALUE = 0.20;
+	public double cWheels = 0;
 	
 	public IntakeSubsystem() {
 		this.init();
@@ -35,51 +33,40 @@ public class IntakeSubsystem extends Subsystem {
 
 
 	public void intakeWheelsIn(double speed) {
-		oldWheelSpeed = Calculator.ease(speed, oldWheelSpeed);
-		RobotMap.intakeMotor.set(oldWheelSpeed);
+		cWheels = coalesce(-speed, cWheels);
+		RobotMap.intakeMotor.set(cWheels);
 	}
 
 	public void intakeWheelsOut(double speed) {
-		oldWheelSpeed = Calculator.ease(-speed, oldWheelSpeed);
-		RobotMap.intakeMotor.set(oldWheelSpeed);
-	}
-	
-	public void armsIn(){
- 		RobotMap.intakeSolenoidLeft.set(true); //TODO are these the correct boolean values?
-		RobotMap.intakeSolenoidRight.set(false);
-		armsActivated = true;
+		cWheels = coalesce(speed, cWheels);
+		RobotMap.intakeMotor.set(cWheels);
 	}
 	
 	/**
-	 * Makes the arms face outward (away from center of robot)
+	 * Coalesces the given current number to match the old number
+	 * @param current the current number given from the input
+	 * @param old the previous input
+	 * @return the coalesced number
 	 */
-	public void armsOut(){
-		RobotMap.intakeSolenoidLeft.set(false);
-		RobotMap.intakeSolenoidRight.set(true);
-		armsActivated = false;
-	}
-
-	public void setArms(boolean state){
-		if(state) //true - arms in
-			armsIn();
-		else      //false - arms out
-			armsOut();
-	}
-	/**
-	 * Inverts the state of the arms
-	 * Arms in -> Arms out etc..
-	 */
-	public void toggleArms(){
-		if(armsActivated){
-			this.armsOut();
+	private double coalesce(double current, double old, double smooth_value) {
+		if (current < old - SMOOTH_VALUE) {
+			current = old - SMOOTH_VALUE;
+		} else if (current > old + SMOOTH_VALUE) {
+			current = old + SMOOTH_VALUE;
 		} else {
-			this.armsIn();
+			current = old;
 		}
+	
+		return current;
+	}
+	
+	private double coalesce(double current, double old){
+		return coalesce(current, old, SMOOTH_VALUE);
 	}
 	
 	public void stop() {
-		oldWheelSpeed = 0;
-		RobotMap.intakeMotor.set(oldWheelSpeed);
+		cWheels = 0;
+		RobotMap.intakeMotor.set(cWheels);
 	}
 	
 }

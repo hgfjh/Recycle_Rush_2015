@@ -24,8 +24,8 @@ public class RobotMap {
 	// public static int rangefinderModule = 1;
 	// Constants
 	public static double ELEVATOR_POSITION_1 = 0.0;
-	public static double ELEVATOR_POSITION_2 = 16;
-	public static double ELEVATOR_POSITION_3 = 28.5;
+	public static double ELEVATOR_POSITION_2 = 17.5;
+	public static double ELEVATOR_POSITION_3 = 30;
 	public static double ELEVATOR_POSITION_4 = 49.0;
 
 	
@@ -82,8 +82,6 @@ public class RobotMap {
 	// Elevator
 	public static RobotDrive elevatorDrive = new RobotDrive(elevatorLeftMotor,
 			elevatorRightMotor);
-	// Calculator
-	public static double EASE_INCREMENT = 0.05;
 	
 
 	// Motor Group for Drive

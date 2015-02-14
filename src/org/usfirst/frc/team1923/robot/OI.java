@@ -1,12 +1,11 @@
 package org.usfirst.frc.team1923.robot;
 
 import org.usfirst.frc.team1923.robot.commands.*;
-import org.usfirst.frc.team1923.triggers.*;
 import org.usfirst.frc.team1923.util.XboxController;
 
 import edu.wpi.first.wpilibj.Joystick;
+//import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.buttons.Trigger;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -50,8 +49,8 @@ public class OI {
 	public JoystickButton y;
 	public JoystickButton lB;
 	public JoystickButton rB;
-	public Trigger lT;
-	public Trigger rT;
+	public JoystickButton lT;
+	public JoystickButton rT;
 	public JoystickButton back;
 	public JoystickButton leftClick;
 	public JoystickButton rightClick;
@@ -75,21 +74,19 @@ public class OI {
 		start = new JoystickButton(xboxController, 8);
 		leftClick = new JoystickButton(xboxController, 9);
 		rightClick = new JoystickButton(xboxController, 10);
-		lT = new LeftTrigger();
-		rT = new RightTrigger();
+		lT = new JoystickButton(xboxController, 11);
+		rT = new JoystickButton(xboxController, 12);
 
-	// Assign button actions
-	x.whenPressed(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_1));
-	a.whenPressed(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_2));
-	b.whenPressed(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_3));
-	y.whenPressed(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_4));
-//		x.whileHeld(new IntakeWheelsIn(1));
-//		a.whileHeld(new IntakeWheelsOut(1));
+		// Assign button actions
+	x.whenPressed(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_1 , 5.0));
+	a.whenPressed(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_2 , 5.0));
+	b.whenPressed(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_3 , 5.0));
+	y.whenPressed(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_4 , 5.0));
 	lB.whileHeld(new ElevatorDownCommand());
 	rB.whileHeld(new ElevatorUpCommand()); 
-	lT.whenActive(new SetIntakeArmsCommand(false)); //FIXME is whenActive correct here?
-	rT.whenActive(new SetIntakeArmsCommand(true));
 	start.whenPressed(new ElevatorSetHomeCommand());
+	
+	
 	
 	}
 
@@ -102,5 +99,9 @@ public class OI {
 		return rightStick;
 	}
 
+	public Joystick getXboxController() {
+		return xboxController;
+
+	}
 
 }

@@ -1,12 +1,9 @@
 package org.usfirst.frc.team1923.robot.subsystems;
 
 //import org.usfirst.frc.team1923.robot.Robot;
-import org.usfirst.frc.team1923.robot.Robot;
 import org.usfirst.frc.team1923.robot.RobotMap;
 import org.usfirst.frc.team1923.robot.commands.*;
-import org.usfirst.frc.team1923.util.Calculator;
 
-import edu.wpi.first.wpilibj.RobotDrive;
 //import edu.wpi.first.wpilibj.Encoder;
 //import edu.wpi.first.wpilibj.Gyro;
 //import edu.wpi.first.wpilibj.PIDController;
@@ -31,15 +28,12 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 	private Timer timer;
 	private double timeOut = 2.0;
 	private int DRIVE_MODE = 1;
-	public double oldLeftSpeed = 0;
-	public double oldRightSpeed = 0;
-	public double autoOldLeftSpeed = 0;
-	public double autoOldRightSpeed = 0;
-	public double corValue = 0.2;
-	public double corValueNeg = 0.05;
-	private double kpLeft = 0.5;
-	private double kpRight = 0.5;
-	private double maxWheelSpeed = 110.0;
+	public double cLeft = 0;
+	public double cRight = 0;
+	private double SMOOTH_VALUE = 0.02;
+	private double SMOOTH_CORRECT = 0.3;
+	private double SMOOTH_THRESHHOLD = 0.3;
+
 
 	// Drive Wheel Encoders
 	// private Encoder driveEncoderLeft = RobotMap.driveEncoderLeft;
@@ -53,12 +47,11 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 			
 			//LEAVE THESE CONSTANTS ALONE!
 			Pg = 0.0118, 	Ig = 0.000,	 Dg = 0.0,
-			Pe = 0.02, 	Ie = 0.000,	 De = 0.00, 
+			Pe = 0.015, 	Ie = 0.000,	 De = 0.00, 
 			
 			PID_LOOP_TIME = .05,
 			gyroTOLERANCE = 3, // 0.2778% error ~= 0.5 degrees...?
-			encoderTOLERANCE = 2.0, // +/- 2" tolarance
-			speedDiffGain = 0.05;
+			encoderTOLERANCE = 2.0; // +/- 2" tolarance
 
 	private static final int MANUAL_MODE = 1, ENCODER_MODE = 2, GYRO_MODE = 3;
 
@@ -84,7 +77,7 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
-		setDefaultCommand(new DriveWithJoyStickCommand());
+		setDefaultCommand(new TeleopCommand());
 	}
 
 	// Manual Drive
@@ -96,8 +89,8 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 	// Stop
 	public void stop() {
 		this.disable();
-		oldLeftSpeed = 0;
-		oldRightSpeed = 0;
+		cLeft = 0;
+		cRight = 0;
 		smoothDrive(0.0, 0.0);
 	}
 
@@ -234,7 +227,7 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 
 	private void applyPIDOutput(double d) {
 		if (DRIVE_MODE == ENCODER_MODE) {
-			autonStraightSmoothDrive(d, d);
+			smoothDrive(d, d);
 		} else if (DRIVE_MODE == GYRO_MODE) {
 			smoothDrive(d / 2.0, -d / 2.0);
 		}
@@ -252,75 +245,56 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 	 * @param old the previous input
 	 * @return the coalesced number
 	 */
-
-	public double getEasedLeft() {
-		return oldLeftSpeed;
+	private double coalesce(double current, double old) {
+		if (current < old - SMOOTH_VALUE) {
+			current = old - SMOOTH_VALUE;
+		} else if (current > old + SMOOTH_VALUE) {
+			current = old + SMOOTH_VALUE;
+		} else {
+			current = old;
+		}
+	
+		return current;
 	}
 
-	public double getEasedRight() {
-		return oldRightSpeed;
+	public double getCoalLeft() {
+		return cLeft;
+	}
+
+	public double getCoalRight() {
+		return cRight;
 	}
 
 	
 	public void smoothDrive(double left, double right){
-		// open loop bias based correction
-		oldLeftSpeed = Calculator.ease(left, oldLeftSpeed);
-		oldRightSpeed = Calculator.ease(right, oldRightSpeed);
+		cLeft = coalesce(left, cLeft);
+		cRight = coalesce(right, cRight);
+		double correctionRate;
 
-		left = oldLeftSpeed;
-		right = oldRightSpeed;
+		if((left + right)/2>0){
+			correctionRate = .931;//0.86;//1.046 + 0.008 *(1-(left + right)/2);
+		} else if((left + right)/2>-0.5){
+			correctionRate = 1;//1.007;
+		} else {
+			correctionRate = 1;//1.007 + 0.001*(left+right)/2;
+		}
+
+		left = cLeft;
+		right = cRight;
 		
+		if(correctionRate > 1){
+			right/=correctionRate;
+		} else {
+			left*=correctionRate;
+		}
+		//cLeft = left;
+		//cRight = right;
 
-		if (left < 0.0 && Math.abs(left) > corValueNeg)
-			left += corValueNeg;
-		else if (left > 0.0 && left > corValue)
-			left -= corValue; 
-		else
-			left = 0.0;
-		RobotMap.robotDriveTrain.tankDrive(left, right, false);
-
-	}
-	
-	/*
-	public void smoothDrive(double left, double right){
-		// PID speed loop with feedforward
-		oldLeftSpeed = Calculator.ease(left, oldLeftSpeed);
-		oldRightSpeed = Calculator.ease(right, oldRightSpeed);
-
-		left = oldLeftSpeed;
-		right = oldRightSpeed;
-		
-		left = left + (left - ((this.getLeftSpeed()/this.maxWheelSpeed)*this.kpLeft));
-		right = right + (right - ((this.getRightSpeed()/this.maxWheelSpeed)*this.kpRight));
-		
-
-		
-		RobotMap.robotDriveTrain.tankDrive(left, right, false);
-
-	}
-	*/
-	public void autonStraightSmoothDrive(double left, double right){
-		left = left - ((getSpeedDiff() / 2 ) * speedDiffGain );
-		right = right + ((getSpeedDiff() / 2 ) * speedDiffGain );
-
-		autoOldLeftSpeed = Calculator.ease(left, autoOldLeftSpeed);
-		autoOldRightSpeed = Calculator.ease(right, autoOldRightSpeed);
-
-		left = autoOldLeftSpeed;
-		right = autoOldRightSpeed;
-		
 		RobotMap.robotDriveTrain.tankDrive(left, right, false);
 	}
 
 	public double getRobotHeading() {
 		return RobotMap.gyro.getAngle();
-	}
-	public double getLeftSpeed(){
-		return RobotMap.driveEncoderLeft.getRate();
-	}
-	
-	public double getRightSpeed(){
-		return RobotMap.driveEncoderRight.getRate();
 	}
 
 	public void resetBothEncoders() {
@@ -330,5 +304,11 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 
 	public void resetGyro() {
 		RobotMap.gyro.reset();
+	}
+	public double getLeftSpeed(){
+		return RobotMap.driveEncoderLeft.getRate();
+	}
+	public double getRightSpeed(){
+		return RobotMap.driveEncoderRight.getRate();
 	}
 }

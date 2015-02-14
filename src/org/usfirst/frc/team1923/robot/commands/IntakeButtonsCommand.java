@@ -1,52 +1,52 @@
-package org.usfirst.frc.team1923.robot.commands;
+ package org.usfirst.frc.team1923.robot.commands;
 
 import org.usfirst.frc.team1923.robot.Robot;
+import org.usfirst.frc.team1923.robot.RobotMap;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+
+//import org.usfirst.frc.team1923.robot.subsystems.DriveTrainSubsystem;
 
 /**
  *
  */
-public class DriveBackwardForArcCommand extends Command {
+public class IntakeButtonsCommand extends Command {
+	private double desiredSpeed = 0;
 
-	private Timer timer;
-
-	private double speed = 0.4;
-
-	public DriveBackwardForArcCommand() {
+	public IntakeButtonsCommand() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(Robot.driveTrainSubsystem);
+		requires(Robot.intakeSubsystem);
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		timer = new Timer();
+		
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		// System.out.println("ex");
-		double currtime = timer.get();
-		if (currtime < 0.1) {
-			Robot.driveTrainSubsystem.manualDrive(-speed * currtime * 10,
-					-speed * currtime * 10);
-		} else {
-			Robot.driveTrainSubsystem.manualDrive(-speed, -speed);
-		}
+		int intake1 = Robot.oi.xboxController.getSharpTriggerDiff();
+		boolean intakeBack = Robot.oi.back.get();
+		
+		if(intake1==1)
+			desiredSpeed=1;
+		else if (intake1==-1)
+			desiredSpeed=-1;
+		else if (intakeBack==true)
+			desiredSpeed=0;
+		
+		Robot.intakeSubsystem.intakeWheelsIn(desiredSpeed);		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return timer.get() >= 0.3;
-		// return false;
+		return false;
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
-		timer.stop();
-		Robot.driveTrainSubsystem.stop();
+		Robot.intakeSubsystem.stop();
 	}
 
 	// Called when another command which requires one or more of the same

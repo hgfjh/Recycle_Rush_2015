@@ -31,7 +31,6 @@ public class ElevatorDownCommand extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if(!isFinished())
 			Robot.elevatorSubsystem.moveElevatorDown(RobotMap.ELEVATOR_DOWN_SPEED);
 	}
 
