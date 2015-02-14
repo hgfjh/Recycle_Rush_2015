@@ -46,7 +46,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(intakeSubsystem);
 		SmartDashboard.putData(intakePistonSubsystem);
 		addCommandsToDashboard();
-		autonomousCommand = new AutonNoBins();
+		autonomousCommand = new AutonSpin();
 		teleopCommand = new TeleopCommand();
 	}
 

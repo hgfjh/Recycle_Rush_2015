@@ -10,21 +10,27 @@ import edu.wpi.first.wpilibj.command.Command;
 public class TurnToHeadingCommand extends Command {
 	private double angle;
 	private double timeOut;
+	private int totes;
 
-	public TurnToHeadingCommand(double angle, double timeOut) {
+	public TurnToHeadingCommand(double angle, double timeOut, int totes) {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.driveTrainSubsystem);
 		this.angle = angle;
 		this.timeOut = timeOut;
+		this.totes = totes;
+	}
+	
+	public TurnToHeadingCommand(double angle, int totes){
+		this(angle, 5.0, totes);
 	}
 	
 	public TurnToHeadingCommand(double angle){
-		this(angle, 2.0);
+		this(angle, 5.0, 0);
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.driveTrainSubsystem.turnRobotHeading(angle, timeOut);
+		Robot.driveTrainSubsystem.turnRobotHeading(angle, timeOut, totes);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

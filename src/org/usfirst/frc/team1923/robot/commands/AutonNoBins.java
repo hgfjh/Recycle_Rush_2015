@@ -47,7 +47,7 @@ public class AutonNoBins extends CommandGroup {
     	//Move into auton zone
     	addSequential(new DriveDistanceCommand(RobotMap.DIST_TO_AUTON_ZONE));
     	//Turn left so when the robot backs up it stays in the auton zone
-    	addSequential(new TurnToHeadingCommand(-90, 5.0));
+    	addSequential(new TurnToHeadingCommand(-90, 5.0, 3));
     	
     	//Drop totes
     	addSequential(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_1));

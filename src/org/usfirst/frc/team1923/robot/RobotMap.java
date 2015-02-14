@@ -36,6 +36,7 @@ public class RobotMap {
 	
 	public static final double ELEVATOR_UP_SPEED = 0.8;
 	public static final double ELEVATOR_DOWN_SPEED = 0.6;
+	public static final double EASE_INCREMENT = 0.05;
 
 	// Compressor
 	//public static Solenoid solenoid = new Solenoid(0);

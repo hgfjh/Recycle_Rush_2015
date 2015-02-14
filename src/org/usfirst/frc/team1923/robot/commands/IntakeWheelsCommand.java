@@ -1,30 +1,41 @@
 package org.usfirst.frc.team1923.robot.commands;
 
 import org.usfirst.frc.team1923.robot.Robot;
-import org.usfirst.frc.team1923.robot.subsystems.IntakeSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class IntakeWheelsIn extends Command {
+public class IntakeWheelsCommand extends Command {
+
+	private int state;
 	
 	private double speed;
-
-    public IntakeWheelsIn(double speed) {
-        // Use requires() here to declare subsystem dependencies
+	
+    public IntakeWheelsCommand(int state, double speed) {
         requires(Robot.intakeSubsystem);
+        this.state = state;
         this.speed = speed;
+    }
+    
+    public IntakeWheelsCommand(int state) {
+    	this(state, 0.8);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.intakeSubsystem.intakeWheelsIn(speed);
+    	if( state == -1) 
+    		Robot.intakeSubsystem.intakeWheelsOut(speed);
+    	if( state == 0)
+    		this.end();
+    	if( state == 1)
+    		Robot.intakeSubsystem.intakeWheelsIn(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()

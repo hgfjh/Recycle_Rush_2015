@@ -2,7 +2,8 @@ package org.usfirst.frc.team1923.robot.subsystems;
 
 //import org.usfirst.frc.team1923.robot.Robot;
 import org.usfirst.frc.team1923.robot.RobotMap;
-import org.usfirst.frc.team1923.robot.commands.*;
+import org.usfirst.frc.team1923.robot.commands.TeleopCommand;
+import org.usfirst.frc.team1923.util.Calculator;
 
 //import edu.wpi.first.wpilibj.Encoder;
 //import edu.wpi.first.wpilibj.Gyro;
@@ -30,10 +31,6 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 	private int DRIVE_MODE = 1;
 	public double cLeft = 0;
 	public double cRight = 0;
-	private double SMOOTH_VALUE = 0.02;
-	private double SMOOTH_CORRECT = 0.3;
-	private double SMOOTH_THRESHHOLD = 0.3;
-
 
 	// Drive Wheel Encoders
 	// private Encoder driveEncoderLeft = RobotMap.driveEncoderLeft;
@@ -46,7 +43,11 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 			WHEEL_CIRCUMFERENCE = 12.56, // 4 inches wheels
 			
 			//LEAVE THESE CONSTANTS ALONE!
-			Pg = 0.0118, 	Ig = 0.000,	 Dg = 0.0,
+			Pg0 = 0.0175, 	Ig0 = 0.000,	 Dg0 = 0.00,
+			Pg1 = 0.0165, 	Ig1 = 0.000,	 Dg1 = 0.00,
+			Pg2 = 0.0167, 	Ig2 = 0.000,	 Dg2 = 0.00,
+			Pg3 = 0.0165, 	Ig3 = 0.000,	 Dg3 = 0.00,
+			
 			Pe = 0.015, 	Ie = 0.000,	 De = 0.00, 
 			
 			PID_LOOP_TIME = .05,
@@ -179,9 +180,9 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 	}
 
 	// Gyro Base Turns
-	public void turnRobotHeading(double angle, double maxTimeOut) {
+	public void turnRobotHeading(double angle, double maxTimeOut, int toteCount) {
 
-		setGyroPID();
+		setGyroPID(toteCount);
 
 		setSetpoint(angle);
 
@@ -202,10 +203,25 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 
 	}
 
-	public void setGyroPID() {
+	public void setGyroPID(int toteCount) {
 		DRIVE_MODE = GYRO_MODE;
 		this.resetGyro();
-		this.getPIDController().setPID(Pg, Ig, Dg);
+		switch (toteCount){
+		case 0:
+			this.getPIDController().setPID(Pg0, Ig0, Dg0);		
+			break;
+		case 1:
+			this.getPIDController().setPID(Pg1, Ig1, Dg1);		
+			break;
+		case 2:
+			this.getPIDController().setPID(Pg2, Ig2, Dg2);		
+			break;
+		case 3:
+			this.getPIDController().setPID(Pg3, Ig3, Dg3);		
+			break;
+		}
+				
+		
 		this.setAbsoluteTolerance(gyroTOLERANCE);
 		this.setOutputRange(-1.0, 1.0);
 		this.setInputRange(-360.0, 360.0);
@@ -245,17 +261,6 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 	 * @param old the previous input
 	 * @return the coalesced number
 	 */
-	private double coalesce(double current, double old) {
-		if (current < old - SMOOTH_VALUE) {
-			current = old - SMOOTH_VALUE;
-		} else if (current > old + SMOOTH_VALUE) {
-			current = old + SMOOTH_VALUE;
-		} else {
-			current = old;
-		}
-	
-		return current;
-	}
 
 	public double getCoalLeft() {
 		return cLeft;
@@ -267,12 +272,13 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 
 	
 	public void smoothDrive(double left, double right){
-		cLeft = coalesce(left, cLeft);
-		cRight = coalesce(right, cRight);
+		cLeft = Calculator.ease(left, cLeft);
+		cRight = Calculator.ease(right, cRight);
+		
 		double correctionRate;
 
 		if((left + right)/2>0){
-			correctionRate = .931;//0.86;//1.046 + 0.008 *(1-(left + right)/2);
+			correctionRate = 0.86;//1.046 + 0.008 *(1-(left + right)/2);
 		} else if((left + right)/2>-0.5){
 			correctionRate = 1;//1.007;
 		} else {

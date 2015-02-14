@@ -26,10 +26,10 @@ public class DriveWithJoyStickCommand extends Command {
 		boolean rightTrigger = Robot.oi.rightStick.getTrigger();
 		boolean leftTrigger = Robot.oi.leftStick.getTrigger();
 		if (rightTrigger && leftTrigger) {
-			Robot.driveTrainSubsystem.manualDrive(-Robot.oi.leftStick.getY() / 2,
+			Robot.driveTrainSubsystem.smoothDrive(-Robot.oi.leftStick.getY() / 2,
 					-Robot.oi.rightStick.getY() / 2);
 		} else {
-			Robot.driveTrainSubsystem.manualDrive(
+			Robot.driveTrainSubsystem.smoothDrive(
 					-Robot.oi.leftStick.getY(),
 					-Robot.oi.rightStick.getY());
 		}

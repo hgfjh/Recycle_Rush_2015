@@ -7,9 +7,15 @@ import edu.wpi.first.wpilibj.command.Scheduler;
  *
  */
 public class AutonDriveForward extends CommandGroup {
-    
-    public  AutonDriveForward() {
-    	addSequential(new ElevatorSetHomeCommand());
-        addSequential(new DriveDistanceCommand(60));
+	
+    public AutonDriveForward(){
+    	this(60);
     }
+    
+    public AutonDriveForward(double distance) {
+    	addSequential(new ElevatorSetHomeCommand());
+        addSequential(new DriveDistanceCommand(distance));
+    }
+    
+
 }
