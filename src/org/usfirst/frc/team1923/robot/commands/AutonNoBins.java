@@ -26,7 +26,7 @@ public class AutonNoBins extends CommandGroup {
     	//Drop elevator on second tote
     	addSequential(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_1));
     	//Pick up second tote
-    	addSequential(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_2));
+    	addParallel(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_2));
 /////////We now have the second tote	
     	//Move right up to third tote
     	addSequential(new DriveDistanceCommand(RobotMap.DIST_TO_NEXT_TOTE));
