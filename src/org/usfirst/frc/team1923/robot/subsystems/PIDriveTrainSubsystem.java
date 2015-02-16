@@ -37,7 +37,7 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 	public double autoOldRightSpeed = 0;
 	public double corValue = 0.2;
 	public double corValueNeg = 0.05;
-	private double kpLeft = 0.2;
+	private double kpLeft = 0.45;// increase kpLeft for drive straight in auton.
 	private double kpRight = 0.2;
 	private double maxWheelSpeed = 120.0;
 
@@ -57,10 +57,10 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 			Pg1 = 0.0165, 	Ig1 = 0.000,	 Dg1 = 0.00,
 			Pg2 = 0.0167, 	Ig2 = 0.000,	 Dg2 = 0.00,
 			Pg3 = 0.0165, 	Ig3 = 0.000,	 Dg3 = 0.00,
-			Pe = 0.02, 	Ie = 0.000,	 De = 0.00, 
+			Pe = 0.01, 	Ie = 0.000,	 De = 0.03, 
 			
 			PID_LOOP_TIME = .05,
-			gyroTOLERANCE = 3, // 0.2778% error ~= 0.5 degrees...?
+			gyroTOLERANCE = 5, // 0.2778% error ~= 0.5 degrees...?
 			encoderTOLERANCE = 2.0, // +/- 2" tolarance
 			speedDiffGain = 0.05;
 
@@ -288,6 +288,8 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 		left = oldLeftSpeed;
 		right = oldRightSpeed;
 		
+		left *= 1.0;
+		right *= 0.91;
 		
 
 //		if (left < 0.0 && Math.abs(left) > corValueNeg)

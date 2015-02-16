@@ -22,9 +22,7 @@ public class ElevatorSetHomeCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		if(!isFinished())
-			Robot.elevatorSubsystem.moveElevatorDown(0.7);
-		else
-			Robot.elevatorSubsystem.stop();
+			Robot.elevatorSubsystem.moveElevatorDown(0.75);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -34,7 +32,6 @@ public class ElevatorSetHomeCommand extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.elevatorSubsystem.moveElevatorDown(0.0);
 		Robot.elevatorSubsystem.setElevatorReferance();
 		Robot.elevatorSubsystem.stop();
 	}
@@ -42,7 +39,6 @@ public class ElevatorSetHomeCommand extends Command {
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
-		Robot.elevatorSubsystem.moveElevatorDown(0.0);
 		Robot.elevatorSubsystem.stop();
 	}
 }

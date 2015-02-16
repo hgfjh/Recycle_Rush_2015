@@ -147,8 +147,9 @@ public class PIElevatorSubsystem extends PIDSubsystem {
 	}
 
 	public void stop() {
-		this.disable();
 		RobotMap.elevatorDrive.drive(0.0, 0.0);
+		this.disable();
+
 	}
 
 	public double getPositionError() {

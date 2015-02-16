@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 public class AutonDriveForward extends CommandGroup {
 	
     public AutonDriveForward(){
-    	this(60);
+    	this(75);
     }
     
     public AutonDriveForward(double distance) {

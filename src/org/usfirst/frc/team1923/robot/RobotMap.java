@@ -30,11 +30,11 @@ public class RobotMap {
 	public static double ELEVATOR_POSITION_4 = 49.0;
 
 	public static double DIST_TO_PICK_UP_TOTE = 27.25;
-	public static double DIST_TO_NEXT_TOTE = 50.25;
-	public static double DIST_TO_AUTON_ZONE = 107;
+	public static double DIST_TO_NEXT_TOTE = 95.0;
+	public static double DIST_TO_AUTON_ZONE = 125;
 	
 	public static final double ELEVATOR_UP_SPEED = 0.8;
-	public static final double ELEVATOR_DOWN_SPEED = 0.6;
+	public static final double ELEVATOR_DOWN_SPEED = 0.7;
 	public static final double EASE_INCREMENT = 0.05;
 
 	// Compressor
@@ -68,12 +68,18 @@ public class RobotMap {
 			EncodingType.k4X);
 
 	// Digital IO
-	public static DigitalInput elevatorTopLimitSwitch = new CustomDigitalInput(9);
-	public static DigitalInput elevatorBottomLimitSwitch = new CustomDigitalInput(8);
+	public static DigitalInput elevatorTopLimitSwitch = new DigitalInput(9);
+	public static DigitalInput elevatorBottomLimitSwitch = new DigitalInput(8);
 
 	// Spikes
-	// public static Relay intakeLeftSpike = new Relay(5);
-	// public static Relay intakeRightSpike = new Relay(6);
+//	 public static Relay intakeLeftSpike = new Relay(5);
+//	 public static Relay intakeRightSpike = new Relay(6);
+	
+	//Lights
+	public static Relay WhiteLED = new Relay(0);
+	public static Relay PinkLED = new Relay(1);
+	public static Relay RedBlueLED = new Relay(2);
+
 
 	// DriveTrain
 	public static RobotDrive robotDriveTrain = new RobotDrive(frontLeftDrive,

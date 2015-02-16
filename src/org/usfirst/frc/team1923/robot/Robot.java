@@ -1,6 +1,8 @@
 package org.usfirst.frc.team1923.robot;
 
 import org.usfirst.frc.team1923.robot.commands.AutonDriveForward;
+import org.usfirst.frc.team1923.robot.commands.AutonDriveForwardWithOneTote;
+import org.usfirst.frc.team1923.robot.commands.AutonMoveBin;
 import org.usfirst.frc.team1923.robot.commands.AutonNoBins;
 import org.usfirst.frc.team1923.robot.commands.AutonSpin;
 import org.usfirst.frc.team1923.robot.commands.DriveDistanceCommand;
@@ -11,6 +13,7 @@ import org.usfirst.frc.team1923.robot.commands.ResetGyroCommand;
 import org.usfirst.frc.team1923.robot.commands.TeleopCommand;
 import org.usfirst.frc.team1923.robot.subsystems.IntakePistonSubsystem;
 import org.usfirst.frc.team1923.robot.subsystems.IntakeSubsystem;
+import org.usfirst.frc.team1923.robot.subsystems.LEDSubsytem;
 import org.usfirst.frc.team1923.robot.subsystems.PIDriveTrainSubsystem;
 import org.usfirst.frc.team1923.robot.subsystems.PIElevatorSubsystem;
 
@@ -38,6 +41,7 @@ public class Robot extends IterativeRobot {
 	public static PIElevatorSubsystem elevatorSubsystem = new PIElevatorSubsystem();
 	public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 	public static IntakePistonSubsystem intakePistonSubsystem = new IntakePistonSubsystem();
+	public static LEDSubsytem ledSubsystem = new LEDSubsytem();
 	public static OI oi;
 	public CommandGroup autonomousCommand;
 	public CommandGroup teleopCommand;
@@ -62,6 +66,8 @@ public class Robot extends IterativeRobot {
 		autoChooser.addDefault("Auton NO BINS ", new AutonNoBins());
 		autoChooser.addObject("Auton drive forward", new AutonDriveForward());
 		autoChooser.addObject("Auton Spin", new AutonSpin());
+		autoChooser.addObject("Auton Drive Forward One Tote", new AutonDriveForwardWithOneTote());
+		autoChooser.addObject("Auton Move Bin", new AutonMoveBin());
 		SmartDashboard.putData("Auto Mode", autoChooser);
 		addCommandsToDashboard();
 		
@@ -178,7 +184,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Drive Distance DIST_TO_PICK_UP_TOTE",
 				new DriveDistanceCommand(RobotMap.DIST_TO_PICK_UP_TOTE, 5.0));
 		SmartDashboard.putData("Drive Distance DIST_TO_NEXT_TOTE",
-				new DriveDistanceCommand(RobotMap.DIST_TO_NEXT_TOTE, 5.0));
+				new DriveDistanceCommand(RobotMap.DIST_TO_NEXT_TOTE, 8.0));
 		SmartDashboard.putData("Drive Distance DIST_TO_AUTON_ZONE",
 				new DriveDistanceCommand(RobotMap.DIST_TO_AUTON_ZONE, 5.0));
 		SmartDashboard.putData("Drive Distance -DIST_TO_PICK_UP_TOTE",
