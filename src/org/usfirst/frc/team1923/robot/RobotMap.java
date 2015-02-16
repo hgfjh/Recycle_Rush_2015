@@ -2,6 +2,7 @@ package org.usfirst.frc.team1923.robot;
 
 //import org.usfirst.frc.team1923.util.MotorGroup;
 
+import org.usfirst.frc.team1923.util.CustomDigitalInput;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -27,8 +28,6 @@ public class RobotMap {
 	public static double ELEVATOR_POSITION_2 = 17.5;
 	public static double ELEVATOR_POSITION_3 = 30;
 	public static double ELEVATOR_POSITION_4 = 49.0;
-
-	
 
 	public static double DIST_TO_PICK_UP_TOTE = 27.25;
 	public static double DIST_TO_NEXT_TOTE = 50.25;
@@ -69,8 +68,8 @@ public class RobotMap {
 			EncodingType.k4X);
 
 	// Digital IO
-	public static DigitalInput elevatorTopLimitSwitch = new DigitalInput(9);
-	public static DigitalInput elevatorBottomLimitSwitch = new DigitalInput(8);
+	public static DigitalInput elevatorTopLimitSwitch = new CustomDigitalInput(9);
+	public static DigitalInput elevatorBottomLimitSwitch = new CustomDigitalInput(8);
 
 	// Spikes
 	// public static Relay intakeLeftSpike = new Relay(5);

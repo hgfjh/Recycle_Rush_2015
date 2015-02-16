@@ -1,12 +1,24 @@
 package org.usfirst.frc.team1923.robot;
 
-import org.usfirst.frc.team1923.robot.commands.*;
-import org.usfirst.frc.team1923.robot.subsystems.*;
+import org.usfirst.frc.team1923.robot.commands.AutonDriveForward;
+import org.usfirst.frc.team1923.robot.commands.AutonNoBins;
+import org.usfirst.frc.team1923.robot.commands.AutonSpin;
+import org.usfirst.frc.team1923.robot.commands.DriveDistanceCommand;
+import org.usfirst.frc.team1923.robot.commands.ElevatorSetHomeCommand;
+import org.usfirst.frc.team1923.robot.commands.MoveElevatorToPositionCommand;
+import org.usfirst.frc.team1923.robot.commands.ResetBothEncodersCommand;
+import org.usfirst.frc.team1923.robot.commands.ResetGyroCommand;
+import org.usfirst.frc.team1923.robot.commands.TeleopCommand;
+import org.usfirst.frc.team1923.robot.subsystems.IntakePistonSubsystem;
+import org.usfirst.frc.team1923.robot.subsystems.IntakeSubsystem;
+import org.usfirst.frc.team1923.robot.subsystems.PIDriveTrainSubsystem;
+import org.usfirst.frc.team1923.robot.subsystems.PIElevatorSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -29,11 +41,12 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public CommandGroup autonomousCommand;
 	public CommandGroup teleopCommand;
+	public SendableChooser autoChooser;
 
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
-	 */
+	 */           
 	public void robotInit() {
 		// Initialize Robot
 		RobotMap.init();
@@ -45,8 +58,14 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(elevatorSubsystem);
 		SmartDashboard.putData(intakeSubsystem);
 		SmartDashboard.putData(intakePistonSubsystem);
+		autoChooser = new SendableChooser();
+		autoChooser.addDefault("Auton NO BINS ", new AutonNoBins());
+		autoChooser.addObject("Auton drive forward", new AutonDriveForward());
+		autoChooser.addObject("Auton Spin", new AutonSpin());
+		SmartDashboard.putData("Auto Mode", autoChooser);
 		addCommandsToDashboard();
-		autonomousCommand = new AutonSpin();
+		
+		//autonomousCommand = new AutonSpin();
 		teleopCommand = new TeleopCommand();
 	}
 
@@ -55,12 +74,12 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousInit() {
-		driveTrainSubsystem.cLeft = 0;
-		driveTrainSubsystem.cRight = 0;
+		//driveTrainSubsystem.cLeft = 0;
+		//driveTrainSubsystem.cRight = 0;
 		intakeSubsystem.cWheels = 0;
-		// schedule the autonomous command (example)
-		if (autonomousCommand != null)
-			autonomousCommand.start();
+		
+		autonomousCommand = (CommandGroup) autoChooser.getSelected();
+		autonomousCommand.start();
 	}
 
 	/**
@@ -78,8 +97,8 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		// Assign commands to buttons
 		
-		driveTrainSubsystem.cLeft = 0;
-		driveTrainSubsystem.cRight = 0;
+		//driveTrainSubsystem.cLeft = 0;
+		//driveTrainSubsystem.cRight = 0;
 		intakeSubsystem.cWheels = 0;
 
 		if (autonomousCommand != null)
@@ -94,8 +113,8 @@ public class Robot extends IterativeRobot {
 	 * to reset subsystems before shutting down.
 	 */
 	public void disabledInit() {
-		driveTrainSubsystem.cLeft = 0;
-		driveTrainSubsystem.cRight = 0;
+		//driveTrainSubsystem.cLeft = 0;
+		//driveTrainSubsystem.cRight = 0;
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		if (teleopCommand != null)
@@ -126,10 +145,10 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Elevator Position",
 				elevatorSubsystem.getElevatorEncoderPosition());
 		SmartDashboard.putNumber("Gyro", driveTrainSubsystem.getRobotHeading());
-		SmartDashboard.putNumber("Coal Left", 
-				driveTrainSubsystem.getCoalLeft());
-		SmartDashboard.putNumber("Coal Right",
-				driveTrainSubsystem.getCoalRight());
+		//SmartDashboard.putNumber("Coal Left", 
+		//		driveTrainSubsystem.getCoalLeft());
+		//SmartDashboard.putNumber("Coal Right",
+		//		driveTrainSubsystem.getCoalRight());
 		SmartDashboard.putNumber("Encoder Speed Diff", driveTrainSubsystem.getSpeedDiff());
 		SmartDashboard.putBoolean("Elevator Bottom Limit Switch", RobotMap.elevatorBottomLimitSwitch.get());
 		SmartDashboard.putNumber("LEFT SPEED", driveTrainSubsystem.getLeftSpeed());

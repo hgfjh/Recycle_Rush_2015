@@ -30,7 +30,7 @@ public class ElevatorDropCommand extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return RobotMap.elevatorBottomLimitSwitch.get() || isTimedOut();
+		return /*RobotMap.elevatorBottomLimitSwitch.get() || */ isTimedOut();
 	}
 	// Called once after isFinished returns true
 	protected void end() {

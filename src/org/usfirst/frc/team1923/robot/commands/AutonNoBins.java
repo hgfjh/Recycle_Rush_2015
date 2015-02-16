@@ -12,21 +12,18 @@ public class AutonNoBins extends CommandGroup {
     	
     	//Initialize elevator
     	addSequential(new ElevatorSetHomeCommand());
-    	//Move elevator to above the first tote
+    	//Lift the first tote
     	addSequential(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_2));
-//    	//Add the intake wheels command here
-    	//Move robot so first tote is in the robot
-    	addSequential(new DriveDistanceCommand(RobotMap.DIST_TO_PICK_UP_TOTE));
-    	//Drop elevator on first tote
-    	addSequential(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_1));
-    	//Pick up first tote
-    	addSequential(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_2));
-/////////////////////We now have the first tote	
+    	/////////////////////We now have the first tote	
     	//Move right up to second tote
     	addSequential(new DriveDistanceCommand(RobotMap.DIST_TO_NEXT_TOTE));
-//    	//Add the intake wheels command here
+    	//Piston faces outwards
+  //  	addSequential(new IntakePistonsCommand(false));
+    	//Spins input wheels inwards
+  // 	addSequential(new IntakeWheelsCommand(1));
     	//Move robot so second tote is in the robot
     	addSequential(new DriveDistanceCommand(RobotMap.DIST_TO_PICK_UP_TOTE));
+  //	addParallel(new IntakePistonsCommand(true));
     	//Drop elevator on second tote
     	addSequential(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_1));
     	//Pick up second tote
