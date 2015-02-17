@@ -78,12 +78,14 @@ public class OI {
 		rT = new JoystickButton(xboxController, 12);
 
 		// Assign button actions
-	x.whenPressed(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_1 , 5.0));
-	a.whenPressed(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_2 , 5.0));
-	b.whenPressed(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_3 , 5.0));
-	y.whenPressed(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_4 , 5.0));
+	x.whenPressed(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_1 , 4.0));
+	a.whenPressed(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_2 , 4.0));
+	b.whenPressed(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_3 , 4.0));
+	y.whenPressed(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_4 , 4.0));
 	lB.whileHeld(new ElevatorDownCommand());
 	rB.whileHeld(new ElevatorUpCommand()); 
+	rightClick.whenPressed(new CoopArmsGroup());
+	leftClick.whenActive(new ToggleIntakeArmsCommand());
 	start.whenPressed(new ElevatorSetHomeCommand());
 	
 	

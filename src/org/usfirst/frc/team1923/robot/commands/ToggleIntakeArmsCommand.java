@@ -7,23 +7,17 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class IntakePistonsCommand extends Command {
-	
-	private boolean active;
+public class ToggleIntakeArmsCommand extends Command {
 
-    public IntakePistonsCommand(boolean active) {
+    public ToggleIntakeArmsCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.intakePistonSubsystem);
-    	this.active = active;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if(active)
-    		Robot.intakePistonSubsystem.armsIn();
-    	else
-    		Robot.intakePistonSubsystem.armsOut();
+    	Robot.intakePistonSubsystem.toggle();
     }
 
     // Called repeatedly when this Command is scheduled to run

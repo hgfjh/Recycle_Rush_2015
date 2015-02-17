@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * floating around.
  */
 public class RobotMap {
+	
+	public static boolean ISGALILEO = true;
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
 	// public static int leftMotor = 1;
@@ -28,6 +30,7 @@ public class RobotMap {
 	public static double ELEVATOR_POSITION_2 = 17.5;
 	public static double ELEVATOR_POSITION_3 = 30;
 	public static double ELEVATOR_POSITION_4 = 49.0;
+	public static double ELEVATOR_POSITION_COOP = 7.5;
 
 	public static double DIST_TO_PICK_UP_TOTE = 27.25;
 	public static double DIST_TO_NEXT_TOTE = 95.0;
@@ -68,8 +71,8 @@ public class RobotMap {
 			EncodingType.k4X);
 
 	// Digital IO
-	public static DigitalInput elevatorTopLimitSwitch = new DigitalInput(9);
-	public static DigitalInput elevatorBottomLimitSwitch = new DigitalInput(8);
+	public static DigitalInput elevatorTopLimitSwitch;
+	public static DigitalInput elevatorBottomLimitSwitch;
 
 	// Spikes
 //	 public static Relay intakeLeftSpike = new Relay(5);

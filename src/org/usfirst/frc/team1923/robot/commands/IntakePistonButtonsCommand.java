@@ -28,7 +28,6 @@ public class IntakePistonButtonsCommand extends Command {
 	protected void execute() {
 		boolean intakeActivate = Robot.oi.leftClick.get();
 		
-		
 		if(intakeActivate!=lastPressed){
 			lastPressed=intakeActivate;
 			if(lastPressed){

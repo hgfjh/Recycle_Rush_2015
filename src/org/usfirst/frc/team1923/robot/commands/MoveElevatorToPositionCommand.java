@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1923.robot.commands;
 
 import org.usfirst.frc.team1923.robot.Robot;
+import org.usfirst.frc.team1923.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -13,6 +14,7 @@ public class MoveElevatorToPositionCommand extends Command {
 	public MoveElevatorToPositionCommand(double position, double timeOut) {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.elevatorSubsystem);
+		requires(Robot.intakePistonSubsystem);
 		this.position = position;
 		this.timeOut = timeOut;
 	}
@@ -23,6 +25,8 @@ public class MoveElevatorToPositionCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		if(position < 5)
+			Robot.intakePistonSubsystem.armsOut();
 		Robot.elevatorSubsystem.moveElevatorToPosition(position, timeOut);
 	}
 

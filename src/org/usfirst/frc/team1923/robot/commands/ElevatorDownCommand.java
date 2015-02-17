@@ -15,12 +15,12 @@ public class ElevatorDownCommand extends Command {
 	public ElevatorDownCommand() {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.elevatorSubsystem);
-		setTimeout(2);
 	}
 	
 	public ElevatorDownCommand(double time) {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.elevatorSubsystem);
+		requires(Robot.intakePistonSubsystem);
 		setTimeout(time);
 	}
 
@@ -31,17 +31,19 @@ public class ElevatorDownCommand extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if(RobotMap.elevatorBottomLimitSwitch.get() || isTimedOut()){
-			Robot.elevatorSubsystem.stop();
-			
-		} else {
+		
+		if(RobotMap.elevatorEncoder.getDistance() < 15)
+			Robot.intakePistonSubsystem.armsOut();
+		
+		if(!isFinished())
 			Robot.elevatorSubsystem.moveElevatorDown(RobotMap.ELEVATOR_DOWN_SPEED);			
-		}
+		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return true;
+		return RobotMap.elevatorBottomLimitSwitch.get();
+
 	}
 
 	// Called once after isFinished returns true

@@ -16,7 +16,10 @@ import org.usfirst.frc.team1923.robot.subsystems.IntakeSubsystem;
 import org.usfirst.frc.team1923.robot.subsystems.LEDSubsytem;
 import org.usfirst.frc.team1923.robot.subsystems.PIDriveTrainSubsystem;
 import org.usfirst.frc.team1923.robot.subsystems.PIElevatorSubsystem;
+import org.usfirst.frc.team1923.util.CustomDigitalInput;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -43,6 +46,7 @@ public class Robot extends IterativeRobot {
 	public static IntakePistonSubsystem intakePistonSubsystem = new IntakePistonSubsystem();
 	public static LEDSubsytem ledSubsystem = new LEDSubsytem();
 	public static OI oi;
+
 	public CommandGroup autonomousCommand;
 	public CommandGroup teleopCommand;
 	public SendableChooser autoChooser;
@@ -55,6 +59,16 @@ public class Robot extends IterativeRobot {
 		// Initialize Robot
 		RobotMap.init();
 		oi = new OI();
+
+		if (RobotMap.ISGALILEO) {
+			RobotMap.elevatorTopLimitSwitch = new CustomDigitalInput(9);
+			RobotMap.elevatorBottomLimitSwitch = new CustomDigitalInput(8);
+		}
+		else{
+			RobotMap.elevatorTopLimitSwitch = new DigitalInput(9);
+			RobotMap.elevatorBottomLimitSwitch = new DigitalInput(8);
+		
+		}
 		// CommandBase.init();
 		// instantiate the command used for the autonomous period
 
@@ -106,6 +120,8 @@ public class Robot extends IterativeRobot {
 		//driveTrainSubsystem.cLeft = 0;
 		//driveTrainSubsystem.cRight = 0;
 		intakeSubsystem.cWheels = 0;
+		
+		//intakePistonSubsystem.armsOut();
 
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
@@ -157,6 +173,7 @@ public class Robot extends IterativeRobot {
 		//		driveTrainSubsystem.getCoalRight());
 		SmartDashboard.putNumber("Encoder Speed Diff", driveTrainSubsystem.getSpeedDiff());
 		SmartDashboard.putBoolean("Elevator Bottom Limit Switch", RobotMap.elevatorBottomLimitSwitch.get());
+		SmartDashboard.putBoolean("arms yo", intakePistonSubsystem.getArms());
 		SmartDashboard.putNumber("LEFT SPEED", driveTrainSubsystem.getLeftSpeed());
 		SmartDashboard.putNumber("RIGHT SPEED", driveTrainSubsystem.getRightSpeed());
 	}

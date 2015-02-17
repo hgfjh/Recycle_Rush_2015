@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class IntakePistonSubsystem extends Subsystem {
 	
-	private boolean activated = false;
+	public boolean armsOut = false;
 	
 	public IntakePistonSubsystem() {
 		this.init();
@@ -28,25 +28,30 @@ public class IntakePistonSubsystem extends Subsystem {
 
 
 	public void initDefaultCommand() {
+		
 	}
 	
-	public void activate(){
- 		RobotMap.intakeSolenoidLeft.set(true);
-		RobotMap.intakeSolenoidRight.set(false);
-		activated = true;
-	}
-	
-	public void deactivate(){
-		RobotMap.intakeSolenoidLeft.set(false);
+	public void armsIn(){
+ 		RobotMap.intakeSolenoidLeft.set(false);
 		RobotMap.intakeSolenoidRight.set(true);
-		activated = false;
+		armsOut = false;
+	}
+	
+	public void armsOut(){
+		RobotMap.intakeSolenoidLeft.set(true);
+		RobotMap.intakeSolenoidRight.set(false);
+		armsOut = true;
 	}
 
 	public void toggle(){
-		if(activated){
-			deactivate();
-		} else {
-			activate();
+		if(!armsOut){
+			armsOut();
+		} else if(armsOut) {
+			armsIn();
 		}
 	}	
+	
+	public boolean getArms(){
+		return armsOut;
+	}
 }

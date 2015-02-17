@@ -9,20 +9,27 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ElevatorSetHomeCommand extends Command {
-
+	
+	private double speed = 0.2;
+	
 	public ElevatorSetHomeCommand() {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.elevatorSubsystem);
+		requires(Robot.intakePistonSubsystem);
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		Robot.intakePistonSubsystem.armsOut();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
+		if(!(speed >= 0.8))
+			speed += 0.05;
+				
 		if(!isFinished())
-			Robot.elevatorSubsystem.moveElevatorDown(0.75);
+			Robot.elevatorSubsystem.moveElevatorDown(speed);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

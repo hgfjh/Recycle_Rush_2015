@@ -1,7 +1,9 @@
 package org.usfirst.frc.team1923.robot.subsystems;
 
+import org.usfirst.frc.team1923.robot.Robot;
 import org.usfirst.frc.team1923.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -15,6 +17,10 @@ public class LEDSubsytem extends Subsystem {
 	
 	public LEDSubsytem(){
 		super();
+		if(DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Red)
+			redBlueLEDOn(true);
+		else
+			redBlueLEDOn(false);
 		whiteLEDOn();
 		pinkLEDOn();
 	}
