@@ -30,7 +30,7 @@ public class RobotMap {
 	public static double ELEVATOR_POSITION_2 = 17.5;
 	public static double ELEVATOR_POSITION_3 = 30;
 	public static double ELEVATOR_POSITION_4 = 49.0;
-	public static double ELEVATOR_POSITION_COOP = 7.5;
+	public static double ELEVATOR_POSITION_COOP = 7.25;
 
 	public static double DIST_TO_PICK_UP_TOTE = 27.25;
 	public static double DIST_TO_NEXT_TOTE = 95.0;
@@ -41,8 +41,8 @@ public class RobotMap {
 	public static final double EASE_INCREMENT = 0.05;
 
 	// Compressor
-	//public static Solenoid solenoid = new Solenoid(0);
-	//public static Compressor compressor = new Compressor(0);
+	
+	public static Compressor compressor = new Compressor(0);
 
 	// Drive Train Talon SRX
 	public static CANTalon frontLeftDrive = new CANTalon(0);
@@ -55,7 +55,9 @@ public class RobotMap {
 	public static CANTalon elevatorRightMotor = new CANTalon(5);
 
 	// Intake Talon SRX
-	public static CANTalon intakeMotor = new CANTalon(6);
+	public static CANTalon intakeMotorLeft = new CANTalon(6);
+	public static CANTalon intakeMotorRight = new CANTalon(7);
+	
 	
 	public static Solenoid intakeSolenoidLeft = new Solenoid(0);
 	public static Solenoid intakeSolenoidRight = new Solenoid(1);
@@ -102,7 +104,7 @@ public class RobotMap {
 
 	// Robot system initialization
 	public static void init() {
-		//compressor.setClosedLoopControl(true);
+		compressor.setClosedLoopControl(true);
 		gyro.reset();
 		driveEncoderLeft.reset();
 		driveEncoderRight.reset();

@@ -5,6 +5,7 @@ import org.usfirst.frc.team1923.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Relay.Value;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -12,15 +13,16 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class LEDSubsytem extends Subsystem {
 
+	
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	
 	public LEDSubsytem(){
 		super();
-		if(DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Red)
+//		if(DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Red)
 			redBlueLEDOn(true);
-		else
-			redBlueLEDOn(false);
+//		else
+//			redBlueLEDOn(false);
 		whiteLEDOn();
 		pinkLEDOn();
 	}
@@ -44,5 +46,6 @@ public class LEDSubsytem extends Subsystem {
 		else
 			RobotMap.RedBlueLED.set(Value.kReverse);	
 	}
+	
 	
 }

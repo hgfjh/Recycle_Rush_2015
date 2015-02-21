@@ -33,13 +33,15 @@ public class IntakeSubsystem extends Subsystem {
 
 
 	public void intakeWheelsIn(double speed) {
-		cWheels = coalesce(-speed, cWheels);
-		RobotMap.intakeMotor.set(cWheels);
+		cWheels = coalesce(speed, cWheels);
+		RobotMap.intakeMotorLeft.set(-cWheels);
+		RobotMap.intakeMotorRight.set(cWheels);
 	}
 
 	public void intakeWheelsOut(double speed) {
 		cWheels = coalesce(speed, cWheels);
-		RobotMap.intakeMotor.set(cWheels);
+		RobotMap.intakeMotorLeft.set(cWheels);
+		RobotMap.intakeMotorRight.set(-cWheels);
 	}
 	
 	/**
@@ -66,7 +68,8 @@ public class IntakeSubsystem extends Subsystem {
 	
 	public void stop() {
 		cWheels = 0;
-		RobotMap.intakeMotor.set(cWheels);
+		RobotMap.intakeMotorLeft.set(cWheels);
+		RobotMap.intakeMotorRight.set(cWheels);
 	}
 	
 }
