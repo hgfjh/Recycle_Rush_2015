@@ -25,7 +25,7 @@ public class ElevatorSetHomeCommand extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if(!(speed >= 0.8))
+		if(!(speed >= 0.85))
 			speed += 0.05;
 				
 		if(!isFinished())

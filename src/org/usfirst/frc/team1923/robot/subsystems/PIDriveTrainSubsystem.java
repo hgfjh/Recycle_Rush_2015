@@ -57,11 +57,11 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 			Pg1 = 0.0165, 	Ig1 = 0.000,	 Dg1 = 0.00,
 			Pg2 = 0.0167, 	Ig2 = 0.000,	 Dg2 = 0.00,
 			Pg3 = 0.0165, 	Ig3 = 0.000,	 Dg3 = 0.00,
-			Pe = 0.01, 	Ie = 0.000,	 De = 0.03, 
+			Pe = 0.012, 	Ie = 0.000,	 De = 0.03, 
 			
 			PID_LOOP_TIME = .05,
 			gyroTOLERANCE = 5, // 0.2778% error ~= 0.5 degrees...?
-			encoderTOLERANCE = 2.0, // +/- 2" tolarance
+			encoderTOLERANCE = 4.0, // +/- 2" tolarance
 			speedDiffGain = 0.05;
 
 	private static final int MANUAL_MODE = 1, ENCODER_MODE = 2, GYRO_MODE = 3;
