@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutonDriveForwardWithOneTote extends CommandGroup {
+public class AutonToteSet extends CommandGroup {
     
-    public  AutonDriveForwardWithOneTote() {
+    public  AutonToteSet() {
     	//Move robot so first tote is in the robot
     	//addSequential(new DriveDistanceCommand(5));//RobotMap.DIST_TO_PICK_UP_TOTE + 15));
     	//Initialize elevator

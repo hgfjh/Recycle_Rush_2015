@@ -6,8 +6,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 // 3 totes auton!!!
 
-public class AutonNoBins extends CommandGroup {
-    public  AutonNoBins() {
+public class AutonThreeToteNoBin extends CommandGroup {
+    public  AutonThreeToteNoBin() {
     	
     	//Initialize elevator
     	addSequential(new ElevatorSetHomeCommand());

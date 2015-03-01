@@ -6,13 +6,13 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 /**
  *
  */
-public class AutonDriveForward extends CommandGroup {
+public class AutonRobotSet extends CommandGroup {
 	
-    public AutonDriveForward(){
+    public AutonRobotSet(){
     	this(75);
     }
     
-    public AutonDriveForward(double distance) {
+    public AutonRobotSet(double distance) {
     	addSequential(new ElevatorSetHomeCommand());
         addSequential(new DriveDistanceCommand(distance));
     }

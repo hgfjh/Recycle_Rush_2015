@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutonMoveBin extends CommandGroup {
+public class AutonRCSet extends CommandGroup {
     
-    public  AutonMoveBin() {
+    public  AutonRCSet() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

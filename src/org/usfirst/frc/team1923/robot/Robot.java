@@ -1,21 +1,7 @@
 package org.usfirst.frc.team1923.robot;
 
-import org.usfirst.frc.team1923.robot.commands.AutonDriveForward;
-import org.usfirst.frc.team1923.robot.commands.AutonDriveForwardWithOneTote;
-import org.usfirst.frc.team1923.robot.commands.AutonMoveBin;
-import org.usfirst.frc.team1923.robot.commands.AutonNoBins;
-import org.usfirst.frc.team1923.robot.commands.AutonSpin;
-import org.usfirst.frc.team1923.robot.commands.DriveDistanceCommand;
-import org.usfirst.frc.team1923.robot.commands.ElevatorSetHomeCommand;
-import org.usfirst.frc.team1923.robot.commands.MoveElevatorToPositionCommand;
-import org.usfirst.frc.team1923.robot.commands.ResetBothEncodersCommand;
-import org.usfirst.frc.team1923.robot.commands.ResetGyroCommand;
-import org.usfirst.frc.team1923.robot.commands.TeleopCommand;
-import org.usfirst.frc.team1923.robot.subsystems.IntakePistonSubsystem;
-import org.usfirst.frc.team1923.robot.subsystems.IntakeSubsystem;
-import org.usfirst.frc.team1923.robot.subsystems.LEDSubsytem;
-import org.usfirst.frc.team1923.robot.subsystems.PIDriveTrainSubsystem;
-import org.usfirst.frc.team1923.robot.subsystems.PIElevatorSubsystem;
+import org.usfirst.frc.team1923.robot.commands.*;
+import org.usfirst.frc.team1923.robot.subsystems.*;
 import org.usfirst.frc.team1923.util.CustomDigitalInput;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -77,11 +63,10 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(intakeSubsystem);
 		SmartDashboard.putData(intakePistonSubsystem);
 		autoChooser = new SendableChooser();
-		autoChooser.addDefault("Auton NO BINS ", new AutonNoBins());
-		autoChooser.addObject("Auton drive forward", new AutonDriveForward());
-		autoChooser.addObject("Auton Spin", new AutonSpin());
-		autoChooser.addObject("Auton Drive Forward One Tote", new AutonDriveForwardWithOneTote());
-		autoChooser.addObject("Auton Move Bin", new AutonMoveBin());
+		autoChooser.addDefault("Auton Three Tote No Bin", new AutonThreeToteNoBin());
+		autoChooser.addObject("Auton Robot Set", new AutonRobotSet());
+		autoChooser.addObject("Auton Tote Set", new AutonToteSet());
+		autoChooser.addObject("Auton RC Set", new AutonRCSet());
 		SmartDashboard.putData("Auto Mode", autoChooser);
 		addCommandsToDashboard();
 		
