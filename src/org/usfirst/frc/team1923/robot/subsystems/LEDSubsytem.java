@@ -19,10 +19,10 @@ public class LEDSubsytem extends Subsystem {
 	
 	public LEDSubsytem(){
 		super();
-//		if(DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Red)
+		if(DriverStation.getInstance().getAlliance().equals(DriverStation.Alliance.Red))
 			redBlueLEDOn(true);
-//		else
-//			redBlueLEDOn(false);
+		else
+			redBlueLEDOn(false);
 		whiteLEDOn();
 		pinkLEDOn();
 	}
