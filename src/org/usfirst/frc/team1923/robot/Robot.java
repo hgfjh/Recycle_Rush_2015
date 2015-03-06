@@ -46,15 +46,8 @@ public class Robot extends IterativeRobot {
 		RobotMap.init();
 		oi = new OI();
 
-		if (RobotMap.ISGALILEO) {
-			RobotMap.elevatorTopLimitSwitch = new CustomDigitalInput(9);
-			RobotMap.elevatorBottomLimitSwitch = new CustomDigitalInput(8);
-		}
-		else{
-			RobotMap.elevatorTopLimitSwitch = new DigitalInput(9);
-			RobotMap.elevatorBottomLimitSwitch = new DigitalInput(8);
-		
-		}
+		RobotMap.elevatorTopLimitSwitch = new CustomDigitalInput(9);
+		RobotMap.elevatorBottomLimitSwitch = new CustomDigitalInput(8);
 		// CommandBase.init();
 		// instantiate the command used for the autonomous period
 
@@ -69,7 +62,7 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Auton RC Set", new AutonRCSet());
 		SmartDashboard.putData("Auto Mode", autoChooser);
 		addCommandsToDashboard();
-		
+
 		//autonomousCommand = new AutonSpin();
 		teleopCommand = new TeleopCommand();
 	}
@@ -82,7 +75,7 @@ public class Robot extends IterativeRobot {
 		//driveTrainSubsystem.cLeft = 0;
 		//driveTrainSubsystem.cRight = 0;
 		intakeSubsystem.cWheels = 0;
-		
+
 		autonomousCommand = (CommandGroup) autoChooser.getSelected();
 		autonomousCommand.start();
 	}
@@ -101,11 +94,11 @@ public class Robot extends IterativeRobot {
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		// Assign commands to buttons
-		
+
 		//driveTrainSubsystem.cLeft = 0;
 		//driveTrainSubsystem.cRight = 0;
 		intakeSubsystem.cWheels = 0;
-		
+
 		//intakePistonSubsystem.armsOut();
 
 		if (autonomousCommand != null)

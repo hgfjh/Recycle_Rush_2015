@@ -19,12 +19,13 @@ public class LEDSubsytem extends Subsystem {
 	
 	public LEDSubsytem(){
 		super();
-		if(DriverStation.getInstance().getAlliance().equals(DriverStation.Alliance.Red))
+		
+		//detect team color and display it
+		DriverStation.Alliance color = DriverStation.getInstance().getAlliance();
+		if(color == DriverStation.Alliance.Blue)
 			redBlueLEDOn(true);
 		else
 			redBlueLEDOn(false);
-		whiteLEDOn();
-		pinkLEDOn();
 	}
 
 	public void initDefaultCommand() {
@@ -32,13 +33,6 @@ public class LEDSubsytem extends Subsystem {
 		// setDefaultCommand(new MySpecialCommand());
 	}
 
-	public void whiteLEDOn() {
-		RobotMap.WhiteLED.set(Value.kForward);
-	}
-
-	public void pinkLEDOn() {
-		RobotMap.PinkLED.set(Value.kForward);
-	}
 	
 	public void redBlueLEDOn(boolean color) {
 		if(color)
