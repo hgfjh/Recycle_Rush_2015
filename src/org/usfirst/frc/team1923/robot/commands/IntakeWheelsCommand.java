@@ -20,7 +20,7 @@ public class IntakeWheelsCommand extends Command {
     }
     
     public IntakeWheelsCommand(int state) {
-    	this(state, 0.8);
+    	this(state, 1);
     }
 
     // Called just before this Command runs the first time
@@ -36,6 +36,10 @@ public class IntakeWheelsCommand extends Command {
     		this.end();
     	if( state == 1)
     		Robot.intakeSubsystem.intakeWheelsIn(speed);
+    	if(state == 2)
+    		Robot.intakeSubsystem.intakeWheelsLeft(speed);
+    	if(state == 3)
+    		Robot.intakeSubsystem.intakeWheelsRight(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -47,7 +47,7 @@ public class ElevatorButtonsCommand extends Command {
 				Robot.elevatorSubsystem.stop();
 				lastPressed = 2;
 
-				this.position = RobotMap.ELEVATOR_POSITION_1;
+				this.position = RobotMap.ELEVATOR_POSITION_0;
 				this.timeOut = 5.0;
 				Robot.elevatorSubsystem.moveElevatorToPosition(position, timeOut);
 			}
@@ -56,7 +56,7 @@ public class ElevatorButtonsCommand extends Command {
 				Robot.elevatorSubsystem.stop();
 				lastPressed = 3;
 
-				this.position = RobotMap.ELEVATOR_POSITION_2;
+				this.position = RobotMap.ELEVATOR_POSITION_1;
 				this.timeOut = 5.0;
 				Robot.elevatorSubsystem.moveElevatorToPosition(position, timeOut);
 				
@@ -66,7 +66,7 @@ public class ElevatorButtonsCommand extends Command {
 				Robot.elevatorSubsystem.stop();
 				lastPressed = 4;
 				
-				this.position = RobotMap.ELEVATOR_POSITION_3;
+				this.position = RobotMap.ELEVATOR_POSITION_2;
 				this.timeOut = 5.0;
 				Robot.elevatorSubsystem.moveElevatorToPosition(position, timeOut);
 			}
@@ -75,7 +75,7 @@ public class ElevatorButtonsCommand extends Command {
 				Robot.elevatorSubsystem.stop();
 				lastPressed = 5;				
 
-				this.position = RobotMap.ELEVATOR_POSITION_4;
+				this.position = RobotMap.ELEVATOR_POSITION_3;
 				this.timeOut = 5.0;
 				Robot.elevatorSubsystem.moveElevatorToPosition(position, timeOut);
 			}

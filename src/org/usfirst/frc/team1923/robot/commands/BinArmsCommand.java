@@ -1,52 +1,44 @@
 package org.usfirst.frc.team1923.robot.commands;
 
 import org.usfirst.frc.team1923.robot.Robot;
+import org.usfirst.frc.team1923.robot.subsystems.BinArmSubsystem;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class DriveBackwardForArcCommand extends Command {
+public class BinArmsCommand extends Command {
 
-	private Timer timer;
+	private boolean armsIn;
 
-	private double speed = 0.4;
-
-	public DriveBackwardForArcCommand() {
+	public BinArmsCommand(boolean armsIn) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(Robot.driveTrainSubsystem);
+		requires(Robot.binArmSubsystem);
+		setTimeout(1.0);
+		this.armsIn = armsIn;
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		timer = new Timer();
+		if (armsIn)
+			Robot.binArmSubsystem.armsIn();
+		else
+			Robot.binArmSubsystem.armsOut();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		// System.out.println("ex");
-		double currtime = timer.get();
-		if (currtime < 0.1) {
-			Robot.driveTrainSubsystem.manualDrive(-speed * currtime * 10,
-					-speed * currtime * 10);
-		} else {
-			Robot.driveTrainSubsystem.manualDrive(-speed, -speed);
-		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return timer.get() >= 0.3;
-		// return false;
+		return isTimedOut();
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
-		timer.stop();
-		Robot.driveTrainSubsystem.stop();
 	}
 
 	// Called when another command which requires one or more of the same

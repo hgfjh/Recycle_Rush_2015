@@ -27,7 +27,7 @@ public class AutonRCSet extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	addSequential(new ElevatorSetHomeCommand());
-    	addSequential(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_2));
+    	addSequential(new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_1));
     	addSequential(new DriveDistanceCommand(-95));
     	//addSequential(new TurnToHeadingCommand(-90));
     	addSequential(new ElevatorSetHomeCommand());

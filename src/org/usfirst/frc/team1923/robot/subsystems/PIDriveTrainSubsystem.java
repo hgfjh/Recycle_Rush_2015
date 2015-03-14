@@ -61,7 +61,7 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 			
 			PID_LOOP_TIME = .05,
 			gyroTOLERANCE = 5, // 0.2778% error ~= 0.5 degrees...?
-			encoderTOLERANCE = 4.0, // +/- 2" tolarance
+			encoderTOLERANCE = 8.0, // +/- 2" tolarance
 			speedDiffGain = 0.05;
 
 	private static final int MANUAL_MODE = 1, ENCODER_MODE = 2, GYRO_MODE = 3;
@@ -288,8 +288,16 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 		left = oldLeftSpeed;
 		right = oldRightSpeed;
 		
-		left *= 1.0;
-		right *= 0.91;
+		if(RobotMap.ISGALILEO)
+		{
+			left *= 0.94;
+			right *= 1.0;
+		}
+		else
+		{
+			left *= 1.0;
+			right *= 0.91;
+		}
 		
 
 //		if (left < 0.0 && Math.abs(left) > corValueNeg)

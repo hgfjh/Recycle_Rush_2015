@@ -26,11 +26,12 @@ public class RobotMap {
 	// public static int rangefinderPort = 1;
 	// public static int rangefinderModule = 1;
 	// Constants
-	public static double ELEVATOR_POSITION_1 = 0.0;
-	public static double ELEVATOR_POSITION_2 = 17.5;
-	public static double ELEVATOR_POSITION_3 = 30;
-	public static double ELEVATOR_POSITION_4 = 49.0;
-	public static double ELEVATOR_POSITION_COOP = 7.25;
+	public static double ELEVATOR_POSITION_0 = 0.0;
+	public static double ELEVATOR_POSITION_1 = 17.5;
+	public static double ELEVATOR_POSITION_2 = 30;
+	public static double ELEVATOR_POSITION_3 = 49.0;
+	public static double ELEVATOR_POSITION_COOP = 6.875;
+	public static double ELEVATOR_POSITION_RC = 35.0;
 
 	public static double DIST_TO_PICK_UP_TOTE = 27.25;
 	public static double DIST_TO_NEXT_TOTE = 95.0;
@@ -61,6 +62,9 @@ public class RobotMap {
 	
 	public static Solenoid intakeSolenoidLeft = new Solenoid(0);
 	public static Solenoid intakeSolenoidRight = new Solenoid(1);
+	
+	public static Solenoid binSolenoidLeft = new Solenoid(2);
+	public static Solenoid binSolenoidRight = new Solenoid(3);
 
 	// Sensors
 	public static Encoder driveEncoderLeft = new Encoder(0, 1, false,

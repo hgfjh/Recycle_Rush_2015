@@ -30,6 +30,7 @@ public class Robot extends IterativeRobot {
 	public static PIElevatorSubsystem elevatorSubsystem = new PIElevatorSubsystem();
 	public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 	public static IntakePistonSubsystem intakePistonSubsystem = new IntakePistonSubsystem();
+	public static BinArmSubsystem binArmSubsystem = new BinArmSubsystem();
 	public static LEDSubsytem ledSubsystem = new LEDSubsytem();
 	public static OI oi;
 
@@ -57,6 +58,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(intakePistonSubsystem);
 		autoChooser = new SendableChooser();
 		autoChooser.addDefault("Auton Three Tote No Bin", new AutonThreeToteNoBin());
+		autoChooser.addObject("Auton Three Tote CARRY RC", new AutonThreeToteWithRC());
+		autoChooser.addObject("Auton Three Tote remove RC", new AutonThreeToteRemoveRC());
+		autoChooser.addObject("Auton Bin Tote Set", new AutonToteBin());
 		autoChooser.addObject("Auton Robot Set", new AutonRobotSet());
 		autoChooser.addObject("Auton Tote Set", new AutonToteSet());
 		autoChooser.addObject("Auton RC Set", new AutonRCSet());
@@ -160,21 +164,13 @@ public class Robot extends IterativeRobot {
 		// SmartDashboard.putData("Drive DRIVE_DIST_1", new
 		// DriveDistanceCommand(RobotMap.DRIVE_DIST_1,5.0));
 		// SmartDashboard.putData("Drive DRIVE_DIST_2", new
-		// DriveDistanceCommand(RobotMap.DRIVE_DIST_2,5.0));
-		SmartDashboard.putData("Move Elevator ELEVATOR_POSITION_1",
-				new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_1,
-						5.0));
-		SmartDashboard.putData("Move Elevator ELEVATOR_POSITION_2",
-				new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_2,
-						5.0));
-		SmartDashboard.putData("Move Elevator ELEVATOR_POSITION_3",
-				new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_3,
-						5.0));
-		SmartDashboard.putData("Move Elevator ELEVATOR_POSITION_4",
-				new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_4,
-						5.0));
+		// DriveDistanceCommand(RobotMap.DRIVE_DIST_2,5.0))
 		SmartDashboard.putData("Set Up Home Position",
 				new ElevatorSetHomeCommand());
+		SmartDashboard.putData("Wheels left",
+				new IntakeWheelsCommand(2, 1.0));
+		SmartDashboard.putData("Wheels right",
+				new IntakeWheelsCommand(3, 1.0));
 
 		SmartDashboard.putData("Drive Distance DIST_TO_PICK_UP_TOTE",
 				new DriveDistanceCommand(RobotMap.DIST_TO_PICK_UP_TOTE, 5.0));
@@ -184,10 +180,6 @@ public class Robot extends IterativeRobot {
 				new DriveDistanceCommand(RobotMap.DIST_TO_AUTON_ZONE, 5.0));
 		SmartDashboard.putData("Drive Distance -DIST_TO_PICK_UP_TOTE",
 				new DriveDistanceCommand(-RobotMap.DIST_TO_PICK_UP_TOTE, 5.0));
-		SmartDashboard.putData("Reset Gyro",
-				new ResetGyroCommand());
-		SmartDashboard.putData("Reset Both Encoders",
-				new ResetBothEncodersCommand());
 
 	}
 

@@ -136,7 +136,7 @@ public class PIElevatorSubsystem extends PIDSubsystem {
 
 	public boolean reachedPosition() {
 		if (timer.get() > this.timeOut || this.onTarget()) {
-			this.disable();
+			this.disable(); //TODO remove me pls
 			timer.stop();
 			timer.reset();
 			return true;

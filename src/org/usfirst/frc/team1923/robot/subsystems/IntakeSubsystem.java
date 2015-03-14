@@ -44,6 +44,18 @@ public class IntakeSubsystem extends Subsystem {
 		RobotMap.intakeMotorRight.set(-cWheels);
 	}
 	
+	public void intakeWheelsLeft(double speed){
+		cWheels = coalesce(speed, cWheels);
+		RobotMap.intakeMotorLeft.set(cWheels);
+		RobotMap.intakeMotorRight.set(cWheels);
+	}
+	
+	public void intakeWheelsRight(double speed){
+		cWheels = coalesce(speed, cWheels);
+		RobotMap.intakeMotorLeft.set(-cWheels);
+		RobotMap.intakeMotorRight.set(-cWheels);
+	}
+	
 	/**
 	 * Coalesces the given current number to match the old number
 	 * @param current the current number given from the input
