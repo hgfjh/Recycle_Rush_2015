@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutonRCSet extends CommandGroup {
+public class AutonBinSet extends CommandGroup {
     
-    public  AutonRCSet() {
+    public  AutonBinSet() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class BinArmsCommand extends Command {
+public class TuskCommand extends Command {
 
 	private boolean armsIn;
 
-	public BinArmsCommand(boolean armsIn) {
+	public TuskCommand(boolean armsIn) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.binArmSubsystem);

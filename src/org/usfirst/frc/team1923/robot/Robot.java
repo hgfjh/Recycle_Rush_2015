@@ -61,9 +61,10 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Auton Three Tote CARRY RC", new AutonThreeToteWithRC());
 		autoChooser.addObject("Auton Three Tote remove RC", new AutonThreeToteRemoveRC());
 		autoChooser.addObject("Auton Bin Tote Set", new AutonToteBin());
+		autoChooser.addObject("Auton Bin Tote Set 2", new AutonToteBin2());
 		autoChooser.addObject("Auton Robot Set", new AutonRobotSet());
 		autoChooser.addObject("Auton Tote Set", new AutonToteSet());
-		autoChooser.addObject("Auton RC Set", new AutonRCSet());
+		autoChooser.addObject("Auton Bin Set", new AutonBinSet());
 		SmartDashboard.putData("Auto Mode", autoChooser);
 		addCommandsToDashboard();
 

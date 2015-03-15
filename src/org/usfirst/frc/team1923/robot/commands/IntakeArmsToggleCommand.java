@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ToggleIntakeArmsCommand extends Command {
+public class IntakeArmsToggleCommand extends Command {
 
-    public ToggleIntakeArmsCommand() {
+    public IntakeArmsToggleCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.intakePistonSubsystem);
