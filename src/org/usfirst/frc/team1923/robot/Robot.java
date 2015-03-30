@@ -30,7 +30,7 @@ public class Robot extends IterativeRobot {
 	public static PIElevatorSubsystem elevatorSubsystem = new PIElevatorSubsystem();
 	public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 	public static IntakePistonSubsystem intakePistonSubsystem = new IntakePistonSubsystem();
-	public static BinArmSubsystem binArmSubsystem = new BinArmSubsystem();
+	public static TuskSubsystem tuskSubsystem = new TuskSubsystem();
 	public static LEDSubsytem ledSubsystem = new LEDSubsytem();
 	public static OI oi;
 
@@ -64,7 +64,6 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Auton Bin Tote Set 2", new AutonToteBin2());
 		autoChooser.addObject("Auton Robot Set", new AutonRobotSet());
 		autoChooser.addObject("Auton Tote Set", new AutonToteSet());
-		autoChooser.addObject("Auton Bin Set", new AutonBinSet());
 		SmartDashboard.putData("Auto Mode", autoChooser);
 		addCommandsToDashboard();
 
