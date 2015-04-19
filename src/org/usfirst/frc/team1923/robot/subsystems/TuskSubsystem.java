@@ -4,11 +4,6 @@ package org.usfirst.frc.team1923.robot.subsystems;
 import org.usfirst.frc.team1923.robot.RobotMap;
 
 
-//import edu.wpi.first.wpilibj.Encoder;
-//import edu.wpi.first.wpilibj.Relay;
-//import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 //import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
@@ -32,14 +27,14 @@ public class TuskSubsystem extends Subsystem {
 	}
 	
 	public void armsIn(){
- 		RobotMap.binSolenoidLeft.set(false);
-		RobotMap.binSolenoidRight.set(true);
+ 		RobotMap.tuskSolenoidLeft.set(false);
+		RobotMap.tuskSolenoidRight.set(true);
 		armsOut = false;
 	}
 	
 	public void armsOut(){
-		RobotMap.binSolenoidLeft.set(true);
-		RobotMap.binSolenoidRight.set(false);
+		RobotMap.tuskSolenoidLeft.set(true);
+		RobotMap.tuskSolenoidRight.set(false);
 		armsOut = true;
 	}
 

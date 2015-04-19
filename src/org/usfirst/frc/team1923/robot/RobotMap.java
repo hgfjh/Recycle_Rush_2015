@@ -45,26 +45,34 @@ public class RobotMap {
 	
 	public static Compressor compressor = new Compressor(0);
 
-	// Drive Train Talon SRX
+	// Drive Train
 	public static CANTalon frontLeftDrive = new CANTalon(0);
 	public static CANTalon rearLeftDrive = new CANTalon(1);
 	public static CANTalon frontRightDrive = new CANTalon(2);
 	public static CANTalon rearRightDrive = new CANTalon(3);
 
-	// Elevator Talon SRX
+	// Elevator
 	public static CANTalon elevatorLeftMotor = new CANTalon(4);
 	public static CANTalon elevatorRightMotor = new CANTalon(5);
 
-	// Intake Talon SRX
+	// Intake
 	public static CANTalon intakeMotorLeft = new CANTalon(6);
 	public static CANTalon intakeMotorRight = new CANTalon(7);
-	
 	
 	public static Solenoid intakeSolenoidLeft = new Solenoid(0);
 	public static Solenoid intakeSolenoidRight = new Solenoid(1);
 	
-	public static Solenoid binSolenoidLeft = new Solenoid(2);
-	public static Solenoid binSolenoidRight = new Solenoid(3);
+	// burglar 
+	public static CANTalon burglarTalon = new CANTalon(8);
+	public static Solenoid burglarSolenoid = new Solenoid(0); // TODO get correct port
+	
+	// tusks
+	public static Solenoid tuskSolenoidLeft = new Solenoid(2);
+	public static Solenoid tuskSolenoidRight = new Solenoid(3);
+	
+
+	
+	
 
 	// Sensors
 	public static Encoder driveEncoderLeft = new Encoder(0, 1, false,
@@ -79,10 +87,6 @@ public class RobotMap {
 	// Digital IO
 	public static DigitalInput elevatorTopLimitSwitch;
 	public static DigitalInput elevatorBottomLimitSwitch;
-
-	// Spikes
-//	 public static Relay intakeLeftSpike = new Relay(5);
-//	 public static Relay intakeRightSpike = new Relay(6);
 	
 	//Lights
 	public static Relay WhiteLED = new Relay(0);

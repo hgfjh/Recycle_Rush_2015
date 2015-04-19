@@ -32,6 +32,7 @@ public class Robot extends IterativeRobot {
 	public static IntakePistonSubsystem intakePistonSubsystem = new IntakePistonSubsystem();
 	public static TuskSubsystem tuskSubsystem = new TuskSubsystem();
 	public static LEDSubsytem ledSubsystem = new LEDSubsytem();
+	public static BurglarSubsystem burglarSubsystem = new BurglarSubsystem();
 	public static OI oi;
 
 	public CommandGroup autonomousCommand;
