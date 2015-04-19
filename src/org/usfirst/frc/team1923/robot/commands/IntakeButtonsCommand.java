@@ -14,7 +14,7 @@ public class IntakeButtonsCommand extends Command {
 	public IntakeButtonsCommand() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(Robot.intakeSubsystem);
+		requires(Robot.intakeWheelSubsystem);
 	}
 
 	// Called just before this Command runs the first time
@@ -34,7 +34,7 @@ public class IntakeButtonsCommand extends Command {
 		else if (intakeBack==true)
 			desiredSpeed=0;
 		
-		Robot.intakeSubsystem.intakeWheelsIn(desiredSpeed);		
+		Robot.intakeWheelSubsystem.intakeWheelsIn(desiredSpeed);		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -44,7 +44,7 @@ public class IntakeButtonsCommand extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.intakeSubsystem.stop();
+		Robot.intakeWheelSubsystem.stop();
 	}
 
 	// Called when another command which requires one or more of the same

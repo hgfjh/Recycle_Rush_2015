@@ -296,7 +296,7 @@ public class PIDriveTrainSubsystem extends PIDSubsystem {
 		else
 		{
 			left *= 1.0;
-			right *= 0.91;
+			right *= 0.95;
 		}
 		
 

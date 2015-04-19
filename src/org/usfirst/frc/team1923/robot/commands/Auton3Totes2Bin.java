@@ -8,14 +8,14 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 /**
  *
  */
-public class AutonToteBin2 extends CommandGroup {
+public class Auton3Totes2Bin extends CommandGroup {
     /*
      * elevator home
      * tusk out
      * 
      */
 	
-    public  AutonToteBin2() {
+    public  Auton3Totes2Bin() {
     	//Initialize elevator
     	addSequential(new ElevatorSetHomeCommand());
     	addSequential(new TuskCommand(false)); //tusk out
@@ -47,13 +47,9 @@ public class AutonToteBin2 extends CommandGroup {
     	addSequential(new WaitCommand(0.5));
     	addSequential(new IntakePistonsCommand(false));
     	
-    	addSequential(new TurnToHeadingCommand(90, 1.1, 3));
+    	addSequential(new TurnToHeadingCommand(90, 1.2, 3));
     	//Move into auton zone
-    	if(RobotMap.ISGALILEO)
-    		addParallel(new DriveTimeCommand(1, 1.7));
-    		//addSequential(new DriveDistanceCommand(RobotMap.DIST_TO_AUTON_ZONE + 5, 3.0));
-    	else
-    		addParallel(new DriveDistanceCommand(RobotMap.DIST_TO_AUTON_ZONE + 16, 3.0));
+    	addParallel(new DriveTimeCommand(1, 1.7));
 
     	//Turn left so when the robot backs up it stays in the auton zone
     	//addSequential(new TurnToHeadingCommand(-90, 1, 3));

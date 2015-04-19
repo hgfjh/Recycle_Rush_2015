@@ -14,7 +14,7 @@ public class IntakeWheelsCommand extends Command {
 	private double speed;
 	
     public IntakeWheelsCommand(int state, double speed) {
-        requires(Robot.intakeSubsystem);
+        requires(Robot.intakeWheelSubsystem);
         this.state = state;
         this.speed = speed;
     }
@@ -31,15 +31,15 @@ public class IntakeWheelsCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if( state == -1) 
-    		Robot.intakeSubsystem.intakeWheelsOut(speed);
+    		Robot.intakeWheelSubsystem.intakeWheelsOut(speed);
     	if( state == 0)
     		this.end();
     	if( state == 1)
-    		Robot.intakeSubsystem.intakeWheelsIn(speed);
+    		Robot.intakeWheelSubsystem.intakeWheelsIn(speed);
     	if(state == 2)
-    		Robot.intakeSubsystem.intakeWheelsLeft(speed);
+    		Robot.intakeWheelSubsystem.intakeWheelsLeft(speed);
     	if(state == 3)
-    		Robot.intakeSubsystem.intakeWheelsRight(speed);
+    		Robot.intakeWheelSubsystem.intakeWheelsRight(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -49,7 +49,7 @@ public class IntakeWheelsCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.intakeSubsystem.stop();
+    	Robot.intakeWheelSubsystem.stop();
     }
 
     // Called when another command which requires one or more of the same

@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutonToteBin extends CommandGroup {
+public class Auton1Tote1Bin extends CommandGroup {
     
-    public  AutonToteBin() {
+    public  Auton1Tote1Bin() {
 
     	addSequential(new ElevatorSetHomeCommand());
     	addSequential(new TuskCommand(false));

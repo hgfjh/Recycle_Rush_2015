@@ -15,12 +15,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class IntakeSubsystem extends Subsystem {
+public class IntakeWheelSubsystem extends Subsystem {
 
 	private static double SMOOTH_VALUE = 0.20;
 	public double cWheels = 0;
 	
-	public IntakeSubsystem() {
+	public IntakeWheelSubsystem() {
 		this.init();
 	}
 

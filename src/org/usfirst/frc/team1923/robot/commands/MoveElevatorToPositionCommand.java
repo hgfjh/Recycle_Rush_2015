@@ -11,6 +11,11 @@ import edu.wpi.first.wpilibj.command.Command;
 public class MoveElevatorToPositionCommand extends Command {
 	private double position, timeOut;
 
+	/**
+	 * Moves the elevator to a given position
+	 * @param position the position to move the elevator to, from 1 to 4
+	 * @param timeOut the manual time out in seconds, optional
+	 */
 	public MoveElevatorToPositionCommand(double position, double timeOut) {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.elevatorSubsystem);
@@ -19,6 +24,10 @@ public class MoveElevatorToPositionCommand extends Command {
 		this.timeOut = timeOut;
 	}
 	
+	/**
+	 * Moves the elevator to a given position
+	 * @param position the position to move the elevator to, from 1 to 4
+     **/
 	public MoveElevatorToPositionCommand(double position) {
 		this(position, 2.0);
 	}

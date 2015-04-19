@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveDistanceCommand extends Command {
 	private double dist, timeOut;
+	
 	public DriveDistanceCommand(double dist, double timeOut) {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.driveTrainSubsystem);

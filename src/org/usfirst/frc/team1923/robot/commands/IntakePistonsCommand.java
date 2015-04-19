@@ -11,6 +11,10 @@ public class IntakePistonsCommand extends Command {
 	
 	private boolean active;
 
+	/**
+	 * Actuates the intake 
+	 * @param active
+	 */
     public IntakePistonsCommand(boolean active) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);

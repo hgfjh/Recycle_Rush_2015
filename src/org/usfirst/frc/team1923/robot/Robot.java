@@ -28,7 +28,7 @@ public class Robot extends IterativeRobot {
 	public static PIDriveTrainSubsystem driveTrainSubsystem = new PIDriveTrainSubsystem();
 	// public static Elevator elevator
 	public static PIElevatorSubsystem elevatorSubsystem = new PIElevatorSubsystem();
-	public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+	public static IntakeWheelSubsystem intakeWheelSubsystem = new IntakeWheelSubsystem();
 	public static IntakePistonSubsystem intakePistonSubsystem = new IntakePistonSubsystem();
 	public static BinArmSubsystem binArmSubsystem = new BinArmSubsystem();
 	public static LEDSubsytem ledSubsystem = new LEDSubsytem();
@@ -54,17 +54,15 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putData(driveTrainSubsystem);
 		SmartDashboard.putData(elevatorSubsystem);
-		SmartDashboard.putData(intakeSubsystem);
+		SmartDashboard.putData(intakeWheelSubsystem);
 		SmartDashboard.putData(intakePistonSubsystem);
 		autoChooser = new SendableChooser();
-		autoChooser.addDefault("Auton Three Tote No Bin", new AutonThreeToteNoBin());
-		autoChooser.addObject("Auton Three Tote CARRY RC", new AutonThreeToteWithRC());
-		autoChooser.addObject("Auton Three Tote remove RC", new AutonThreeToteRemoveRC());
-		autoChooser.addObject("Auton Bin Tote Set", new AutonToteBin());
-		autoChooser.addObject("Auton Bin Tote Set 2", new AutonToteBin2());
+		autoChooser.addDefault("Do nothing", new AutonDoNothing());
+		autoChooser.addObject("Auton 1 Tote 1 Bin", new Auton1Tote1Bin());
+		autoChooser.addObject("Auton 3 Totes 2 Bins", new Auton3Totes2Bin());
 		autoChooser.addObject("Auton Robot Set", new AutonRobotSet());
 		autoChooser.addObject("Auton Tote Set", new AutonToteSet());
-		autoChooser.addObject("Auton Bin Set", new AutonBinSet());
+		autoChooser.addObject("Auton Bin Set", new Auton1Bin());
 		SmartDashboard.putData("Auto Mode", autoChooser);
 		addCommandsToDashboard();
 
@@ -73,13 +71,14 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void disabledPeriodic() {
+		
 		Scheduler.getInstance().run();
 	}
 
 	public void autonomousInit() {
 		//driveTrainSubsystem.cLeft = 0;
 		//driveTrainSubsystem.cRight = 0;
-		intakeSubsystem.cWheels = 0;
+		intakeWheelSubsystem.cWheels = 0;
 
 		autonomousCommand = (CommandGroup) autoChooser.getSelected();
 		autonomousCommand.start();
@@ -102,7 +101,7 @@ public class Robot extends IterativeRobot {
 
 		//driveTrainSubsystem.cLeft = 0;
 		//driveTrainSubsystem.cRight = 0;
-		intakeSubsystem.cWheels = 0;
+		intakeWheelSubsystem.cWheels = 0;
 
 		//intakePistonSubsystem.armsOut();
 
