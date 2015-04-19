@@ -10,12 +10,12 @@ import edu.wpi.first.wpilibj.command.Command;
 public class TuskToggleCommand extends Command {
 
     public TuskToggleCommand() {
-		requires(Robot.binArmSubsystem);
+		requires(Robot.tuskSubsystem);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.binArmSubsystem.toggle();
+    	Robot.tuskSubsystem.toggle();
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -15,11 +15,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class BinArmSubsystem extends Subsystem {
+public class TuskSubsystem extends Subsystem {
 	
 	public boolean armsOut = false;
 	
-	public BinArmSubsystem() {
+	public TuskSubsystem() {
 		this.init();
 	}
 
