@@ -1,48 +1,53 @@
 package org.usfirst.frc.team1923.robot.commands;
 
 import org.usfirst.frc.team1923.robot.Robot;
+import org.usfirst.frc.team1923.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
-//import org.usfirst.frc.team1923.robot.subsystems.DriveTrainSubsystem;
+//import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class DriveWithJoyStickCommand extends Command {
+public class ElevatorRaiseOneCommand extends Command {
 
-    public DriveWithJoyStickCommand() {
+	private Timer timer = new Timer();
+	
+    public ElevatorRaiseOneCommand() {
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	requires(Robot.driveTrainSubsystem);
+        requires(Robot.elevatorSubsystem);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	timer.stop();
+    	timer.reset();
+    	timer.start();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	boolean rightTrigger = Robot.oi.rightStick.getTrigger();
-    	boolean leftTrigger = Robot.oi.leftStick.getTrigger();
-    	if(rightTrigger && leftTrigger){
-        	Robot.driveTrainSubsystem.manualDrive(-Robot.oi.leftStick.getY(), -Robot.oi.rightStick.getY());
-    	} else {
-    		Robot.driveTrainSubsystem.manualDrive(-Robot.oi.leftStick.getY()/2, -Robot.oi.rightStick.getY()/2);    		
-    	}
+        	Robot.elevatorSubsystem.moveElevatorUp(0.8);    		
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return timer.get() > 1.3;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	timer.stop();
+    	Robot.elevatorSubsystem.moveElevatorDown(0.0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	timer.stop();
+    	Robot.elevatorSubsystem.moveElevatorDown(0.0);
     }
 }
+
