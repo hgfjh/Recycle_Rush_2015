@@ -15,6 +15,7 @@ public class TurnRight90 extends Command {
     public TurnRight90() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(Robot.driveTrainSubsystem);
     }
 
     // Called just before this Command runs the first time
