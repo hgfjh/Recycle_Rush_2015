@@ -11,16 +11,25 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ElevatorDownCommand extends Command {
+	
+	public ElevatorDownCommand() {
+		// Use requires() here to declare subsystem dependencies
+		requires(Robot.elevatorSubsystem);
+	}
+	
+	public ElevatorDownCommand(double time) {
+		// Use requires() here to declare subsystem dependencies
+		requires(Robot.elevatorSubsystem);
+		requires(Robot.intakePistonSubsystem);
+		setTimeout(time);
+	}
 
-    public ElevatorDownCommand() {
-        // Use requires() here to declare subsystem dependencies
-        requires(Robot.elevatorSubsystem);
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    }
+	}
 
+<<<<<<< HEAD
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(RobotMap.elevatorBottomLimitSwitch.get()){
@@ -29,19 +38,46 @@ public class ElevatorDownCommand extends Command {
         	Robot.elevatorSubsystem.moveElevatorDown(0.8);    		
     	}
     }
+=======
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+		
+		if(RobotMap.elevatorEncoder.getDistance() < 15)
+			Robot.intakePistonSubsystem.armsOut();
+		
+		if(!isFinished())
+			Robot.elevatorSubsystem.moveElevatorDown(RobotMap.ELEVATOR_DOWN_SPEED);			
+		
+	}
+>>>>>>> branch 'master' of https://github.com/Team1923/Recycle_Rush_2015.git
 
+<<<<<<< HEAD
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return RobotMap.elevatorBottomLimitSwitch.get();
     }
+=======
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return RobotMap.elevatorBottomLimitSwitch.get();
+>>>>>>> branch 'master' of https://github.com/Team1923/Recycle_Rush_2015.git
 
+<<<<<<< HEAD
     // Called once after isFinished returns true
     protected void end() {
     	
     }
+=======
+	}
+>>>>>>> branch 'master' of https://github.com/Team1923/Recycle_Rush_2015.git
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+	// Called once after isFinished returns true
+	protected void end() {
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+		end();
+	}
 }
