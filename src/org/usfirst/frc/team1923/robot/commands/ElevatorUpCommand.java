@@ -1,9 +1,8 @@
-package org.usfirst.frc.team1923.robot.commands;
-
-import org.usfirst.frc.team1923.robot.Robot;
-import org.usfirst.frc.team1923.robot.RobotMap;
+package src.org.usfirst.frc.team1923.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import src.org.usfirst.frc.team1923.robot.Robot;
+import src.org.usfirst.frc.team1923.robot.RobotMap;
 
 //import edu.wpi.first.wpilibj.command.Command;
 
@@ -26,26 +25,12 @@ public class ElevatorUpCommand extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 
-<<<<<<< HEAD
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	Robot.elevatorSubsystem.moveElevatorUp(0.8);
-    }
-=======
 	}
->>>>>>> branch 'master' of https://github.com/Team1923/Recycle_Rush_2015.git
 
-<<<<<<< HEAD
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return false;
-    }
-=======
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		Robot.elevatorSubsystem.moveElevatorUp(RobotMap.ELEVATOR_UP_SPEED);
 	}
->>>>>>> branch 'master' of https://github.com/Team1923/Recycle_Rush_2015.git
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {

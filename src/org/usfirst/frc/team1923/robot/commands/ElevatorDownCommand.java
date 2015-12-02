@@ -1,9 +1,8 @@
-package org.usfirst.frc.team1923.robot.commands;
-
-import org.usfirst.frc.team1923.robot.Robot;
-import org.usfirst.frc.team1923.robot.RobotMap;
+package src.org.usfirst.frc.team1923.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import src.org.usfirst.frc.team1923.robot.Robot;
+import src.org.usfirst.frc.team1923.robot.RobotMap;
 
 //import edu.wpi.first.wpilibj.command.Command;
 
@@ -29,16 +28,6 @@ public class ElevatorDownCommand extends Command {
 
 	}
 
-<<<<<<< HEAD
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	if(RobotMap.elevatorBottomLimitSwitch.get()){
-        	Robot.elevatorSubsystem.moveElevatorDown(0.0);
-    	} else {
-        	Robot.elevatorSubsystem.moveElevatorDown(0.8);    		
-    	}
-    }
-=======
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		
@@ -49,27 +38,12 @@ public class ElevatorDownCommand extends Command {
 			Robot.elevatorSubsystem.moveElevatorDown(RobotMap.ELEVATOR_DOWN_SPEED);			
 		
 	}
->>>>>>> branch 'master' of https://github.com/Team1923/Recycle_Rush_2015.git
 
-<<<<<<< HEAD
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return RobotMap.elevatorBottomLimitSwitch.get();
-    }
-=======
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		return RobotMap.elevatorBottomLimitSwitch.get();
->>>>>>> branch 'master' of https://github.com/Team1923/Recycle_Rush_2015.git
 
-<<<<<<< HEAD
-    // Called once after isFinished returns true
-    protected void end() {
-    	
-    }
-=======
 	}
->>>>>>> branch 'master' of https://github.com/Team1923/Recycle_Rush_2015.git
 
 	// Called once after isFinished returns true
 	protected void end() {

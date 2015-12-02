@@ -1,7 +1,7 @@
- package org.usfirst.frc.team1923.robot.commands;
+ package src.org.usfirst.frc.team1923.robot.commands;
 
-import org.usfirst.frc.team1923.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
+import src.org.usfirst.frc.team1923.robot.Robot;
 
 //import org.usfirst.frc.team1923.robot.subsystems.DriveTrainSubsystem;
 

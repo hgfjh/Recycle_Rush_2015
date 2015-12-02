@@ -1,8 +1,7 @@
-package org.usfirst.frc.team1923.robot.commands;
-
-import org.usfirst.frc.team1923.robot.Robot;
+package src.org.usfirst.frc.team1923.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import src.org.usfirst.frc.team1923.robot.Robot;
 
 //import org.usfirst.frc.team1923.robot.subsystems.DriveTrainSubsystem;
 
@@ -21,18 +20,6 @@ public class DriveWithJoyStickCommand extends Command {
 	protected void initialize() {
 	}
 
-<<<<<<< HEAD
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	boolean rightTrigger = Robot.oi.rightStick.getTrigger();
-    	boolean leftTrigger = Robot.oi.leftStick.getTrigger();
-    	if(rightTrigger && leftTrigger){
-        	Robot.driveTrainSubsystem.manualDrive(-Robot.oi.leftStick.getY(), -Robot.oi.rightStick.getY());
-    	} else {
-    		Robot.driveTrainSubsystem.manualDrive(-Robot.oi.leftStick.getY()/2, -Robot.oi.rightStick.getY()/2);    		
-    	}
-    }
-=======
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		boolean rightTrigger = Robot.oi.rightStick.getTrigger();
@@ -46,7 +33,6 @@ public class DriveWithJoyStickCommand extends Command {
 					-Robot.oi.rightStick.getY());
 		}
 	}
->>>>>>> branch 'master' of https://github.com/Team1923/Recycle_Rush_2015.git
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {

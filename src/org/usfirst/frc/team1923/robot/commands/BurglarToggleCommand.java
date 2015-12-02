@@ -6,17 +6,17 @@ import src.org.usfirst.frc.team1923.robot.Robot;
 /**
  *
  */
-public class IntakeArmsToggleCommand extends Command {
+public class BurglarToggleCommand extends Command {
 
-    public IntakeArmsToggleCommand() {
+    public BurglarToggleCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.intakePistonSubsystem);
+    	requires(Robot.burglarPistonSubsystem);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.intakePistonSubsystem.toggle();
+    	Robot.burglarPistonSubsystem.toggle();
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -1,11 +1,8 @@
-package org.usfirst.frc.team1923.robot.subsystems;
-
-//import org.usfirst.frc.team1923.robot.Robot;
-import org.usfirst.frc.team1923.robot.RobotMap;
-
+package src.org.usfirst.frc.team1923.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 //import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import src.org.usfirst.frc.team1923.robot.RobotMap;
 
 /**
  *

@@ -1,6 +1,6 @@
-package org.usfirst.frc.team1923.util;
+package src.org.usfirst.frc.team1923.util;
 
-import org.usfirst.frc.team1923.robot.RobotMap;
+import src.org.usfirst.frc.team1923.robot.RobotMap;
 
 /**
  * A class that contains various mathematic methods

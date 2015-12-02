@@ -1,44 +1,17 @@
-package org.usfirst.frc.team1923.robot;
+package src.org.usfirst.frc.team1923.robot;
 
-import org.usfirst.frc.team1923.robot.commands.*;
-import org.usfirst.frc.team1923.robot.subsystems.*;
-import org.usfirst.frc.team1923.util.CustomDigitalInput;
-
-<<<<<<< HEAD
-import org.usfirst.frc.team1923.robot.commands.AutonEvadeBins;
-import org.usfirst.frc.team1923.robot.commands.DriveDistanceCommand;
-import org.usfirst.frc.team1923.robot.commands.DriveForwardCommand;
-import org.usfirst.frc.team1923.robot.commands.DriveWithJoyStickCommand;
-import org.usfirst.frc.team1923.robot.commands.AutonNoBins;
-import org.usfirst.frc.team1923.robot.commands.ElevatorSetHomeCommand;
-import org.usfirst.frc.team1923.robot.commands.MoveElevatorToPositionCommand;
-import org.usfirst.frc.team1923.robot.commands.TeleopElevatorBumpers;
-import org.usfirst.frc.team1923.robot.commands.TurnToHeading;
-import org.usfirst.frc.team1923.robot.subsystems.DriveTrainSubsystem;
-import org.usfirst.frc.team1923.robot.subsystems.ElevatorSubsystem;
-import org.usfirst.frc.team1923.robot.subsystems.PIDriveTrainSubsystem;
-import org.usfirst.frc.team1923.robot.subsystems.PIElevatorSubsystem;
-
-=======
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
->>>>>>> branch 'master' of https://github.com/Team1923/Recycle_Rush_2015.git
 import edu.wpi.first.wpilibj.IterativeRobot;
-<<<<<<< HEAD
-import edu.wpi.first.wpilibj.command.Command;
-=======
->>>>>>> branch 'master' of https://github.com/Team1923/Recycle_Rush_2015.git
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-<<<<<<< HEAD
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-
-=======
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
->>>>>>> branch 'master' of https://github.com/Team1923/Recycle_Rush_2015.git
+import src.org.usfirst.frc.team1923.robot.commands.*;
+import src.org.usfirst.frc.team1923.robot.subsystems.*;
+import src.org.usfirst.frc.team1923.util.CustomDigitalInput;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -49,33 +22,23 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-<<<<<<< HEAD
-	//public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-	public static OI oi;
-	public static PIDriveTrainSubsystem driveTrainSubsystem = new PIDriveTrainSubsystem();
-    //public static Elevator elevator
-    public static PIElevatorSubsystem elevatorSubsystem = new PIElevatorSubsystem();
-    public CommandGroup autonomousCommand;
-    public CommandGroup teleopCommand;
-=======
 	// public static final ExampleSubsystem exampleSubsystem = new
 	// ExampleSubsystem();
->>>>>>> branch 'master' of https://github.com/Team1923/Recycle_Rush_2015.git
 
 	public static PIDriveTrainSubsystem driveTrainSubsystem = new PIDriveTrainSubsystem();
 	// public static Elevator elevator
 	public static PIElevatorSubsystem elevatorSubsystem = new PIElevatorSubsystem();
 	public static IntakeWheelSubsystem intakeWheelSubsystem = new IntakeWheelSubsystem();
 	public static IntakePistonSubsystem intakePistonSubsystem = new IntakePistonSubsystem();
-	public static TuskSubsystem tuskSubsystem = new TuskSubsystem();
 	public static LEDSubsytem ledSubsystem = new LEDSubsytem();
 	public static BurglarSubsystem burglarSubsystem = new BurglarSubsystem();
+	public static BurglarPistonSubsystem burglarPistonSubsystem = new BurglarPistonSubsystem();
 	public static OI oi;
+	public static TuskSubsystem tuskSubsystem = new TuskSubsystem();
 
 	public CommandGroup autonomousCommand;
 	public CommandGroup teleopCommand;
 	public SendableChooser autoChooser;
-
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -83,20 +46,6 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		// Initialize Robot
 		RobotMap.init();
-<<<<<<< HEAD
-		//CommandBase.init();
-        // instantiate the command used for the autonomous period
-		
-		SmartDashboard.putData(driveTrainSubsystem);
-		SmartDashboard.putData(elevatorSubsystem);
-		addCommandsToDashboard();
-		autonomousCommand = new AutonNoBins();
-		teleopCommand = new TeleopElevatorBumpers();
-		
-		
-    }
-	
-=======
 		oi = new OI();
 
 		RobotMap.elevatorTopLimitSwitch = new CustomDigitalInput(9);
@@ -108,125 +57,51 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(elevatorSubsystem);
 		SmartDashboard.putData(intakeWheelSubsystem);
 		SmartDashboard.putData(intakePistonSubsystem);
+		
 		autoChooser = new SendableChooser();
 		autoChooser.addDefault("Do nothing", new AutonDoNothing());
-		autoChooser.addObject("Auton 1 Tote 1 Bin", new Auton1Tote1Bin());
-		autoChooser.addObject("Auton 3 Totes 2 Bins", new Auton3Totes2Bin());
-		autoChooser.addObject("Auton Robot Set", new AutonRobotSet());
-		autoChooser.addObject("Auton Tote Set", new AutonToteSet());
-		autoChooser.addObject("Auton Bin Set", new Auton1Bin());
+		autoChooser.addObject("CatWoman", new CatWomanAuton());
+		autoChooser.addObject("Robot Set", new AutonRobotSet());
 		SmartDashboard.putData("Auto Mode", autoChooser);
 		addCommandsToDashboard();
+		
+		
 
 		//autonomousCommand = new AutonSpin();
 		teleopCommand = new TeleopCommand();
 	}
 
->>>>>>> branch 'master' of https://github.com/Team1923/Recycle_Rush_2015.git
 	public void disabledPeriodic() {
-		
 		Scheduler.getInstance().run();
 	}
 
 	public void autonomousInit() {
-		//driveTrainSubsystem.cLeft = 0;
-		//driveTrainSubsystem.cRight = 0;
-		intakeWheelSubsystem.cWheels = 0;
-
-<<<<<<< HEAD
-    /**
-     * This function is called periodically during autonomous
-     */
-    public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
-    	log();
-    }
-=======
 		autonomousCommand = (CommandGroup) autoChooser.getSelected();
 		autonomousCommand.start();
+		
+		
 	}
->>>>>>> branch 'master' of https://github.com/Team1923/Recycle_Rush_2015.git
 
 	/**
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		log();
 	}
 
 	public void teleopInit() {
 		// This makes sure that the autonomous stops running when
-<<<<<<< HEAD
-        // teleop starts running. If you want the autonomous to 
-        // continue until interrupted by another command, remove
-        // this line or comment it out.
-        if (autonomousCommand != null) autonomousCommand.cancel();
-        if (teleopCommand != null) teleopCommand.start();
-    }
-=======
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		// Assign commands to buttons
->>>>>>> branch 'master' of https://github.com/Team1923/Recycle_Rush_2015.git
 
-<<<<<<< HEAD
-    /**
-     * This function is called when the disabled button is hit.
-     * You can use it to reset subsystems before shutting down.
-     */
-    public void disabledInit(){
-        if (autonomousCommand != null) autonomousCommand.cancel();
-        if (teleopCommand != null) teleopCommand.cancel();
-    }
-=======
 		//driveTrainSubsystem.cLeft = 0;
 		//driveTrainSubsystem.cRight = 0;
 		intakeWheelSubsystem.cWheels = 0;
 
 		//intakePistonSubsystem.armsOut();
->>>>>>> branch 'master' of https://github.com/Team1923/Recycle_Rush_2015.git
 
-<<<<<<< HEAD
-    /**
-     * This function is called periodically during operator control
-     */
-    public void teleopPeriodic() {
-        Scheduler.getInstance().run();
-    	log();
-    }
-    
-    /**
-     * This function is called periodically during test mode
-     */
-    public void testPeriodic() {
-        LiveWindow.run();
-    }
-
-    public void log(){
-    	// Log values at Dashboard
-    	SmartDashboard.putNumber("Left Distance", driveTrainSubsystem.getLeftEncoderDistance());
-    	SmartDashboard.putNumber("Right Distance", driveTrainSubsystem.getRightEncoderDistance());
-    	SmartDashboard.putNumber("Elevator Position", elevatorSubsystem.getElevatorEncoderPosition());
-    	SmartDashboard.putNumber("Gyro Angle", driveTrainSubsystem.getGyroAngle());
-
-    }
- 
-    public void addCommandsToDashboard(){
-    	//SmartDashboard.putData("Drive DRIVE_DIST_1", new DriveDistanceCommand(RobotMap.DRIVE_DIST_1,5.0));
-    	//SmartDashboard.putData("Drive DRIVE_DIST_2", new DriveDistanceCommand(RobotMap.DRIVE_DIST_2,5.0));
-    	SmartDashboard.putData("Move Elevator ELEVATOR_POSITION_1", new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_1,5.0));
-    	SmartDashboard.putData("Move Elevator ELEVATOR_POSITION_2", new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_2,5.0));
-    	SmartDashboard.putData("Move Elevator ELEVATOR_POSITION_3", new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_3,5.0));
-    	SmartDashboard.putData("Move Elevator ELEVATOR_POSITION_4", new MoveElevatorToPositionCommand(RobotMap.ELEVATOR_POSITION_4,5.0));
-    	SmartDashboard.putData("Move Gyro Angle 0", new TurnToHeading(0,5.0));
-    	SmartDashboard.putData("Move Gyro Angle 90", new TurnToHeading(-90,5.0));
-    	SmartDashboard.putData("Set Up Home Position", new ElevatorSetHomeCommand());
-    	
-    }
-    
-=======
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		if (teleopCommand != null)
@@ -305,6 +180,4 @@ public class Robot extends IterativeRobot {
 
 	}
 
->>>>>>> branch 'master' of https://github.com/Team1923/Recycle_Rush_2015.git
 }
-

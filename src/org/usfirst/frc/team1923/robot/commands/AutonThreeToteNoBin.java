@@ -1,8 +1,7 @@
-package org.usfirst.frc.team1923.robot.commands;
-
-import org.usfirst.frc.team1923.robot.RobotMap;
+package src.org.usfirst.frc.team1923.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import src.org.usfirst.frc.team1923.robot.RobotMap;
 
 // 3 totes auton!!!
 
