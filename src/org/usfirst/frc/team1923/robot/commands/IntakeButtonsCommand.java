@@ -1,50 +1,55 @@
-package src.org.usfirst.frc.team1923.robot.commands;
+ package src.org.usfirst.frc.team1923.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import src.org.usfirst.frc.team1923.robot.Robot;
-import src.org.usfirst.frc.team1923.robot.RobotMap;
+
+//import org.usfirst.frc.team1923.robot.subsystems.DriveTrainSubsystem;
 
 /**
  *
  */
-public class ElevatorSetHomeCommand extends Command {
-	
-	private double speed = 0.2;
-	
-	public ElevatorSetHomeCommand() {
+public class IntakeButtonsCommand extends Command {
+	private double desiredSpeed = 0;
+
+	public IntakeButtonsCommand() {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.elevatorSubsystem);
-		requires(Robot.intakePistonSubsystem);
+		// eg. requires(chassis);
+		requires(Robot.intakeWheelSubsystem);
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.intakePistonSubsystem.armsOut();
+		
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if(!(speed >= 0.85))
-			speed += 0.05;
-				
-		if(!isFinished())
-			Robot.elevatorSubsystem.moveElevatorDown(speed);
+		int intake1 = Robot.oi.xboxController.getSharpTriggerDiff();
+		boolean intakeBack = Robot.oi.back.get();
+		
+		if(intake1==1)
+			desiredSpeed=1;
+		else if (intake1==-1)
+			desiredSpeed=-1;
+		else if (intakeBack==true)
+			desiredSpeed=0;
+		
+		Robot.intakeWheelSubsystem.intakeWheelsIn(desiredSpeed);		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return RobotMap.elevatorBottomLimitSwitch.get();
+		return false;
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.elevatorSubsystem.setElevatorReferance();
-		Robot.elevatorSubsystem.stop();
+		Robot.intakeWheelSubsystem.stop();
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
-		Robot.elevatorSubsystem.stop();
+		end();
 	}
 }

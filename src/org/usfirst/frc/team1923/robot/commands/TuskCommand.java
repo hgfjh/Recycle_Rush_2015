@@ -2,49 +2,47 @@ package src.org.usfirst.frc.team1923.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import src.org.usfirst.frc.team1923.robot.Robot;
-import src.org.usfirst.frc.team1923.robot.RobotMap;
+import src.org.usfirst.frc.team1923.robot.subsystems.TuskSubsystem;
 
 /**
  *
  */
-public class ElevatorSetHomeCommand extends Command {
-	
-	private double speed = 0.2;
-	
-	public ElevatorSetHomeCommand() {
+public class TuskCommand extends Command {
+
+	private boolean armsIn;
+
+	public TuskCommand(boolean armsIn) {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.elevatorSubsystem);
-		requires(Robot.intakePistonSubsystem);
+		// eg. requires(chassis);
+		requires(Robot.tuskSubsystem);
+		setTimeout(1.0);
+		this.armsIn = armsIn;
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.intakePistonSubsystem.armsOut();
+		if (armsIn)
+			Robot.tuskSubsystem.armsIn();
+		else
+			Robot.tuskSubsystem.armsOut();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if(!(speed >= 0.85))
-			speed += 0.05;
-				
-		if(!isFinished())
-			Robot.elevatorSubsystem.moveElevatorDown(speed);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return RobotMap.elevatorBottomLimitSwitch.get();
+		return isTimedOut();
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.elevatorSubsystem.setElevatorReferance();
-		Robot.elevatorSubsystem.stop();
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
-		Robot.elevatorSubsystem.stop();
+		end();
 	}
 }

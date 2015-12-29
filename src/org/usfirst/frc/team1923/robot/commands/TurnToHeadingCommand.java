@@ -2,49 +2,53 @@ package src.org.usfirst.frc.team1923.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import src.org.usfirst.frc.team1923.robot.Robot;
-import src.org.usfirst.frc.team1923.robot.RobotMap;
 
 /**
  *
  */
-public class ElevatorSetHomeCommand extends Command {
-	
-	private double speed = 0.2;
-	
-	public ElevatorSetHomeCommand() {
+public class TurnToHeadingCommand extends Command {
+	private double angle;
+	private double timeOut;
+	private int totes;
+
+	public TurnToHeadingCommand(double angle, double timeOut, int totes) {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.elevatorSubsystem);
-		requires(Robot.intakePistonSubsystem);
+		requires(Robot.driveTrainSubsystem);
+		this.angle = angle;
+		this.timeOut = timeOut;
+		this.totes = totes;
+	}
+	
+	public TurnToHeadingCommand(double angle, int totes){
+		this(angle, 5.0, totes);
+	}
+	
+	public TurnToHeadingCommand(double angle){
+		this(angle, 5.0, 0);
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.intakePistonSubsystem.armsOut();
+		Robot.driveTrainSubsystem.turnRobotHeading(angle, timeOut, totes);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if(!(speed >= 0.85))
-			speed += 0.05;
-				
-		if(!isFinished())
-			Robot.elevatorSubsystem.moveElevatorDown(speed);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return RobotMap.elevatorBottomLimitSwitch.get();
+		return Robot.driveTrainSubsystem.reachedTarget();
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.elevatorSubsystem.setElevatorReferance();
-		Robot.elevatorSubsystem.stop();
+		Robot.driveTrainSubsystem.stop();
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
-		Robot.elevatorSubsystem.stop();
+		end();
 	}
 }
